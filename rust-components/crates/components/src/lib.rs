@@ -40,6 +40,10 @@ pub mod breadcrumbs;
 pub mod pagination;
 pub mod side_navigation;
 pub mod top_navigation;
+pub mod status_indicator;
+pub mod key_value_pairs;
+pub mod column_layout;
+pub mod expandable_section;
 
 // Internal utilities
 pub mod internal;
@@ -91,6 +95,14 @@ pub use side_navigation::{
     SideNavigation, SideNavigationProps, SideNavigationItem, SideNavigationItemType,
     SideNavigationHeader, FollowDetail as SideNavigationFollowDetail,
     ChangeDetail as SideNavigationChangeDetail,
+};
+pub use status_indicator::{
+    StatusIndicator, StatusIndicatorProps, StatusIndicatorType, StatusIndicatorColor,
+};
+pub use key_value_pairs::{KeyValuePairs, KeyValuePairsProps, KeyValuePair};
+pub use column_layout::{ColumnLayout, ColumnLayoutProps, ColumnVariant, BordersType};
+pub use expandable_section::{
+    ExpandableSection, ExpandableSectionProps, ExpandableSectionVariant, ExpandableSectionChangeDetail,
 };
 
 // Re-export commonly used internal types

@@ -120,7 +120,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (28 Total)
+### Implemented (32 Total)
 
 #### Basic Components
 - ✅ **Badge** - Small visual indicator for labels and metadata
@@ -150,6 +150,7 @@ fn app() -> Html {
 - ✅ **Header** - Page and section headers (H1/H2/H3)
 - ✅ **AppLayout** - Main application shell with navigation, tools, and split panel
 - ✅ **ContentLayout** - Content wrapper with header and notifications
+- ✅ **ColumnLayout** - Multi-column layout wrapper with responsive grids
 
 #### Navigation Components
 
@@ -159,12 +160,18 @@ fn app() -> Html {
 - ✅ **Pagination** - Page navigation with next/previous and page numbers
 - ✅ **TopNavigation** - Top application bar with menu items and utilities
 
+#### Data Display Components
+
+- ✅ **StatusIndicator** - Status badges with color variants and icons
+- ✅ **KeyValuePairs** - Structured key-value pair display
+- ✅ **ExpandableSection** - Collapsible content sections
+
 ### Planned
 
 - ⏳ **Table** - Data table with sorting and filtering
 - ⏳ **Modal** - Dialog component
 - ⏳ **Flashbar** - Notification message container
-- ⏳ **StatusIndicator** - Status indicator with color variants
+- ⏳ **Popover** - Popover/tooltip overlay
 - ⏳ More components coming...
 
 ## Design Tokens
