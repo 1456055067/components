@@ -26,7 +26,7 @@ pub use spacing::SpacingTokens;
 pub use typography::TypographyTokens;
 
 /// Main design tokens structure containing all token categories
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct DesignTokens {
     pub colors: ColorTokens,
     pub spacing: SpacingTokens,
@@ -37,18 +37,6 @@ pub struct DesignTokens {
 }
 
 impl DesignTokens {
-    /// Creates default design tokens from the Visual Refresh theme
-    pub fn default() -> Self {
-        Self {
-            colors: ColorTokens::default(),
-            spacing: SpacingTokens::default(),
-            typography: TypographyTokens::default(),
-            borders: BorderTokens::default(),
-            shadows: ShadowTokens::default(),
-            motion: MotionTokens::default(),
-        }
-    }
-
     /// Loads design tokens from JSON
     pub fn from_json(json: &str) -> Result<Self, serde_json::Error> {
         serde_json::from_str(json)

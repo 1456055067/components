@@ -6,13 +6,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Motion tokens for animation durations and easing functions
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct MotionTokens {
     // Placeholder - will be generated
-}
-
-impl Default for MotionTokens {
-    fn default() -> Self {
-        Self {}
-    }
 }

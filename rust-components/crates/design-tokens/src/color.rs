@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// This will be populated by the design token generator with all color tokens
 /// from the Cloudscape design system.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct ColorTokens {
     // Placeholder - will be generated
     // Example fields:
@@ -20,14 +20,6 @@ pub struct ColorTokens {
     // pub background_button_normal_hover: String,
     // pub text_body_default: String,
     // ... 300+ more color tokens
-}
-
-impl Default for ColorTokens {
-    fn default() -> Self {
-        Self {
-            // Placeholder defaults - will be generated
-        }
-    }
 }
 
 /// Color token names as CSS custom property references

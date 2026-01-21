@@ -6,13 +6,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Border tokens for widths and radii
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct BorderTokens {
     // Placeholder - will be generated
-}
-
-impl Default for BorderTokens {
-    fn default() -> Self {
-        Self {}
-    }
 }

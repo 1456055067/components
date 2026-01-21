@@ -6,14 +6,8 @@
 use serde::{Deserialize, Serialize};
 
 /// Spacing tokens for margins, padding, and gaps
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct SpacingTokens {
     // Placeholder - will be generated
     // Example: pub xxxs: String, pub xxs: String, pub xs: String, etc.
-}
-
-impl Default for SpacingTokens {
-    fn default() -> Self {
-        Self {}
-    }
 }

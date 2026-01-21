@@ -6,13 +6,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Typography tokens for font sizes, weights, and line heights
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct TypographyTokens {
     // Placeholder - will be generated
-}
-
-impl Default for TypographyTokens {
-    fn default() -> Self {
-        Self {}
-    }
 }

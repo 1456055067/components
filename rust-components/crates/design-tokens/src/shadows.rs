@@ -6,13 +6,7 @@
 use serde::{Deserialize, Serialize};
 
 /// Shadow tokens for box shadows
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct ShadowTokens {
     // Placeholder - will be generated
-}
-
-impl Default for ShadowTokens {
-    fn default() -> Self {
-        Self {}
-    }
 }

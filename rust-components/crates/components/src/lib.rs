@@ -62,7 +62,6 @@ pub use autosuggest::{
 pub use badge::{Badge, BadgeColor, BadgeProps};
 pub use box_component::{Box, BoxProps, BoxVariant, SpacingSize};
 pub use breadcrumbs::{BreadcrumbFollowEvent, BreadcrumbItem, Breadcrumbs, BreadcrumbsProps};
-pub use breadcrumbs::{BreadcrumbFollowEvent, BreadcrumbItem, Breadcrumbs, BreadcrumbsProps};
 pub use button::{Button, ButtonProps, ButtonVariant, FormAction, IconAlign};
 pub use checkbox::{Checkbox, CheckboxChangeDetail, CheckboxProps};
 pub use column_layout::{BordersType, ColumnLayout, ColumnLayoutProps, ColumnVariant};
@@ -94,19 +93,10 @@ pub use pagination::{
     Pagination, PaginationChangeDetail, PaginationI18nStrings, PaginationPageClickDetail,
     PaginationProps,
 };
-pub use pagination::{
-    Pagination, PaginationChangeDetail, PaginationI18nStrings, PaginationPageClickDetail,
-    PaginationProps,
-};
 pub use radio_group::{
     RadioGroup, RadioGroupChangeDetail, RadioGroupDirection, RadioGroupItem, RadioGroupProps,
 };
 pub use select::{Select, SelectChangeDetail, SelectOption, SelectProps};
-pub use side_navigation::{
-    ChangeDetail as SideNavigationChangeDetail, FollowDetail as SideNavigationFollowDetail,
-    SideNavigation, SideNavigationHeader, SideNavigationItem, SideNavigationItemType,
-    SideNavigationProps,
-};
 pub use side_navigation::{
     ChangeDetail as SideNavigationChangeDetail, FollowDetail as SideNavigationFollowDetail,
     SideNavigation, SideNavigationHeader, SideNavigationItem, SideNavigationItemType,
@@ -117,14 +107,8 @@ pub use status_indicator::{
     StatusIndicator, StatusIndicatorColor, StatusIndicatorProps, StatusIndicatorType,
 };
 pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
-pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
 pub use textarea::{Textarea, TextareaChangeDetail, TextareaProps};
 pub use toggle::{Toggle, ToggleChangeDetail, ToggleProps};
-pub use top_navigation::{
-    IdentityFollowDetail, TopNavigation, TopNavigationI18nStrings, TopNavigationIdentity,
-    TopNavigationLogo, TopNavigationProps, TopNavigationUtility, UtilityButtonVariant,
-    UtilityClickDetail, UtilityFollowDetail, UtilityType,
-};
 pub use top_navigation::{
     IdentityFollowDetail, TopNavigation, TopNavigationI18nStrings, TopNavigationIdentity,
     TopNavigationLogo, TopNavigationProps, TopNavigationUtility, UtilityButtonVariant,
