@@ -120,23 +120,34 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (17 Total)
+### Implemented (23 Total)
 
+#### Basic Components
 - ✅ **Badge** - Small visual indicator for labels and metadata
 - ✅ **Spinner** - Loading indicator with animation
 - ✅ **Box** - Layout utility for spacing and typography
 - ✅ **Button** - Interactive button with multiple variants
 - ✅ **Alert** - Contextual feedback messages with different severity levels
+- ✅ **Link** - Hyperlink with external icon support
+- ✅ **Icon** - SVG icon component with built-in and custom icon support
+
+#### Form Components
 - ✅ **Input** - Text input field with validation and multiple types
 - ✅ **Checkbox** - Checkbox input with indeterminate state support
 - ✅ **Toggle** - Toggle switch component (on/off control)
 - ✅ **RadioGroup** - Radio button group with multiple options
 - ✅ **Select** - Dropdown selection with keyboard navigation
 - ✅ **Textarea** - Multi-line text input with auto-resize
-- ✅ **Link** - Hyperlink with external icon support
+- ✅ **FormField** - Form field wrapper with label, description, and validation
+- ✅ **Multiselect** - Multiple selection dropdown with token display
+- ✅ **Autosuggest** - Input with suggestions dropdown
+- ✅ **DatePicker** - Date selection with calendar
+- ✅ **DateRangePicker** - Date range selection (absolute/relative)
+- ✅ **FileUpload** - File upload with drag-and-drop
+
+#### Layout Components
 - ✅ **Container** - Content container with header, footer, and media slots
 - ✅ **Header** - Page and section headers (H1/H2/H3)
-- ✅ **Icon** - SVG icon component with built-in and custom icon support
 - ✅ **AppLayout** - Main application shell with navigation, tools, and split panel
 - ✅ **ContentLayout** - Content wrapper with header and notifications
 

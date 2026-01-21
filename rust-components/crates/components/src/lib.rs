@@ -29,6 +29,12 @@ pub mod link;
 pub mod icon;
 pub mod app_layout;
 pub mod content_layout;
+pub mod form_field;
+pub mod multiselect;
+pub mod autosuggest;
+pub mod date_picker;
+pub mod date_range_picker;
+pub mod file_upload;
 
 // Internal utilities
 pub mod internal;
@@ -54,6 +60,17 @@ pub use app_layout::{
     NavigationChangeDetail, ToolsChangeDetail, SplitPanelToggleDetail, SplitPanelResizeDetail,
 };
 pub use content_layout::{ContentLayout, ContentLayoutProps};
+pub use form_field::{FormField, FormFieldProps};
+pub use multiselect::{Multiselect, MultiselectProps, MultiselectOption, MultiselectChangeDetail, FilteringType};
+pub use autosuggest::{Autosuggest, AutosuggestProps, AutosuggestOption, AutosuggestChangeDetail, AutosuggestSelectDetail};
+pub use date_picker::{DatePicker, DatePickerProps, DatePickerChangeDetail};
+pub use date_range_picker::{
+    DateRangePicker, DateRangePickerProps, DateRange, DateRangePickerChangeDetail,
+    RangeSelectorMode, RelativeOption, TimeUnit,
+};
+pub use file_upload::{
+    FileUpload, FileUploadProps, FileUploadFile, FileUploadChangeDetail, FileUploadI18nStrings,
+};
 
 // Re-export commonly used internal types
 pub use internal::CustomEvent;
