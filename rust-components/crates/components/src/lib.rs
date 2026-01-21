@@ -44,6 +44,7 @@ pub mod select;
 pub mod side_navigation;
 pub mod spinner;
 pub mod status_indicator;
+pub mod table;
 pub mod tabs;
 pub mod textarea;
 pub mod toggle;
@@ -113,6 +114,10 @@ pub use side_navigation::{
 pub use spinner::{Spinner, SpinnerProps, SpinnerSize, SpinnerVariant};
 pub use status_indicator::{
     StatusIndicator, StatusIndicatorColor, StatusIndicatorProps, StatusIndicatorType,
+};
+pub use table::{
+    SelectionType, SortDirection, SortingState, Table, TableColumn, TableProps,
+    TableSelectionDetail, TableSortDetail,
 };
 pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
 pub use textarea::{Textarea, TextareaChangeDetail, TextareaProps};

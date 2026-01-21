@@ -123,7 +123,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (36 Total)
+### Implemented (37 Total)
 
 #### Basic Components
 
@@ -171,6 +171,7 @@ fn app() -> Html {
 - ✅ **StatusIndicator** - Status badges with color variants and icons
 - ✅ **KeyValuePairs** - Structured key-value pair display
 - ✅ **ExpandableSection** - Collapsible content sections
+- ✅ **Table** - Data table with sorting, filtering, selection, and pagination
 
 #### Overlay Components
 
@@ -184,7 +185,6 @@ fn app() -> Html {
 
 ### Planned
 
-- ⏳ **Table** - Data table with sorting and filtering
 - ⏳ **Cards** - Card grid with selection
 - ⏳ **PropertyFilter** - Advanced filtering component
 - ⏳ More components coming...
