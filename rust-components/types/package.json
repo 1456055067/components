@@ -1,0 +1,22 @@
+{
+  "name": "@cloudscape-design/rust-components-types",
+  "version": "0.1.0",
+  "description": "TypeScript type definitions for Cloudscape Rust/WASM components",
+  "license": "Apache-2.0",
+  "main": "",
+  "types": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudscape-design/components"
+  },
+  "keywords": [
+    "cloudscape",
+    "rust",
+    "wasm",
+    "typescript",
+    "types"
+  ]
+}
