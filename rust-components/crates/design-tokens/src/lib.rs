@@ -18,6 +18,10 @@ pub mod shadows;
 pub mod spacing;
 pub mod typography;
 
+// Auto-generated tokens from style-dictionary
+#[cfg(feature = "generated")]
+pub mod generated;
+
 pub use borders::BorderTokens;
 pub use color::ColorTokens;
 pub use motion::MotionTokens;

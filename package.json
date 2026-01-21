@@ -25,7 +25,17 @@
     "start:integ": "cross-env NODE_ENV=development webpack serve --config pages/webpack.config.integ.cjs",
     "start:react18": "npm-run-all --parallel start:watch start:react18:dev",
     "start:react18:dev": "cross-env NODE_ENV=development REACT_VERSION=18 webpack serve --config pages/webpack.config.cjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync:analyze": "./scripts/sync-upstream.sh analyze",
+    "sync:preview": "./scripts/sync-upstream.sh preview",
+    "sync:merge": "./scripts/sync-upstream.sh merge",
+    "sync:deep-analyze": "node scripts/analyze-react-changes.js --all",
+    "rust:tokens": "node build-tools/tasks/generate-rust-tokens.js",
+    "rust:watch": "node build-tools/tasks/watch-rust-tokens.js",
+    "rust:styles": "node build-tools/tasks/rust-styles.js",
+    "rust:build": "npm run rust:styles && cd rust-components/demo && trunk build --release",
+    "rust:serve": "cd rust-components/demo && trunk serve",
+    "rust:bench": "cd rust-components && cargo bench --bench component_benchmarks --features generated"
   },
   "dependencies": {
     "@cloudscape-design/collection-hooks": "^1.0.0",
@@ -161,7 +171,7 @@
       "eslint --fix"
     ],
     "*.{scss,css}": [
-      "stylelint --fix"
+      "stylelint --fix --allow-empty-input"
     ],
     "package-lock.json": [
       "node ./scripts/unlock-package-lock.js"

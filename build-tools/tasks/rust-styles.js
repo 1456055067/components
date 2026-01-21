@@ -10,8 +10,8 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,17 +23,69 @@ const RUST_DIST_OUTPUT = path.join(rootDir, 'lib/rust-components');
 
 /**
  * Component list to extract CSS for
+ * These match the Rust component implementations
  */
 const COMPONENTS = [
-  'badge',
-  'button',
-  'spinner',
-  'box',
+  // Basic components
   'alert',
-  'container',
-  'header',
+  'badge',
+  'box',
+  'button',
+  'icon',
+  'spinner',
+
+  // Form components
+  'autosuggest',
+  'checkbox',
+  'date-picker',
+  'date-range-picker',
+  'file-upload',
+  'form-field',
   'input',
-  // Add more as they're implemented
+  'multiselect',
+  'radio-group',
+  'select',
+  'textarea',
+  'tiles',
+  'toggle',
+
+  // Layout components
+  'app-layout',
+  'column-layout',
+  'container',
+  'content-layout',
+  'header',
+  'space-between',
+
+  // Navigation components
+  'breadcrumb-group',
+  'button-dropdown',
+  'link',
+  'pagination',
+  'side-navigation',
+  'tabs',
+  'top-navigation',
+
+  // Data display components
+  'cards',
+  'expandable-section',
+  'key-value-pairs',
+  'status-indicator',
+  'table',
+  'text-content',
+  'token-group',
+
+  // Overlay components
+  'drawer',
+  'modal',
+  'popover',
+
+  // Notification components
+  'flashbar',
+
+  // Additional components
+  'copy-to-clipboard',
+  'progress-bar',
 ];
 
 /**
@@ -67,6 +119,38 @@ async function extractCssFromJsFile(filePath) {
 }
 
 /**
+ * Extracts internal/shared CSS used across components
+ */
+async function extractInternalStyles() {
+  const internalStyles = [];
+
+  // List of internal style files to extract
+  const internalFiles = [
+    'internal/styles/global-styles.css.js',
+    'internal/base-component/styles.css.js',
+    'internal/components/button-trigger/styles.css.js',
+    'internal/components/dropdown/styles.css.js',
+    'internal/components/option/styles.css.js',
+    'internal/components/portal/styles.css.js',
+    'internal/components/transition/styles.css.js',
+  ];
+
+  for (const file of internalFiles) {
+    const filePath = path.join(REACT_BUILD_DIR, file);
+    try {
+      const css = await extractCssFromJsFile(filePath);
+      if (css) {
+        internalStyles.push(`/* ${file} */\n${css}`);
+      }
+    } catch {
+      // Skip files that don't exist
+    }
+  }
+
+  return internalStyles.join('\n\n');
+}
+
+/**
  * Extracts global styles
  */
 async function extractGlobalStyles() {
@@ -77,7 +161,7 @@ async function extractGlobalStyles() {
     if (css) {
       return css;
     }
-  } catch (error) {
+  } catch {
     console.warn('Global styles not found, will generate minimal defaults');
   }
 
@@ -116,24 +200,47 @@ export async function buildRustStyles() {
   console.log('🎨 Building CSS for Rust components...');
 
   try {
+    // First, generate design tokens from style-dictionary
+    console.log('   🔧 Generating design tokens...');
+    const generateTokens = await import('./generate-rust-tokens.js');
+    await generateTokens.default();
+
     // Ensure output directories exist
     await fs.mkdir(RUST_STYLES_OUTPUT, { recursive: true });
     await fs.mkdir(RUST_DIST_OUTPUT, { recursive: true });
 
     let combinedCss = '';
 
-    // Add global styles first
+    // Add generated design tokens first
+    const designTokensPath = path.join(RUST_STYLES_OUTPUT, 'design-tokens.css');
+    try {
+      const designTokensCss = await fs.readFile(designTokensPath, 'utf-8');
+      combinedCss += designTokensCss + '\n\n';
+      console.log('   ✓ Included design tokens');
+    } catch {
+      console.warn('   ⚠️  Design tokens not found, will use fallback');
+    }
+
+    // Add global styles
     const globalStyles = await extractGlobalStyles();
     combinedCss += '/* Global Styles */\n' + globalStyles + '\n\n';
+
+    // Add internal/shared styles
+    console.log('   🔧 Extracting internal styles...');
+    const internalStyles = await extractInternalStyles();
+    if (internalStyles) {
+      combinedCss += '/* Internal/Shared Styles */\n' + internalStyles + '\n\n';
+      console.log('   ✓ Included internal styles');
+    }
 
     // Extract and combine component styles
     let componentCount = 0;
     for (const component of COMPONENTS) {
-      const cssJsPath = path.join(REACT_BUILD_DIR, component, 'styles.css.js');
+      // Try .scoped.css file (contains actual CSS)
+      const scopedCssPath = path.join(REACT_BUILD_DIR, component, 'styles.scoped.css');
 
       try {
-        await fs.access(cssJsPath);
-        const componentCss = await extractCssFromJsFile(cssJsPath);
+        const componentCss = await fs.readFile(scopedCssPath, 'utf-8');
 
         if (componentCss) {
           combinedCss += `/* Component: ${component} */\n`;
@@ -141,7 +248,7 @@ export async function buildRustStyles() {
           componentCount++;
           console.log(`   ✓ Extracted CSS for ${component}`);
         }
-      } catch (error) {
+      } catch {
         console.log(`   ⊘ Skipped ${component} (not built yet)`);
       }
     }
@@ -152,6 +259,9 @@ export async function buildRustStyles() {
       // Create placeholder CSS
       combinedCss += generatePlaceholderStyles();
     }
+
+    // Deduplicate CSS before writing
+    combinedCss = deduplicateCss(combinedCss);
 
     // Write combined CSS bundle
     const outputPath = path.join(RUST_STYLES_OUTPUT, 'cloudscape-components.css');
@@ -167,11 +277,43 @@ export async function buildRustStyles() {
 
     // Generate minified version
     await createMinifiedCss(combinedCss);
-
   } catch (error) {
     console.error('❌ CSS build failed:', error.message);
     throw error;
   }
+}
+
+/**
+ * Removes duplicate comments and fixes stylelint issues
+ */
+function deduplicateCss(css) {
+  // Simpler approach: just remove all stylelint-disable comments
+  // They're not needed in the final bundled CSS file
+  css = css.replace(/\/\*\s*stylelint-disable[^*]*\*\/\s*/g, '');
+
+  // Remove duplicate consecutive copyright headers
+  const lines = css.split('\n');
+  const dedupedLines = [];
+  let lastWasCopyright = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const isCopyright = line.includes('Copyright Amazon.com');
+
+    // Skip duplicate copyright lines
+    if (isCopyright && lastWasCopyright) {
+      // Skip lines until we find the end of this copyright block
+      while (i < lines.length && !lines[i].includes('*/')) {
+        i++;
+      }
+      continue;
+    }
+
+    dedupedLines.push(line);
+    lastWasCopyright = isCopyright;
+  }
+
+  return dedupedLines.join('\n');
 }
 
 /**
@@ -286,10 +428,7 @@ export function watchRustStyles() {
   const { watch } = require('gulp');
 
   return watch(
-    [
-      'lib/components/**/styles.css.js',
-      'lib/components/internal/styles/**/*.css.js',
-    ],
+    ['lib/components/**/styles.css.js', 'lib/components/internal/styles/**/*.css.js'],
     { cwd: rootDir },
     buildRustStyles
   );
@@ -312,7 +451,7 @@ export async function cleanRustStyles() {
     }
 
     console.log('✅ CSS files cleaned');
-  } catch (error) {
+  } catch {
     // Ignore if files don't exist
   }
 }

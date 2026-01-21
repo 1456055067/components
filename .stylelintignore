@@ -1,0 +1,10 @@
+# Ignore Rust-generated CSS bundles
+rust-components/demo/cloudscape-components.css
+rust-components/dist/**/*.css
+lib/rust-components/**/*.css
+
+# Ignore build artifacts
+lib/components/**/*.css
+lib/components/**/*.css.js
+dist/**/*.css
+build/**/*.css

@@ -21,4 +21,9 @@ js-sys = "0.3.85"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
+criterion = "0.5"
+
+[[bench]]
+name = "component_benchmarks"
+harness = false
 

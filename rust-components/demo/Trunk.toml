@@ -1,7 +1,10 @@
 [build]
 target = "index.html"
-release = false
+release = true
 dist = "dist"
+# Enable minification for production builds
+minify = "on_release"
+filehash = true
 
 [watch]
 ignore = ["target", "dist"]
