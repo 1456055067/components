@@ -25,6 +25,7 @@ pub mod checkbox;
 pub mod column_layout;
 pub mod container;
 pub mod content_layout;
+pub mod copy_to_clipboard;
 pub mod date_picker;
 pub mod date_range_picker;
 pub mod drawer;
@@ -45,13 +46,16 @@ pub mod progress_bar;
 pub mod radio_group;
 pub mod select;
 pub mod side_navigation;
+pub mod space_between;
 pub mod spinner;
 pub mod status_indicator;
 pub mod table;
 pub mod tabs;
+pub mod text_content;
 pub mod textarea;
 pub mod tiles;
 pub mod toggle;
+pub mod token_group;
 pub mod top_navigation;
 
 // Internal utilities
@@ -80,6 +84,9 @@ pub use checkbox::{Checkbox, CheckboxChangeDetail, CheckboxProps};
 pub use column_layout::{BordersType, ColumnLayout, ColumnLayoutProps, ColumnVariant};
 pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPosition};
 pub use content_layout::{ContentLayout, ContentLayoutProps};
+pub use copy_to_clipboard::{
+    CopyDetail, CopyStatus, CopyToClipboard, CopyToClipboardProps, CopyToClipboardVariant,
+};
 pub use date_picker::{DatePicker, DatePickerChangeDetail, DatePickerProps};
 pub use date_range_picker::{
     DateRange, DateRangePicker, DateRangePickerChangeDetail, DateRangePickerProps,
@@ -119,6 +126,10 @@ pub use side_navigation::{
     SideNavigation, SideNavigationHeader, SideNavigationItem, SideNavigationItemType,
     SideNavigationProps,
 };
+pub use space_between::{
+    SpaceBetween, SpaceBetweenAlignment, SpaceBetweenDirection, SpaceBetweenProps,
+    SpaceBetweenSize,
+};
 pub use spinner::{Spinner, SpinnerProps, SpinnerSize, SpinnerVariant};
 pub use status_indicator::{
     StatusIndicator, StatusIndicatorColor, StatusIndicatorProps, StatusIndicatorType,
@@ -128,9 +139,11 @@ pub use table::{
     TableSelectionDetail, TableSortDetail,
 };
 pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
+pub use text_content::{TextContent, TextContentProps};
 pub use textarea::{Textarea, TextareaChangeDetail, TextareaProps};
 pub use tiles::{TileItem, Tiles, TilesChangeDetail, TilesProps};
 pub use toggle::{Toggle, ToggleChangeDetail, ToggleProps};
+pub use token_group::{Token, TokenDismissDetail, TokenGroup, TokenGroupAlignment, TokenGroupProps};
 pub use top_navigation::{
     IdentityFollowDetail, TopNavigation, TopNavigationI18nStrings, TopNavigationIdentity,
     TopNavigationLogo, TopNavigationProps, TopNavigationUtility, UtilityButtonVariant,

@@ -96,7 +96,10 @@ If React components aren't built yet, placeholder styles with design tokens are 
 
 ```rust
 use yew::prelude::*;
-use cloudscape_components::{Button, ButtonVariant, Badge, BadgeColor};
+use cloudscape_components::{
+    Button, ButtonVariant, Badge, BadgeColor,
+    SpaceBetween, SpaceBetweenSize
+};
 
 #[function_component(App)]
 fn app() -> Html {
@@ -105,7 +108,7 @@ fn app() -> Html {
     });
 
     html! {
-        <div>
+        <SpaceBetween size={SpaceBetweenSize::M}>
             <Button
                 variant={ButtonVariant::Primary}
                 on_click={on_click}
@@ -116,14 +119,14 @@ fn app() -> Html {
             <Badge color={BadgeColor::Blue}>
                 {"New"}
             </Badge>
-        </div>
+        </SpaceBetween>
     }
 }
 ```
 
 ## Components
 
-### Implemented (41 Total)
+### Implemented (44 Total)
 
 #### Basic Components
 
@@ -136,6 +139,7 @@ fn app() -> Html {
 - ✅ **Link** - Hyperlink with external icon support
 - ✅ **Icon** - SVG icon component with built-in and custom icon support
 - ✅ **ProgressBar** - Progress indicator with percentage and status variants
+- ✅ **CopyToClipboard** - Button that copies text to clipboard with feedback
 
 #### Form Components
 
@@ -160,6 +164,7 @@ fn app() -> Html {
 - ✅ **AppLayout** - Main application shell with navigation, tools, and split panel
 - ✅ **ContentLayout** - Content wrapper with header and notifications
 - ✅ **ColumnLayout** - Multi-column layout wrapper with responsive grids
+- ✅ **SpaceBetween** - Layout utility for spacing elements with consistent gaps
 
 #### Navigation Components
 
@@ -176,6 +181,7 @@ fn app() -> Html {
 - ✅ **ExpandableSection** - Collapsible content sections
 - ✅ **Table** - Data table with sorting, filtering, selection, and pagination
 - ✅ **Cards** - Card grid container with selection support
+- ✅ **TokenGroup** - Display dismissible tokens/tags with optional icons and limit
 
 #### Overlay Components
 
