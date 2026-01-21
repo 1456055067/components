@@ -13,7 +13,7 @@ The Rust/Yew components are designed to:
 
 ## Project Structure
 
-```
+```text
 rust-components/
 ├── Cargo.toml              # Workspace configuration
 ├── crates/
@@ -30,6 +30,7 @@ rust-components/
 │       └── Cargo.toml
 ├── examples/               # Demo applications (coming soon)
 └── dist/                   # Build output (WASM, JS bindings)
+
 ```
 
 ## Prerequisites
@@ -40,13 +41,13 @@ rust-components/
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
    ```
 
-2. **wasm-pack**: Install for building WASM
+1. **wasm-pack**: Install for building WASM
 
    ```bash
    cargo install wasm-pack
    ```
 
-3. **Node.js**: Required for the design token generator (already installed for React build)
+1. **Node.js**: Required for the design token generator (already installed for React build)
 
 ## Building
 
@@ -122,7 +123,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (33 Total)
+### Implemented (36 Total)
 
 #### Basic Components
 
@@ -174,13 +175,18 @@ fn app() -> Html {
 #### Overlay Components
 
 - ✅ **Modal** - Dialog/modal component with size variants and dismiss handling
+- ✅ **Popover** - Popover overlay with positioning and dismissible content
+- ✅ **Drawer** - Side drawer panel that slides in from the edge
+
+#### Notification Components
+
+- ✅ **Flashbar** - Notification message container that displays multiple flash messages
 
 ### Planned
 
 - ⏳ **Table** - Data table with sorting and filtering
-- ⏳ **Flashbar** - Notification message container
-- ⏳ **Popover** - Popover/tooltip overlay
-- ⏳ **Drawer** - Side drawer panel
+- ⏳ **Cards** - Card grid with selection
+- ⏳ **PropertyFilter** - Advanced filtering component
 - ⏳ More components coming...
 
 ## Design Tokens

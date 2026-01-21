@@ -25,8 +25,10 @@ pub mod container;
 pub mod content_layout;
 pub mod date_picker;
 pub mod date_range_picker;
+pub mod drawer;
 pub mod expandable_section;
 pub mod file_upload;
+pub mod flashbar;
 pub mod form_field;
 pub mod header;
 pub mod icon;
@@ -36,6 +38,7 @@ pub mod link;
 pub mod modal;
 pub mod multiselect;
 pub mod pagination;
+pub mod popover;
 pub mod radio_group;
 pub mod select;
 pub mod side_navigation;
@@ -72,12 +75,16 @@ pub use date_range_picker::{
     DateRange, DateRangePicker, DateRangePickerChangeDetail, DateRangePickerProps,
     RangeSelectorMode, RelativeOption, TimeUnit,
 };
+pub use drawer::{Drawer, DrawerDismissDetail, DrawerProps, DrawerSize};
 pub use expandable_section::{
     ExpandableSection, ExpandableSectionChangeDetail, ExpandableSectionProps,
     ExpandableSectionVariant,
 };
 pub use file_upload::{
     FileUpload, FileUploadChangeDetail, FileUploadFile, FileUploadI18nStrings, FileUploadProps,
+};
+pub use flashbar::{
+    Flashbar, FlashbarDismissDetail, FlashbarItem, FlashbarProps, FlashbarType,
 };
 pub use form_field::{FormField, FormFieldProps};
 pub use header::{Header, HeaderProps, HeaderVariant};
@@ -93,6 +100,7 @@ pub use pagination::{
     Pagination, PaginationChangeDetail, PaginationI18nStrings, PaginationPageClickDetail,
     PaginationProps,
 };
+pub use popover::{Popover, PopoverDismissDetail, PopoverPosition, PopoverProps, PopoverSize};
 pub use radio_group::{
     RadioGroup, RadioGroupChangeDetail, RadioGroupDirection, RadioGroupItem, RadioGroupProps,
 };
