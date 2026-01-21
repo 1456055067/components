@@ -266,7 +266,8 @@ pub fn button(props: &ButtonProps) -> Html {
     let external_icon_label = props
         .i18n_strings
         .as_ref()
-        .and_then(|i18n| i18n.get("externalIconAriaLabel")).cloned()
+        .and_then(|i18n| i18n.get("externalIconAriaLabel"))
+        .cloned()
         .unwrap_or_else(|| "(opens in a new tab)".to_string());
 
     // Build button content

@@ -16,8 +16,7 @@ use yew::prelude::*;
 /// Drawer size variants
 ///
 /// Determines the width of the drawer panel.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum DrawerSize {
     /// Small drawer (290px)
     Small,
@@ -174,19 +173,21 @@ pub fn drawer(props: &DrawerProps) -> Html {
     use_effect_with(props.visible, |visible| {
         if *visible
             && let Some(window) = web_sys::window()
-                && let Some(document) = window.document()
-                    && let Some(body) = document.body() {
-                        // HtmlElement inherits from Element which has set_attribute
-                        let _ = body.set_attribute("style", "overflow: hidden");
-                    }
+            && let Some(document) = window.document()
+            && let Some(body) = document.body()
+        {
+            // HtmlElement inherits from Element which has set_attribute
+            let _ = body.set_attribute("style", "overflow: hidden");
+        }
 
         // Cleanup: restore body scroll
         move || {
             if let Some(window) = web_sys::window()
                 && let Some(document) = window.document()
-                    && let Some(body) = document.body() {
-                        let _ = body.remove_attribute("style");
-                    }
+                && let Some(body) = document.body()
+            {
+                let _ = body.remove_attribute("style");
+            }
         }
     });
 
@@ -421,11 +422,7 @@ mod tests {
 
     #[test]
     fn test_all_drawer_sizes() {
-        let sizes = vec![
-            DrawerSize::Small,
-            DrawerSize::Medium,
-            DrawerSize::Large,
-        ];
+        let sizes = vec![DrawerSize::Small, DrawerSize::Medium, DrawerSize::Large];
 
         for size in sizes {
             assert!(!size.as_str().is_empty());

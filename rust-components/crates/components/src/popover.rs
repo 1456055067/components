@@ -17,8 +17,7 @@ use yew::prelude::*;
 /// Popover size variants
 ///
 /// Determines the width of the popover content container.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum PopoverSize {
     /// Small popover (200px)
     Small,
@@ -43,8 +42,7 @@ impl PopoverSize {
 /// Popover position variants
 ///
 /// Determines the preferred position of the popover relative to its trigger.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum PopoverPosition {
     /// Position above the trigger
     #[default]
@@ -252,36 +250,41 @@ pub fn popover(props: &PopoverProps) -> Html {
         let dismissible = props.dismissible;
         let popover_ref = popover_ref.clone();
 
-        use_effect_with((*visible, dismissible), move |(is_visible, is_dismissible)| {
-            let listener = if *is_visible && *is_dismissible {
-                let document = web_sys::window()
-                    .and_then(|w| w.document())
-                    .expect("Should have document");
+        use_effect_with(
+            (*visible, dismissible),
+            move |(is_visible, is_dismissible)| {
+                let listener = if *is_visible && *is_dismissible {
+                    let document = web_sys::window()
+                        .and_then(|w| w.document())
+                        .expect("Should have document");
 
-                let popover_ref = popover_ref.clone();
-                let dismiss = dismiss.clone();
+                    let popover_ref = popover_ref.clone();
+                    let dismiss = dismiss.clone();
 
-                Some(EventListener::new(&document, "mousedown", move |event| {
-                    let mouse_event = event.dyn_ref::<MouseEvent>().expect("Should be MouseEvent");
+                    Some(EventListener::new(&document, "mousedown", move |event| {
+                        let mouse_event =
+                            event.dyn_ref::<MouseEvent>().expect("Should be MouseEvent");
 
-                    if let Some(popover_element) = popover_ref.cast::<Element>()
-                        && let Some(target) = mouse_event.target()
-                        && let Ok(target_element) = target.dyn_into::<Element>() {
-                        // Check if click is outside popover
-                        if !popover_element.contains(Some(&target_element)) {
-                            dismiss.emit(DismissReason::Overlay);
+                        if let Some(popover_element) = popover_ref.cast::<Element>()
+                            && let Some(target) = mouse_event.target()
+                            && let Ok(target_element) = target.dyn_into::<Element>()
+                        {
+                            // Check if click is outside popover
+                            if !popover_element.contains(Some(&target_element)) {
+                                dismiss.emit(DismissReason::Overlay);
+                            }
                         }
-                    }
-                }))
-            } else {
-                None
-            };
+                    }))
+                } else {
+                    None
+                };
 
-            // Return cleanup function
-            move || {
-                drop(listener);
-            }
-        });
+                // Return cleanup function
+                move || {
+                    drop(listener);
+                }
+            },
+        );
     }
 
     // Build CSS classes
@@ -291,23 +294,27 @@ pub fn popover(props: &PopoverProps) -> Html {
 
     let trigger_classes = ClassBuilder::new()
         .add("awsui-popover-trigger")
-        .add_option(props.trigger_type.as_ref().map(|t| format!("awsui-popover-trigger-{}", t)))
+        .add_option(
+            props
+                .trigger_type
+                .as_ref()
+                .map(|t| format!("awsui-popover-trigger-{}", t)),
+        )
         .build();
 
     let container_classes = ClassBuilder::new()
         .add("awsui-popover-container")
         .add(format!("awsui-popover-size-{}", props.size.as_str()))
-        .add(format!("awsui-popover-position-{}", props.position.as_str()))
+        .add(format!(
+            "awsui-popover-position-{}",
+            props.position.as_str()
+        ))
         .add_if(props.fixed, "awsui-popover-fixed")
         .build();
 
-    let header_classes = ClassBuilder::new()
-        .add("awsui-popover-header")
-        .build();
+    let header_classes = ClassBuilder::new().add("awsui-popover-header").build();
 
-    let content_classes = ClassBuilder::new()
-        .add("awsui-popover-content")
-        .build();
+    let content_classes = ClassBuilder::new().add("awsui-popover-content").build();
 
     let dismiss_button_classes = ClassBuilder::new()
         .add("awsui-popover-dismiss-button")
@@ -497,11 +504,7 @@ mod tests {
 
     #[test]
     fn test_all_popover_sizes() {
-        let sizes = vec![
-            PopoverSize::Small,
-            PopoverSize::Medium,
-            PopoverSize::Large,
-        ];
+        let sizes = vec![PopoverSize::Small, PopoverSize::Medium, PopoverSize::Large];
 
         for size in sizes {
             assert!(!size.as_str().is_empty());

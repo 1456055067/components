@@ -401,9 +401,10 @@ fn init_expanded_state(
 fn contains_active_href(items: &[SideNavigationItem], href: &str) -> bool {
     items.iter().any(|item| {
         if let Some(ref item_href) = item.href
-            && item_href == href {
-                return true;
-            }
+            && item_href == href
+        {
+            return true;
+        }
         if !item.items.is_empty() {
             return contains_active_href(&item.items, href);
         }
@@ -563,14 +564,15 @@ fn render_link_item(
                     e.prevent_default();
                 }
                 if let Some(ref callback) = on_follow
-                    && let Some(ref href) = item.href {
-                        callback.emit(CustomEvent::new(FollowDetail {
-                            href: href.clone(),
-                            external: item.external,
-                            text: item.text.clone(),
-                            item_type: SideNavigationItemType::Link,
-                        }));
-                    }
+                    && let Some(ref href) = item.href
+                {
+                    callback.emit(CustomEvent::new(FollowDetail {
+                        href: href.clone(),
+                        external: item.external,
+                        text: item.text.clone(),
+                        item_type: SideNavigationItemType::Link,
+                    }));
+                }
             }
         })
     };
@@ -750,14 +752,15 @@ fn render_expandable_group_item(
             if e.button() == 0 && !e.ctrl_key() && !e.shift_key() && !e.alt_key() && !e.meta_key() {
                 e.prevent_default();
                 if let Some(ref callback) = on_follow
-                    && let Some(ref href) = item.href {
-                        callback.emit(CustomEvent::new(FollowDetail {
-                            href: href.clone(),
-                            external: false,
-                            text: item.text.clone(),
-                            item_type: SideNavigationItemType::ExpandableLinkGroup,
-                        }));
-                    }
+                    && let Some(ref href) = item.href
+                {
+                    callback.emit(CustomEvent::new(FollowDetail {
+                        href: href.clone(),
+                        external: false,
+                        text: item.text.clone(),
+                        item_type: SideNavigationItemType::ExpandableLinkGroup,
+                    }));
+                }
             }
         })
     };

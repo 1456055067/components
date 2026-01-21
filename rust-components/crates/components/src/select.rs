@@ -242,11 +242,12 @@ pub fn select(props: &SelectProps) -> Html {
             is_open.set(false);
 
             if !option.disabled
-                && let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(SelectChangeDetail {
-                        selected_option: option,
-                    }));
-                }
+                && let Some(callback) = &on_change
+            {
+                callback.emit(CustomEvent::new_non_cancelable(SelectChangeDetail {
+                    selected_option: option,
+                }));
+            }
         })
     };
 
@@ -333,16 +334,17 @@ pub fn select(props: &SelectProps) -> Html {
                     if *is_open {
                         // Select highlighted option
                         if let Some(option) = options.get(*highlighted_index)
-                            && !option.disabled {
-                                if let Some(callback) = &on_change {
-                                    callback.emit(CustomEvent::new_non_cancelable(
-                                        SelectChangeDetail {
-                                            selected_option: option.clone(),
-                                        },
-                                    ));
-                                }
-                                is_open.set(false);
+                            && !option.disabled
+                        {
+                            if let Some(callback) = &on_change {
+                                callback.emit(CustomEvent::new_non_cancelable(
+                                    SelectChangeDetail {
+                                        selected_option: option.clone(),
+                                    },
+                                ));
                             }
+                            is_open.set(false);
+                        }
                     } else {
                         is_open.set(true);
                     }
@@ -391,9 +393,9 @@ pub fn select(props: &SelectProps) -> Html {
                 && let Some(index) = options
                     .iter()
                     .position(|opt| opt.value == selected_opt.value)
-                {
-                    highlighted_index.set(index);
-                }
+            {
+                highlighted_index.set(index);
+            }
             || ()
         }
     });

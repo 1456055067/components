@@ -9,8 +9,7 @@ use crate::internal::{BaseComponentProps, ClassBuilder};
 use yew::prelude::*;
 
 /// Box HTML tag variants
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum BoxVariant {
     #[default]
     Div,
@@ -28,7 +27,6 @@ pub enum BoxVariant {
     AwsuiKeyLabel,
     AwsuiValueLarge,
 }
-
 
 impl BoxVariant {
     fn as_str(&self) -> &'static str {

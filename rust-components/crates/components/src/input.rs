@@ -12,8 +12,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 /// Input type variants
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum InputType {
     /// Standard text input
     #[default]
@@ -29,7 +28,6 @@ pub enum InputType {
     /// URL input
     Url,
 }
-
 
 impl InputType {
     /// Returns the HTML input type attribute value

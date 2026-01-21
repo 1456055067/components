@@ -14,8 +14,7 @@ use yew::prelude::*;
 /// Modal size variants
 ///
 /// Determines the width of the modal dialog.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ModalSize {
     /// Small modal (280px)
     Small,
@@ -27,7 +26,6 @@ pub enum ModalSize {
     /// Maximum modal (variable width up to design limit)
     Max,
 }
-
 
 impl ModalSize {
     /// Returns the CSS class name suffix for this size
@@ -202,19 +200,21 @@ pub fn modal(props: &ModalProps) -> Html {
     use_effect_with(props.visible, |visible| {
         if *visible
             && let Some(window) = web_sys::window()
-                && let Some(document) = window.document()
-                    && let Some(body) = document.body() {
-                        // HtmlElement inherits from Element which has set_attribute
-                        let _ = body.set_attribute("style", "overflow: hidden");
-                    }
+            && let Some(document) = window.document()
+            && let Some(body) = document.body()
+        {
+            // HtmlElement inherits from Element which has set_attribute
+            let _ = body.set_attribute("style", "overflow: hidden");
+        }
 
         // Cleanup: restore body scroll
         move || {
             if let Some(window) = web_sys::window()
                 && let Some(document) = window.document()
-                    && let Some(body) = document.body() {
-                        let _ = body.remove_attribute("style");
-                    }
+                && let Some(body) = document.body()
+            {
+                let _ = body.remove_attribute("style");
+            }
         }
     });
 

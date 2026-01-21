@@ -13,8 +13,7 @@ use yew::prelude::*;
 /// Column layout visual variants
 ///
 /// Determines the spacing and layout behavior of the column grid.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ColumnVariant {
     /// Default layout for general content
     #[default]
@@ -22,7 +21,6 @@ pub enum ColumnVariant {
     /// Text-focused layout with equal width columns optimized for readability
     TextGrid,
 }
-
 
 impl ColumnVariant {
     /// Returns the CSS class name suffix for this variant
@@ -37,8 +35,7 @@ impl ColumnVariant {
 /// Border configuration for column layout
 ///
 /// Controls dividers between rows and columns.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum BordersType {
     /// No borders
     #[default]
@@ -50,7 +47,6 @@ pub enum BordersType {
     /// Both vertical and horizontal borders
     All,
 }
-
 
 impl BordersType {
     /// Returns the CSS class name suffix for this border type

@@ -14,8 +14,7 @@ use yew::prelude::*;
 /// Visual variants for the expandable section
 ///
 /// Determines the visual style and spacing of the expandable section based on context.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ExpandableSectionVariant {
     /// Default variant for general use
     #[default]
@@ -27,7 +26,6 @@ pub enum ExpandableSectionVariant {
     /// Navigation variant for use in navigation panels
     Navigation,
 }
-
 
 impl ExpandableSectionVariant {
     /// Returns the CSS class name suffix for this variant

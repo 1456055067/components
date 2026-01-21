@@ -19,6 +19,8 @@ pub mod badge;
 pub mod box_component;
 pub mod breadcrumbs;
 pub mod button;
+pub mod button_dropdown;
+pub mod cards;
 pub mod checkbox;
 pub mod column_layout;
 pub mod container;
@@ -39,6 +41,7 @@ pub mod modal;
 pub mod multiselect;
 pub mod pagination;
 pub mod popover;
+pub mod progress_bar;
 pub mod radio_group;
 pub mod select;
 pub mod side_navigation;
@@ -47,6 +50,7 @@ pub mod status_indicator;
 pub mod table;
 pub mod tabs;
 pub mod textarea;
+pub mod tiles;
 pub mod toggle;
 pub mod top_navigation;
 
@@ -67,6 +71,11 @@ pub use badge::{Badge, BadgeColor, BadgeProps};
 pub use box_component::{Box, BoxProps, BoxVariant, SpacingSize};
 pub use breadcrumbs::{BreadcrumbFollowEvent, BreadcrumbItem, Breadcrumbs, BreadcrumbsProps};
 pub use button::{Button, ButtonProps, ButtonVariant, FormAction, IconAlign};
+pub use button_dropdown::{
+    ButtonDropdown, ButtonDropdownItem, ButtonDropdownItemClickDetail, ButtonDropdownItemGroup,
+    ButtonDropdownProps,
+};
+pub use cards::{CardDefinition, Cards, CardsProps, CardsSelectionDetail, CardsSelectionType};
 pub use checkbox::{Checkbox, CheckboxChangeDetail, CheckboxProps};
 pub use column_layout::{BordersType, ColumnLayout, ColumnLayoutProps, ColumnVariant};
 pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPosition};
@@ -84,9 +93,7 @@ pub use expandable_section::{
 pub use file_upload::{
     FileUpload, FileUploadChangeDetail, FileUploadFile, FileUploadI18nStrings, FileUploadProps,
 };
-pub use flashbar::{
-    Flashbar, FlashbarDismissDetail, FlashbarItem, FlashbarProps, FlashbarType,
-};
+pub use flashbar::{Flashbar, FlashbarDismissDetail, FlashbarItem, FlashbarProps, FlashbarType};
 pub use form_field::{FormField, FormFieldProps};
 pub use header::{Header, HeaderProps, HeaderVariant};
 pub use icon::{Icon, IconProps, IconSize, IconVariant};
@@ -102,6 +109,7 @@ pub use pagination::{
     PaginationProps,
 };
 pub use popover::{Popover, PopoverDismissDetail, PopoverPosition, PopoverProps, PopoverSize};
+pub use progress_bar::{ProgressBar, ProgressBarProps, ProgressBarStatus, ProgressBarVariant};
 pub use radio_group::{
     RadioGroup, RadioGroupChangeDetail, RadioGroupDirection, RadioGroupItem, RadioGroupProps,
 };
@@ -121,6 +129,7 @@ pub use table::{
 };
 pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
 pub use textarea::{Textarea, TextareaChangeDetail, TextareaProps};
+pub use tiles::{TileItem, Tiles, TilesChangeDetail, TilesProps};
 pub use toggle::{Toggle, ToggleChangeDetail, ToggleProps};
 pub use top_navigation::{
     IdentityFollowDetail, TopNavigation, TopNavigationI18nStrings, TopNavigationIdentity,

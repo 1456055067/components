@@ -14,8 +14,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 /// Filtering type for autosuggest options
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum FilteringType {
     /// No filtering, show all options
     None,
@@ -23,7 +22,6 @@ pub enum FilteringType {
     #[default]
     Auto,
 }
-
 
 /// A single option in the autosuggest dropdown
 #[derive(Clone, PartialEq, Debug)]
@@ -410,14 +408,15 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                             let option_idx = if show_entered_text { idx - 1 } else { idx };
                             if let Some(option) = filtered_options.get(option_idx)
                                 && !option.disabled
-                                    && let Some(callback) = &on_select {
-                                        callback.emit(CustomEvent::new_non_cancelable(
-                                            AutosuggestSelectDetail {
-                                                value: option.value.clone(),
-                                                selected_option: Some(option.clone()),
-                                            },
-                                        ));
-                                    }
+                                && let Some(callback) = &on_select
+                            {
+                                callback.emit(CustomEvent::new_non_cancelable(
+                                    AutosuggestSelectDetail {
+                                        value: option.value.clone(),
+                                        selected_option: Some(option.clone()),
+                                    },
+                                ));
+                            }
                         }
 
                         is_open.set(false);

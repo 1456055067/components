@@ -13,8 +13,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 /// Direction for radio button layout
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum RadioGroupDirection {
     /// Stack radio buttons vertically (default)
     #[default]
@@ -22,7 +21,6 @@ pub enum RadioGroupDirection {
     /// Arrange radio buttons horizontally
     Horizontal,
 }
-
 
 /// A single radio button item in the group
 #[derive(Clone, PartialEq)]

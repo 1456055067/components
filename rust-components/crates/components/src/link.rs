@@ -15,8 +15,7 @@ use web_sys::{KeyboardEvent, MouseEvent};
 use yew::prelude::*;
 
 /// Link variant styles
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum LinkVariant {
     /// Primary variant - bold styling for sufficient contrast (default in some contexts)
     Primary,
@@ -28,7 +27,6 @@ pub enum LinkVariant {
     /// Value large variant - for displaying large values as links
     ValueLarge,
 }
-
 
 impl LinkVariant {
     pub fn as_str(&self) -> &'static str {
@@ -42,8 +40,7 @@ impl LinkVariant {
 }
 
 /// Font size options for links
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum LinkFontSize {
     BodyS,
     #[default]
@@ -56,7 +53,6 @@ pub enum LinkFontSize {
     DisplayL,
     Inherit,
 }
-
 
 impl LinkFontSize {
     pub fn as_str(&self) -> &'static str {
@@ -75,8 +71,7 @@ impl LinkFontSize {
 }
 
 /// Color options for links
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum LinkColor {
     /// Normal color (default)
     #[default]
@@ -84,7 +79,6 @@ pub enum LinkColor {
     /// Inverted color (for use in Flashbars and dark backgrounds)
     Inverted,
 }
-
 
 impl LinkColor {
     pub fn as_str(&self) -> &'static str {
@@ -459,20 +453,21 @@ fn create_click_handler(
 
         // Fire follow event for plain left clicks (or all clicks if button)
         if (is_button || is_plain_left_click(&e))
-            && let Some(ref cb) = on_follow {
-                let follow_detail = FollowDetail {
-                    href: href.clone(),
-                    external,
-                    target: target.clone(),
-                };
-                let event = FollowEvent::new(follow_detail);
-                cb.emit(event.clone());
+            && let Some(ref cb) = on_follow
+        {
+            let follow_detail = FollowDetail {
+                href: href.clone(),
+                external,
+                target: target.clone(),
+            };
+            let event = FollowEvent::new(follow_detail);
+            cb.emit(event.clone());
 
-                // Prevent default navigation if prevented by callback
-                if event.default_prevented {
-                    e.prevent_default();
-                }
+            // Prevent default navigation if prevented by callback
+            if event.default_prevented {
+                e.prevent_default();
             }
+        }
     })
 }
 

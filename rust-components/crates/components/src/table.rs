@@ -696,10 +696,10 @@ mod tests {
 
     #[test]
     fn test_table_column_equality() {
-        let col1 = TableColumn::new("id", "ID", |item: &TestItem| html! { {item.id} })
-            .with_sortable(true);
-        let col2 = TableColumn::new("id", "ID", |item: &TestItem| html! { {item.id} })
-            .with_sortable(true);
+        let col1 =
+            TableColumn::new("id", "ID", |item: &TestItem| html! { {item.id} }).with_sortable(true);
+        let col2 =
+            TableColumn::new("id", "ID", |item: &TestItem| html! { {item.id} }).with_sortable(true);
 
         assert_eq!(col1, col2);
     }

@@ -12,8 +12,7 @@ use crate::spinner::{Spinner, SpinnerSize};
 use yew::prelude::*;
 
 /// Status indicator type variants
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum StatusIndicatorType {
     /// Success status
     Success,
@@ -33,7 +32,6 @@ pub enum StatusIndicatorType {
     /// Loading status with spinner
     Loading,
 }
-
 
 impl StatusIndicatorType {
     /// Returns the CSS class name for this status type

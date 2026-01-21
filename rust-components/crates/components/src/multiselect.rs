@@ -80,8 +80,7 @@ impl MultiselectOption {
 }
 
 /// Filtering behavior for the multiselect
-#[derive(Clone, PartialEq, Debug)]
-#[derive(Default)]
+#[derive(Clone, PartialEq, Debug, Default)]
 pub enum FilteringType {
     /// No filtering
     #[default]
@@ -91,7 +90,6 @@ pub enum FilteringType {
     /// Manual filtering (user provides filtered options)
     Manual,
 }
-
 
 /// Event detail for multiselect change events
 #[derive(Clone, PartialEq)]
@@ -452,30 +450,31 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                     if *is_open && !filtered_options.is_empty() {
                         // Toggle highlighted option
                         if let Some(option) = filtered_options.get(*highlighted_index)
-                            && !option.disabled {
-                                let mut new_selection = selected_options.clone();
+                            && !option.disabled
+                        {
+                            let mut new_selection = selected_options.clone();
 
-                                if let Some(pos) = new_selection
-                                    .iter()
-                                    .position(|opt| opt.value == option.value)
-                                {
-                                    new_selection.remove(pos);
-                                } else {
-                                    new_selection.push(option.clone());
-                                }
-
-                                if let Some(callback) = &on_change {
-                                    callback.emit(CustomEvent::new_non_cancelable(
-                                        MultiselectChangeDetail {
-                                            selected_options: new_selection,
-                                        },
-                                    ));
-                                }
-
-                                if !keep_open {
-                                    is_open.set(false);
-                                }
+                            if let Some(pos) = new_selection
+                                .iter()
+                                .position(|opt| opt.value == option.value)
+                            {
+                                new_selection.remove(pos);
+                            } else {
+                                new_selection.push(option.clone());
                             }
+
+                            if let Some(callback) = &on_change {
+                                callback.emit(CustomEvent::new_non_cancelable(
+                                    MultiselectChangeDetail {
+                                        selected_options: new_selection,
+                                    },
+                                ));
+                            }
+
+                            if !keep_open {
+                                is_open.set(false);
+                            }
+                        }
                     } else {
                         is_open.set(true);
                     }

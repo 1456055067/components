@@ -289,12 +289,13 @@ pub fn tabs(props: &TabsProps) -> Html {
         Callback::from(move |tab_id: String| {
             if let Some(tab) = tabs.iter().find(|t| t.id == tab_id)
                 && !tab.disabled
-                    && let Some(ref callback) = on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(TabChangeDetail {
-                            active_tab_id: tab_id,
-                            active_tab_href: tab.href.clone(),
-                        }));
-                    }
+                && let Some(ref callback) = on_change
+            {
+                callback.emit(CustomEvent::new_non_cancelable(TabChangeDetail {
+                    active_tab_id: tab_id,
+                    active_tab_href: tab.href.clone(),
+                }));
+            }
         })
     };
 

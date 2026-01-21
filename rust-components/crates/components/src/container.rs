@@ -13,8 +13,7 @@ use yew::prelude::*;
 /// Container visual variants
 ///
 /// Determines the visual style and spacing of the container based on its context.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ContainerVariant {
     /// Default variant for standalone use
     #[default]
@@ -22,7 +21,6 @@ pub enum ContainerVariant {
     /// Stacked variant for use adjacent to other stacked containers
     Stacked,
 }
-
 
 impl ContainerVariant {
     /// Returns the CSS class name suffix for this variant
@@ -35,8 +33,7 @@ impl ContainerVariant {
 }
 
 /// Media element position within the container
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum MediaPosition {
     /// Media positioned at the top of the container
     #[default]
@@ -44,7 +41,6 @@ pub enum MediaPosition {
     /// Media positioned on the side of the container
     Side,
 }
-
 
 impl MediaPosition {
     /// Returns the CSS class name suffix for this position

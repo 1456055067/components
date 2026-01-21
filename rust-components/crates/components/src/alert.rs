@@ -12,8 +12,7 @@ use crate::internal::{
 use yew::prelude::*;
 
 /// Alert type variants
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum AlertType {
     /// Informational message (default)
     #[default]
@@ -25,7 +24,6 @@ pub enum AlertType {
     /// Error or critical message
     Error,
 }
-
 
 impl AlertType {
     /// Returns the CSS class name for this alert type

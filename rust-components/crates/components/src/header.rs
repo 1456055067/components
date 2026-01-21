@@ -12,8 +12,7 @@ use crate::internal::{
 use yew::prelude::*;
 
 /// Header variant types corresponding to HTML heading levels
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum HeaderVariant {
     /// Page-level header (h1 tag)
     H1,
@@ -23,7 +22,6 @@ pub enum HeaderVariant {
     /// Section-level header (h3 tag)
     H3,
 }
-
 
 impl HeaderVariant {
     /// Returns the CSS class suffix for this variant

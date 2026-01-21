@@ -287,15 +287,16 @@ fn render_breadcrumb_item(
 
             // Fire follow event for plain left clicks without modifiers
             if is_plain_left_click(&e)
-                && let Some(ref cb) = on_follow_cb {
-                    let event = BreadcrumbFollowEvent::new(detail);
-                    cb.emit(event.clone());
+                && let Some(ref cb) = on_follow_cb
+            {
+                let event = BreadcrumbFollowEvent::new(detail);
+                cb.emit(event.clone());
 
-                    // Prevent default navigation if prevented by callback
-                    if event.default_prevented {
-                        e.prevent_default();
-                    }
+                // Prevent default navigation if prevented by callback
+                if event.default_prevented {
+                    e.prevent_default();
                 }
+            }
         }))
     } else {
         None

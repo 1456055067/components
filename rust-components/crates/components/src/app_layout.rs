@@ -11,8 +11,7 @@ use crate::internal::{BaseComponentProps, ClassBuilder, ComponentMetadata, Custo
 use yew::prelude::*;
 
 /// Content type determines the layout and spacing behavior
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ContentType {
     /// Default content type with standard padding
     #[default]
@@ -29,7 +28,6 @@ pub enum ContentType {
     Cards,
 }
 
-
 impl ContentType {
     /// Returns the CSS class suffix for this content type
     pub fn as_str(&self) -> &'static str {
@@ -45,8 +43,7 @@ impl ContentType {
 }
 
 /// Split panel position configuration
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum SplitPanelPosition {
     /// Split panel positioned at the bottom of the content area
     #[default]
@@ -54,7 +51,6 @@ pub enum SplitPanelPosition {
     /// Split panel positioned on the side of the content area
     Side,
 }
-
 
 impl SplitPanelPosition {
     /// Returns the CSS class suffix for this position
@@ -67,8 +63,7 @@ impl SplitPanelPosition {
 }
 
 /// Split panel preferences configuration
-#[derive(Clone, PartialEq)]
-#[derive(Default)]
+#[derive(Clone, PartialEq, Default)]
 pub struct SplitPanelPreferences {
     /// Position of the split panel (bottom or side)
     pub position: SplitPanelPosition,
@@ -76,7 +71,6 @@ pub struct SplitPanelPreferences {
     /// Size of the split panel in pixels
     pub size: Option<u32>,
 }
-
 
 impl SplitPanelPreferences {
     /// Creates new split panel preferences with default values

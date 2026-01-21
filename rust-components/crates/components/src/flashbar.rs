@@ -13,8 +13,7 @@ use yew::prelude::*;
 /// Flash message type variants
 ///
 /// Determines the visual styling and icon for a flash item.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum FlashbarType {
     /// Informational message (default)
     #[default]
@@ -385,8 +384,7 @@ mod tests {
 
     #[test]
     fn test_flashbar_item_builder_with_id() {
-        let item = FlashbarItem::new(FlashbarType::Info, html! { "Test" })
-            .with_id("test-id");
+        let item = FlashbarItem::new(FlashbarType::Info, html! { "Test" }).with_id("test-id");
         assert_eq!(item.id, Some("test-id".to_string()));
     }
 
@@ -399,15 +397,13 @@ mod tests {
 
     #[test]
     fn test_flashbar_item_builder_with_dismissible() {
-        let item = FlashbarItem::new(FlashbarType::Error, html! { "Test" })
-            .with_dismissible(true);
+        let item = FlashbarItem::new(FlashbarType::Error, html! { "Test" }).with_dismissible(true);
         assert_eq!(item.dismissible, true);
     }
 
     #[test]
     fn test_flashbar_item_builder_with_loading() {
-        let item = FlashbarItem::new(FlashbarType::Info, html! { "Test" })
-            .with_loading(true);
+        let item = FlashbarItem::new(FlashbarType::Info, html! { "Test" }).with_loading(true);
         assert_eq!(item.loading, true);
     }
 

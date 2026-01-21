@@ -21,7 +21,6 @@ pub enum LabelIdentifier {
     Root,
 }
 
-
 impl From<String> for LabelIdentifier {
     fn from(s: String) -> Self {
         LabelIdentifier::String(s)

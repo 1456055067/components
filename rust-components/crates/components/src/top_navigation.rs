@@ -620,18 +620,23 @@ fn render_identity(identity: &TopNavigationIdentity) -> Html {
 
     let on_click = Callback::from(move |e: MouseEvent| {
         // Only fire on_follow for plain left clicks
-        if e.button() == 0 && !e.ctrl_key() && !e.shift_key() && !e.alt_key() && !e.meta_key()
-            && let Some(ref callback) = identity_clone.on_follow {
-                let detail = IdentityFollowDetail {
-                    href: identity_clone.href.clone(),
-                };
-                let event = CustomEvent::new(detail);
-                callback.emit(event.clone());
+        if e.button() == 0
+            && !e.ctrl_key()
+            && !e.shift_key()
+            && !e.alt_key()
+            && !e.meta_key()
+            && let Some(ref callback) = identity_clone.on_follow
+        {
+            let detail = IdentityFollowDetail {
+                href: identity_clone.href.clone(),
+            };
+            let event = CustomEvent::new(detail);
+            callback.emit(event.clone());
 
-                if event.default_prevented {
-                    e.prevent_default();
-                }
+            if event.default_prevented {
+                e.prevent_default();
             }
+        }
     });
 
     html! {
@@ -666,10 +671,7 @@ fn render_utilities(utilities: &[TopNavigationUtility]) -> Html {
         return html! {};
     }
 
-    let utility_items = utilities
-        .iter()
-        .map(render_utility)
-        .collect::<Html>();
+    let utility_items = utilities.iter().map(render_utility).collect::<Html>();
 
     html! {
         <div class="awsui-top-navigation-utilities">
@@ -729,22 +731,27 @@ fn render_button_utility(utility: &TopNavigationUtility, utility_classes: &str) 
         }
 
         // Fire follow callback for plain left clicks with href
-        if e.button() == 0 && !e.ctrl_key() && !e.shift_key() && !e.alt_key() && !e.meta_key()
+        if e.button() == 0
+            && !e.ctrl_key()
+            && !e.shift_key()
+            && !e.alt_key()
+            && !e.meta_key()
             && let Some(ref href) = utility_clone.href
-                && let Some(ref callback) = utility_clone.on_follow {
-                    let follow_detail = UtilityFollowDetail {
-                        id: utility_clone.id.clone(),
-                        href: href.clone(),
-                        external: utility_clone.external,
-                        target: utility_clone.target.clone(),
-                    };
-                    let event = CustomEvent::new(follow_detail);
-                    callback.emit(event.clone());
+            && let Some(ref callback) = utility_clone.on_follow
+        {
+            let follow_detail = UtilityFollowDetail {
+                id: utility_clone.id.clone(),
+                href: href.clone(),
+                external: utility_clone.external,
+                target: utility_clone.target.clone(),
+            };
+            let event = CustomEvent::new(follow_detail);
+            callback.emit(event.clone());
 
-                    if event.default_prevented {
-                        e.prevent_default();
-                    }
-                }
+            if event.default_prevented {
+                e.prevent_default();
+            }
+        }
     });
 
     let variant = utility.variant.unwrap_or_default();

@@ -332,19 +332,21 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
             if let Some(date) = parse_date_display(&input_text) {
                 let new_value = date.format();
                 if new_value != value
-                    && let Some(callback) = &on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
-                            value: new_value,
-                        }));
-                    }
+                    && let Some(callback) = &on_change
+                {
+                    callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                        value: new_value,
+                    }));
+                }
             } else if input_text.is_empty() {
                 // Clear the value
                 if !value.is_empty()
-                    && let Some(callback) = &on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
-                            value: String::new(),
-                        }));
-                    }
+                    && let Some(callback) = &on_change
+                {
+                    callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                        value: String::new(),
+                    }));
+                }
             } else {
                 // Invalid input - revert to current value
                 if let Some(date) = parse_date(&value) {
@@ -394,11 +396,12 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         Callback::from(move |day: u32| {
             let (year, month) = *displayed_month;
             if let Some(date) = DateValue::new(year, month, day)
-                && let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
-                        value: date.format(),
-                    }));
-                }
+                && let Some(callback) = &on_change
+            {
+                callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                    value: date.format(),
+                }));
+            }
             is_calendar_open.set(false);
         })
     };
@@ -415,7 +418,6 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
             } else {
                 displayed_month.set((year, month - 1));
             };
-            
         })
     };
 
@@ -431,7 +433,6 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
             } else {
                 displayed_month.set((year, month + 1));
             };
-            
         })
     };
 
@@ -500,13 +501,12 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
                 "Enter" | " " => {
                     e.prevent_default();
                     if let Some(date) = DateValue::new(year, month, current_day)
-                        && let Some(callback) = &on_change {
-                            callback.emit(CustomEvent::new_non_cancelable(
-                                DatePickerChangeDetail {
-                                    value: date.format(),
-                                },
-                            ));
-                        }
+                        && let Some(callback) = &on_change
+                    {
+                        callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                            value: date.format(),
+                        }));
+                    }
                     is_calendar_open.set(false);
                 }
                 "Escape" => {

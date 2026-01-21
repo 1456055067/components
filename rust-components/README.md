@@ -123,7 +123,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (37 Total)
+### Implemented (41 Total)
 
 #### Basic Components
 
@@ -131,9 +131,11 @@ fn app() -> Html {
 - ✅ **Spinner** - Loading indicator with animation
 - ✅ **Box** - Layout utility for spacing and typography
 - ✅ **Button** - Interactive button with multiple variants
+- ✅ **ButtonDropdown** - Button with dropdown menu for multiple actions
 - ✅ **Alert** - Contextual feedback messages with different severity levels
 - ✅ **Link** - Hyperlink with external icon support
 - ✅ **Icon** - SVG icon component with built-in and custom icon support
+- ✅ **ProgressBar** - Progress indicator with percentage and status variants
 
 #### Form Components
 
@@ -141,6 +143,7 @@ fn app() -> Html {
 - ✅ **Checkbox** - Checkbox input with indeterminate state support
 - ✅ **Toggle** - Toggle switch component (on/off control)
 - ✅ **RadioGroup** - Radio button group with multiple options
+- ✅ **Tiles** - Selectable tile grid for radio-button-style selections
 - ✅ **Select** - Dropdown selection with keyboard navigation
 - ✅ **Textarea** - Multi-line text input with auto-resize
 - ✅ **FormField** - Form field wrapper with label, description, and validation
@@ -172,6 +175,7 @@ fn app() -> Html {
 - ✅ **KeyValuePairs** - Structured key-value pair display
 - ✅ **ExpandableSection** - Collapsible content sections
 - ✅ **Table** - Data table with sorting, filtering, selection, and pagination
+- ✅ **Cards** - Card grid container with selection support
 
 #### Overlay Components
 
@@ -185,7 +189,6 @@ fn app() -> Html {
 
 ### Planned
 
-- ⏳ **Cards** - Card grid with selection
 - ⏳ **PropertyFilter** - Advanced filtering component
 - ⏳ More components coming...
 
