@@ -8,12 +8,11 @@
 //! and the dropdown remains open after selections. Supports disabled states,
 //! validation, descriptions, label tags, and filtering.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// A single option in the multiselect dropdown
 #[derive(Clone, PartialEq, Debug)]
@@ -261,7 +260,11 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
 
     // Filter options based on filtering type and filter text
     let filtered_options = use_memo(
-        (props.options.clone(), (*filter_text).clone(), props.filtering_type.clone()),
+        (
+            props.options.clone(),
+            (*filter_text).clone(),
+            props.filtering_type.clone(),
+        ),
         |(options, filter, filtering_type)| {
             if *filtering_type == FilteringType::Auto && !filter.is_empty() {
                 let filter_lower = filter.to_lowercase();
@@ -269,7 +272,10 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                     .iter()
                     .filter(|opt| {
                         opt.display_text().to_lowercase().contains(&filter_lower)
-                            || opt.description.as_ref().map_or(false, |d| d.to_lowercase().contains(&filter_lower))
+                            || opt
+                                .description
+                                .as_ref()
+                                .map_or(false, |d| d.to_lowercase().contains(&filter_lower))
                     })
                     .cloned()
                     .collect::<Vec<_>>()
@@ -303,7 +309,10 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                 // Toggle selection
                 let mut new_selection = selected_options.clone();
 
-                if let Some(pos) = new_selection.iter().position(|opt| opt.value == option.value) {
+                if let Some(pos) = new_selection
+                    .iter()
+                    .position(|opt| opt.value == option.value)
+                {
                     // Remove if already selected
                     new_selection.remove(pos);
                 } else {
@@ -312,11 +321,9 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                 }
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        MultiselectChangeDetail {
-                            selected_options: new_selection,
-                        }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(MultiselectChangeDetail {
+                        selected_options: new_selection,
+                    }));
                 }
 
                 // Close dropdown if keep_open is false
@@ -335,15 +342,16 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
         Callback::from(move |option_value: String| {
             let mut new_selection = selected_options.clone();
 
-            if let Some(pos) = new_selection.iter().position(|opt| opt.value == option_value) {
+            if let Some(pos) = new_selection
+                .iter()
+                .position(|opt| opt.value == option_value)
+            {
                 new_selection.remove(pos);
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        MultiselectChangeDetail {
-                            selected_options: new_selection,
-                        }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(MultiselectChangeDetail {
+                        selected_options: new_selection,
+                    }));
                 }
             }
         })
@@ -411,7 +419,9 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                         let mut new_index = *highlighted_index;
                         loop {
                             new_index = (new_index + 1) % filtered_options.len();
-                            if new_index == *highlighted_index || !filtered_options[new_index].disabled {
+                            if new_index == *highlighted_index
+                                || !filtered_options[new_index].disabled
+                            {
                                 break;
                             }
                         }
@@ -431,7 +441,9 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                             } else {
                                 new_index - 1
                             };
-                            if new_index == *highlighted_index || !filtered_options[new_index].disabled {
+                            if new_index == *highlighted_index
+                                || !filtered_options[new_index].disabled
+                            {
                                 break;
                             }
                         }
@@ -446,7 +458,10 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                             if !option.disabled {
                                 let mut new_selection = selected_options.clone();
 
-                                if let Some(pos) = new_selection.iter().position(|opt| opt.value == option.value) {
+                                if let Some(pos) = new_selection
+                                    .iter()
+                                    .position(|opt| opt.value == option.value)
+                                {
                                     new_selection.remove(pos);
                                 } else {
                                     new_selection.push(option.clone());
@@ -456,7 +471,7 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                                     callback.emit(CustomEvent::new_non_cancelable(
                                         MultiselectChangeDetail {
                                             selected_options: new_selection,
-                                        }
+                                        },
                                     ));
                                 }
 
@@ -485,7 +500,10 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
         .add_if(props.invalid, "awsui-multiselect-trigger-invalid")
         .add_if(props.warning, "awsui-multiselect-trigger-warning")
         .add_if(*is_open, "awsui-multiselect-trigger-open")
-        .add_if(props.selected_options.is_empty(), "awsui-multiselect-trigger-placeholder");
+        .add_if(
+            props.selected_options.is_empty(),
+            "awsui-multiselect-trigger-placeholder",
+        );
 
     // Build dropdown classes
     let dropdown_classes = ClassBuilder::new()
@@ -561,7 +579,10 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
 
     // Determine what to show in the trigger
     let trigger_content = if props.selected_options.is_empty() {
-        props.placeholder.clone().unwrap_or_else(|| "Choose options".to_string())
+        props
+            .placeholder
+            .clone()
+            .unwrap_or_else(|| "Choose options".to_string())
     } else {
         format!("{} selected", props.selected_options.len())
     };
@@ -728,15 +749,17 @@ mod tests {
 
         assert_eq!(option.value, "us-west-2");
         assert_eq!(option.label, Some("US West (Oregon)".to_string()));
-        assert_eq!(option.description, Some("Northern California region".to_string()));
+        assert_eq!(
+            option.description,
+            Some("Northern California region".to_string())
+        );
         assert_eq!(option.label_tag, Some("Recommended".to_string()));
         assert!(option.disabled);
     }
 
     #[test]
     fn test_multiselect_option_display_text() {
-        let option_with_label = MultiselectOption::new("value")
-            .with_label("Display Label");
+        let option_with_label = MultiselectOption::new("value").with_label("Display Label");
         assert_eq!(option_with_label.display_text(), "Display Label");
 
         let option_without_label = MultiselectOption::new("value");

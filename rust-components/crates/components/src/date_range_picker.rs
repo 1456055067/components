@@ -7,12 +7,11 @@
 //! and relative (preset) date range selection modes. Supports validation, disabled states,
 //! and custom relative options.
 
-use yew::prelude::*;
-use web_sys::HtmlInputElement;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Time unit for relative date ranges
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -362,7 +361,7 @@ pub fn date_range_picker(props: &DateRangePickerProps) -> Html {
 
                     if let Some(callback) = &on_change {
                         callback.emit(CustomEvent::new_non_cancelable(
-                            DateRangePickerChangeDetail { value: new_range }
+                            DateRangePickerChangeDetail { value: new_range },
                         ));
                     }
                 }
@@ -405,7 +404,7 @@ pub fn date_range_picker(props: &DateRangePickerProps) -> Html {
 
                     if let Some(callback) = &on_change {
                         callback.emit(CustomEvent::new_non_cancelable(
-                            DateRangePickerChangeDetail { value: new_range }
+                            DateRangePickerChangeDetail { value: new_range },
                         ));
                     }
                 }
@@ -443,7 +442,7 @@ pub fn date_range_picker(props: &DateRangePickerProps) -> Html {
                 // that relative mode is selected but we're not calculating dates.
                 if let Some(callback) = &on_change {
                     callback.emit(CustomEvent::new_non_cancelable(
-                        DateRangePickerChangeDetail { value: None }
+                        DateRangePickerChangeDetail { value: None },
                     ));
                 }
             }
@@ -451,9 +450,8 @@ pub fn date_range_picker(props: &DateRangePickerProps) -> Html {
     };
 
     // Check if current range is invalid
-    let is_range_invalid = props.value.as_ref()
-        .map(|v| !v.is_valid())
-        .unwrap_or(false) || props.invalid;
+    let is_range_invalid =
+        props.value.as_ref().map(|v| !v.is_valid()).unwrap_or(false) || props.invalid;
 
     // Build root classes
     let root_classes = ClassBuilder::new()
@@ -474,14 +472,20 @@ pub fn date_range_picker(props: &DateRangePickerProps) -> Html {
     };
 
     // Get placeholder text
-    let placeholder_text = props.placeholder.clone()
+    let placeholder_text = props
+        .placeholder
+        .clone()
         .unwrap_or_else(|| "YYYY-MM-DD".to_string());
 
     // Get start and end values
-    let start_value = props.value.as_ref()
+    let start_value = props
+        .value
+        .as_ref()
         .and_then(|v| v.start.clone())
         .unwrap_or_default();
-    let end_value = props.value.as_ref()
+    let end_value = props
+        .value
+        .as_ref()
         .and_then(|v| v.end.clone())
         .unwrap_or_default();
 
@@ -646,7 +650,7 @@ mod tests {
     fn test_date_range_new() {
         let range = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         assert_eq!(range.start, Some("2024-01-01".to_string()));
         assert_eq!(range.end, Some("2024-01-31".to_string()));
@@ -654,8 +658,7 @@ mod tests {
 
     #[test]
     fn test_date_range_builder() {
-        let range = DateRange::with_start("2024-01-01")
-            .set_end("2024-01-31");
+        let range = DateRange::with_start("2024-01-01").set_end("2024-01-31");
         assert_eq!(range.start, Some("2024-01-01".to_string()));
         assert_eq!(range.end, Some("2024-01-31".to_string()));
     }
@@ -664,20 +667,17 @@ mod tests {
     fn test_date_range_is_valid() {
         let valid_range = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         assert!(valid_range.is_valid());
 
         let invalid_range = DateRange::new(
             Some("2024-01-31".to_string()),
-            Some("2024-01-01".to_string())
+            Some("2024-01-01".to_string()),
         );
         assert!(!invalid_range.is_valid());
 
-        let incomplete_range = DateRange::new(
-            Some("2024-01-01".to_string()),
-            None
-        );
+        let incomplete_range = DateRange::new(Some("2024-01-01".to_string()), None);
         assert!(incomplete_range.is_valid());
     }
 
@@ -685,14 +685,11 @@ mod tests {
     fn test_date_range_is_complete() {
         let complete_range = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         assert!(complete_range.is_complete());
 
-        let incomplete_range = DateRange::new(
-            Some("2024-01-01".to_string()),
-            None
-        );
+        let incomplete_range = DateRange::new(Some("2024-01-01".to_string()), None);
         assert!(!incomplete_range.is_complete());
     }
 
@@ -701,10 +698,7 @@ mod tests {
         let empty_range = DateRange::default();
         assert!(empty_range.is_empty());
 
-        let non_empty_range = DateRange::new(
-            Some("2024-01-01".to_string()),
-            None
-        );
+        let non_empty_range = DateRange::new(Some("2024-01-01".to_string()), None);
         assert!(!non_empty_range.is_empty());
     }
 
@@ -733,7 +727,7 @@ mod tests {
     fn test_date_range_picker_change_detail() {
         let range = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         let detail = DateRangePickerChangeDetail {
             value: Some(range.clone()),
@@ -746,15 +740,15 @@ mod tests {
     fn test_date_range_equality() {
         let range1 = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         let range2 = DateRange::new(
             Some("2024-01-01".to_string()),
-            Some("2024-01-31".to_string())
+            Some("2024-01-31".to_string()),
         );
         let range3 = DateRange::new(
             Some("2024-02-01".to_string()),
-            Some("2024-02-28".to_string())
+            Some("2024-02-28".to_string()),
         );
 
         assert_eq!(range1, range2);

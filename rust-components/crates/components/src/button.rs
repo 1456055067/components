@@ -5,16 +5,15 @@
 //!
 //! An interactive button element with multiple variants and states.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
-use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ComponentStyles,
-    AnalyticsMetadata, ClickEvent, FollowEvent, NativeAttributes,
-    I18nStrings, AriaAttributes,
-};
 use crate::internal::events::FollowDetail;
 use crate::internal::styles::ButtonStyle;
+use crate::internal::{
+    AnalyticsMetadata, AriaAttributes, BaseComponentProps, ClickEvent, ComponentMetadata,
+    ComponentStyles, FollowEvent, I18nStrings, NativeAttributes,
+};
 use crate::spinner::{Spinner, SpinnerSize, SpinnerVariant};
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// Button variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -264,7 +263,8 @@ pub fn button(props: &ButtonProps) -> Html {
     }
 
     // Get external icon label from i18n
-    let external_icon_label = props.i18n_strings
+    let external_icon_label = props
+        .i18n_strings
         .as_ref()
         .and_then(|i18n| i18n.get("externalIconAriaLabel"))
         .map(|s| s.clone())

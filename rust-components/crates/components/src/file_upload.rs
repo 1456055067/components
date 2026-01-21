@@ -6,12 +6,11 @@
 //! Provides an interactive file input control with drag-and-drop zone, file validation,
 //! and comprehensive file management capabilities.
 
-use yew::prelude::*;
-use web_sys::{HtmlInputElement, DragEvent, File, FileList};
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::{DragEvent, File, FileList, HtmlInputElement};
+use yew::prelude::*;
 
 /// Represents a selected file with metadata
 #[derive(Debug, Clone, PartialEq)]
@@ -243,9 +242,9 @@ pub fn file_upload(props: &FileUploadProps) -> Html {
                     };
 
                     if let Some(callback) = &on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(
-                            FileUploadChangeDetail { value: updated_value }
-                        ));
+                        callback.emit(CustomEvent::new_non_cancelable(FileUploadChangeDetail {
+                            value: updated_value,
+                        }));
                     }
                 }
 
@@ -278,9 +277,9 @@ pub fn file_upload(props: &FileUploadProps) -> Html {
                 new_value.remove(index);
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        FileUploadChangeDetail { value: new_value }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(FileUploadChangeDetail {
+                        value: new_value,
+                    }));
                 }
             }
         })
@@ -384,9 +383,9 @@ pub fn file_upload(props: &FileUploadProps) -> Html {
             };
 
             if let Some(callback) = &on_change {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    FileUploadChangeDetail { value: updated_value }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(FileUploadChangeDetail {
+                    value: updated_value,
+                }));
             }
         })
     };
@@ -400,7 +399,10 @@ pub fn file_upload(props: &FileUploadProps) -> Html {
 
     let dropzone_classes = ClassBuilder::new()
         .add("awsui-file-upload-dropzone")
-        .add_if(*drag_active && !props.disabled, "awsui-file-upload-dropzone-active");
+        .add_if(
+            *drag_active && !props.disabled,
+            "awsui-file-upload-dropzone-active",
+        );
 
     // Determine control ID
     let control_id = props.control_id.clone();

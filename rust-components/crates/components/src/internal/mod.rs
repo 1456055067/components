@@ -3,18 +3,18 @@
 
 //! Internal utilities and shared component functionality
 
+pub mod accessibility;
+pub mod analytics;
 pub mod base_component;
 pub mod classes;
 pub mod events;
 pub mod props;
 pub mod styles;
-pub mod analytics;
-pub mod accessibility;
 
+pub use accessibility::{AriaAttributes, FocusOptions};
+pub use analytics::AnalyticsMetadata;
 pub use base_component::{BaseComponentProps, ComponentMetadata};
 pub use classes::{ClassBuilder, classes};
-pub use events::{ClickEvent, CustomEvent, ClickDetail, FollowEvent};
-pub use props::{StyleOverride, NativeAttributes, I18nStrings};
+pub use events::{ClickDetail, ClickEvent, CustomEvent, FollowEvent};
+pub use props::{I18nStrings, NativeAttributes, StyleOverride};
 pub use styles::ComponentStyles;
-pub use analytics::AnalyticsMetadata;
-pub use accessibility::{AriaAttributes, FocusOptions};

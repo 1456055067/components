@@ -6,12 +6,12 @@
 //! Page navigation with next/previous and page numbers, enabling users to navigate
 //! through large sets of data.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ComponentStyles,
-    AnalyticsMetadata, CustomEvent, ClassBuilder,
+    AnalyticsMetadata, BaseComponentProps, ClassBuilder, ComponentMetadata, ComponentStyles,
+    CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// Event detail for pagination change events
 #[derive(Debug, Clone, PartialEq)]
@@ -190,24 +190,27 @@ pub fn pagination(props: &PaginationProps) -> Html {
     let _metadata = ComponentMetadata::new("Pagination");
 
     // Get pagination state (which pages to show, where to show dots)
-    let pagination_state = get_pagination_state(
-        props.current_page_index,
-        props.pages_count,
-        props.open_end,
-    );
+    let pagination_state =
+        get_pagination_state(props.current_page_index, props.pages_count, props.open_end);
 
     // Get i18n strings with defaults
-    let previous_page_label = props.aria_labels.previous_page_label
+    let previous_page_label = props
+        .aria_labels
+        .previous_page_label
         .as_ref()
         .cloned()
         .unwrap_or_else(|| "Previous page".to_string());
 
-    let next_page_label = props.aria_labels.next_page_label
+    let next_page_label = props
+        .aria_labels
+        .next_page_label
         .as_ref()
         .cloned()
         .unwrap_or_else(|| "Next page".to_string());
 
-    let page_label_fn = props.aria_labels.page_label
+    let page_label_fn = props
+        .aria_labels
+        .page_label
         .unwrap_or(|page_number| format!("Page {}", page_number));
 
     // Create handlers
@@ -281,8 +284,9 @@ pub fn pagination(props: &PaginationProps) -> Html {
 
     // Determine button states
     let previous_button_disabled = props.disabled || props.current_page_index == 1;
-    let next_button_disabled = props.disabled ||
-        (!props.open_end && (props.pages_count == 0 || props.current_page_index == props.pages_count));
+    let next_button_disabled = props.disabled
+        || (!props.open_end
+            && (props.pages_count == 0 || props.current_page_index == props.pages_count));
 
     // Build component styles
     let mut styles = ComponentStyles::new();
@@ -507,7 +511,11 @@ struct PaginationState {
 ///
 /// This determines which page numbers to display and where to show ellipsis.
 /// The algorithm tries to show 7 controls total (current page +/- 3 neighbors).
-fn get_pagination_state(current_page_index: u32, total_pages_count: u32, is_open_end: bool) -> PaginationState {
+fn get_pagination_state(
+    current_page_index: u32,
+    total_pages_count: u32,
+    is_open_end: bool,
+) -> PaginationState {
     // Total number of page number elements to display (excluding first, last, and arrows)
     const NUMBER_OF_CONTROLS: u32 = 7;
 

@@ -6,8 +6,8 @@
 //! The KeyValuePairs component provides a flexible way to display structured data as
 //! key-value pairs with support for multiple columns and semantic HTML for accessibility.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// A single key-value pair item
 ///
@@ -165,9 +165,7 @@ pub fn key_value_pairs(props: &KeyValuePairsProps) -> Html {
 
     // Build the pairs as dt/dd elements
     let pairs = props.items.iter().enumerate().map(|(index, pair)| {
-        let pair_classes = ClassBuilder::new()
-            .add("awsui-key-value-pair")
-            .build();
+        let pair_classes = ClassBuilder::new().add("awsui-key-value-pair").build();
 
         let label_classes = ClassBuilder::new()
             .add("awsui-key-value-pair-label")
@@ -178,9 +176,7 @@ pub fn key_value_pairs(props: &KeyValuePairsProps) -> Html {
             .build();
 
         let info_element = pair.info.as_ref().map(|info| {
-            let info_classes = ClassBuilder::new()
-                .add("awsui-key-value-pair-info")
-                .build();
+            let info_classes = ClassBuilder::new().add("awsui-key-value-pair-info").build();
 
             html! {
                 <span class={info_classes}>
@@ -230,8 +226,8 @@ mod tests {
 
     #[test]
     fn test_key_value_pair_with_info() {
-        let pair = KeyValuePair::new("Label", html! { "Value" })
-            .with_info(html! { <a>{"Info"}</a> });
+        let pair =
+            KeyValuePair::new("Label", html! { "Value" }).with_info(html! { <a>{"Info"}</a> });
 
         assert_eq!(pair.label, "Label");
         assert!(pair.info.is_some());
@@ -239,8 +235,8 @@ mod tests {
 
     #[test]
     fn test_key_value_pair_builder_pattern() {
-        let pair = KeyValuePair::new("Name", html! { "John" })
-            .with_info(html! { <span>{"i"}</span> });
+        let pair =
+            KeyValuePair::new("Name", html! { "John" }).with_info(html! { <span>{"i"}</span> });
 
         assert_eq!(pair.label, "Name");
         assert!(pair.info.is_some());

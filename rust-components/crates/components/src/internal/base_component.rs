@@ -64,7 +64,10 @@ impl ComponentMetadata {
 
     /// Gets analytics metadata attribute value
     pub fn analytics_metadata(&self) -> String {
-        format!(r#"{{"component":{{"name":"awsui.{}","label":"{}"}}}}"#, self.name, self.name)
+        format!(
+            r#"{{"component":{{"name":"awsui.{}","label":"{}"}}}}"#,
+            self.name, self.name
+        )
     }
 }
 

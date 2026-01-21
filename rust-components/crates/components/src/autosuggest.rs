@@ -6,13 +6,12 @@
 //! An input component that provides suggestions as the user types, with support
 //! for filtering, keyboard navigation, and custom "Use entered text" option.
 
-use yew::prelude::*;
-use web_sys::HtmlInputElement;
-use gloo_timers::callback::Timeout;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use gloo_timers::callback::Timeout;
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Filtering type for autosuggest options
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -260,7 +259,11 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
 
     // Filter options based on current value
     let filtered_options = use_memo(
-        (props.options.clone(), props.value.clone(), props.filtering_type),
+        (
+            props.options.clone(),
+            props.value.clone(),
+            props.filtering_type,
+        ),
         |(options, value, filtering_type)| {
             if *filtering_type == FilteringType::Auto && !value.is_empty() {
                 options
@@ -275,8 +278,8 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
     );
 
     // Determine if we should show the "Use entered text" option
-    let show_entered_text = !props.value.is_empty()
-        && !filtered_options.iter().any(|opt| opt.value == props.value);
+    let show_entered_text =
+        !props.value.is_empty() && !filtered_options.iter().any(|opt| opt.value == props.value);
 
     // Calculate total dropdown items (including "Use entered text" if shown)
     let total_items = filtered_options.len() + if show_entered_text { 1 } else { 0 };
@@ -296,9 +299,9 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                 highlighted_index.set(0);
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        AutosuggestChangeDetail { value }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(AutosuggestChangeDetail {
+                        value,
+                    }));
                 }
             }
         })
@@ -342,18 +345,18 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
         let on_select = props.on_select.clone();
         let is_open = is_open.clone();
 
-        Callback::from(move |(value, option): (String, Option<AutosuggestOption>)| {
-            is_open.set(false);
+        Callback::from(
+            move |(value, option): (String, Option<AutosuggestOption>)| {
+                is_open.set(false);
 
-            if let Some(callback) = &on_select {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    AutosuggestSelectDetail {
+                if let Some(callback) = &on_select {
+                    callback.emit(CustomEvent::new_non_cancelable(AutosuggestSelectDetail {
                         value,
                         selected_option: option,
-                    }
-                ));
-            }
-        })
+                    }));
+                }
+            },
+        )
     };
 
     // Handle keyboard navigation
@@ -404,7 +407,7 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                                     AutosuggestSelectDetail {
                                         value: value.clone(),
                                         selected_option: None,
-                                    }
+                                    },
                                 ));
                             }
                         } else {
@@ -417,7 +420,7 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                                             AutosuggestSelectDetail {
                                                 value: option.value.clone(),
                                                 selected_option: Some(option.clone()),
-                                            }
+                                            },
                                         ));
                                     }
                                 }
@@ -454,12 +457,18 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
         .add("awsui-autosuggest-input")
         .add_if(props.disabled, "awsui-autosuggest-input-disabled")
         .add_if(props.invalid, "awsui-autosuggest-input-invalid")
-        .add_if(!props.invalid && props.warning, "awsui-autosuggest-input-warning");
+        .add_if(
+            !props.invalid && props.warning,
+            "awsui-autosuggest-input-warning",
+        );
 
     // Build dropdown classes
     let dropdown_classes = ClassBuilder::new()
         .add("awsui-autosuggest-dropdown")
-        .add_if(*is_open && total_items > 0, "awsui-autosuggest-dropdown-open");
+        .add_if(
+            *is_open && total_items > 0,
+            "awsui-autosuggest-dropdown-open",
+        );
 
     // Determine entered text label
     let entered_text_label = props
@@ -623,15 +632,17 @@ mod tests {
 
         assert_eq!(option.value, "apple");
         assert_eq!(option.label, Some("Apple Fruit".to_string()));
-        assert_eq!(option.description, Some("A delicious red fruit".to_string()));
+        assert_eq!(
+            option.description,
+            Some("A delicious red fruit".to_string())
+        );
         assert_eq!(option.label_tag, Some("Popular".to_string()));
         assert!(option.disabled);
     }
 
     #[test]
     fn test_autosuggest_option_display_text() {
-        let option_with_label = AutosuggestOption::new("value")
-            .with_label("Display Label");
+        let option_with_label = AutosuggestOption::new("value").with_label("Display Label");
         assert_eq!(option_with_label.display_text(), "Display Label");
 
         let option_without_label = AutosuggestOption::new("value");
@@ -640,8 +651,7 @@ mod tests {
 
     #[test]
     fn test_autosuggest_option_matches_filter() {
-        let option = AutosuggestOption::new("apple")
-            .with_label("Red Apple");
+        let option = AutosuggestOption::new("apple").with_label("Red Apple");
 
         // Empty filter matches everything
         assert!(option.matches_filter(""));

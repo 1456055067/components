@@ -5,10 +5,8 @@
 //!
 //! A flexible SVG-based icon component with multiple variants and sizes.
 
+use crate::internal::{AnalyticsMetadata, BaseComponentProps, ComponentMetadata, ComponentStyles};
 use yew::prelude::*;
-use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ComponentStyles, AnalyticsMetadata,
-};
 
 /// Icon variant types for different visual styles
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -206,7 +204,9 @@ pub fn icon(props: &IconProps) -> Html {
 
     // Render URL-based icon if provided
     if let Some(ref url) = props.url {
-        let alt_text = props.aria_label.clone()
+        let alt_text = props
+            .aria_label
+            .clone()
             .or_else(|| props.alt.clone())
             .unwrap_or_default();
 

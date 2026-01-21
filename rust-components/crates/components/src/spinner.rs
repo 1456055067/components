@@ -5,8 +5,8 @@
 //!
 //! A loading indicator that displays an animated spinner.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// Spinner size variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]

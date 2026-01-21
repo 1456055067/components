@@ -7,12 +7,11 @@
 //! from a list of choices. Supports disabled states, validation, descriptions,
 //! and label tags for options.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// A single option in the select dropdown
 #[derive(Clone, PartialEq, Debug)]
@@ -244,11 +243,9 @@ pub fn select(props: &SelectProps) -> Html {
 
             if !option.disabled {
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        SelectChangeDetail {
-                            selected_option: option,
-                        }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(SelectChangeDetail {
+                        selected_option: option,
+                    }));
                 }
             }
         })
@@ -342,7 +339,7 @@ pub fn select(props: &SelectProps) -> Html {
                                     callback.emit(CustomEvent::new_non_cancelable(
                                         SelectChangeDetail {
                                             selected_option: option.clone(),
-                                        }
+                                        },
                                     ));
                                 }
                                 is_open.set(false);
@@ -368,7 +365,10 @@ pub fn select(props: &SelectProps) -> Html {
         .add_if(props.read_only, "awsui-select-trigger-readonly")
         .add_if(props.invalid, "awsui-select-trigger-invalid")
         .add_if(*is_open, "awsui-select-trigger-open")
-        .add_if(props.selected_option.is_none(), "awsui-select-trigger-placeholder");
+        .add_if(
+            props.selected_option.is_none(),
+            "awsui-select-trigger-placeholder",
+        );
 
     // Build dropdown classes
     let dropdown_classes = ClassBuilder::new()
@@ -379,24 +379,27 @@ pub fn select(props: &SelectProps) -> Html {
     let trigger_content = if let Some(ref option) = props.selected_option {
         option.display_text().to_string()
     } else {
-        props.placeholder.clone().unwrap_or_else(|| "Select an option".to_string())
+        props
+            .placeholder
+            .clone()
+            .unwrap_or_else(|| "Select an option".to_string())
     };
 
     // Find index of selected option for initial highlight
-    use_effect_with(
-        (props.selected_option.clone(), props.options.clone()),
-        {
-            let highlighted_index = highlighted_index.clone();
-            move |(selected, options)| {
-                if let Some(selected_opt) = selected {
-                    if let Some(index) = options.iter().position(|opt| opt.value == selected_opt.value) {
-                        highlighted_index.set(index);
-                    }
+    use_effect_with((props.selected_option.clone(), props.options.clone()), {
+        let highlighted_index = highlighted_index.clone();
+        move |(selected, options)| {
+            if let Some(selected_opt) = selected {
+                if let Some(index) = options
+                    .iter()
+                    .position(|opt| opt.value == selected_opt.value)
+                {
+                    highlighted_index.set(index);
                 }
-                || ()
             }
-        },
-    );
+            || ()
+        }
+    });
 
     // Close dropdown when clicking outside
     use_effect_with(*is_open, {
@@ -544,15 +547,17 @@ mod tests {
 
         assert_eq!(option.value, "us-west-2");
         assert_eq!(option.label, Some("US West (Oregon)".to_string()));
-        assert_eq!(option.description, Some("Northern California region".to_string()));
+        assert_eq!(
+            option.description,
+            Some("Northern California region".to_string())
+        );
         assert_eq!(option.label_tag, Some("Recommended".to_string()));
         assert!(option.disabled);
     }
 
     #[test]
     fn test_select_option_display_text() {
-        let option_with_label = SelectOption::new("value")
-            .with_label("Display Label");
+        let option_with_label = SelectOption::new("value").with_label("Display Label");
         assert_eq!(option_with_label.display_text(), "Display Label");
 
         let option_without_label = SelectOption::new("value");

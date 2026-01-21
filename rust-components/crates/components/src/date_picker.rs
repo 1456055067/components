@@ -6,12 +6,11 @@
 //! Provides a controlled date input with a calendar dropdown for visual date selection.
 //! Supports keyboard navigation, manual text entry, and validation.
 
-use yew::prelude::*;
-use web_sys::{HtmlInputElement, KeyboardEvent};
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::{HtmlInputElement, KeyboardEvent};
+use yew::prelude::*;
 
 /// Event detail for date picker change events
 #[derive(Clone, PartialEq, Debug)]
@@ -212,19 +211,37 @@ fn get_today() -> DateValue {
         let year = date.get_full_year() as i32;
         let month = (date.get_month() + 1.0) as u32;
         let day = date.get_date() as u32;
-        DateValue::new(year, month, day).unwrap_or(DateValue { year: 2026, month: 1, day: 1 })
+        DateValue::new(year, month, day).unwrap_or(DateValue {
+            year: 2026,
+            month: 1,
+            day: 1,
+        })
     }
     #[cfg(not(target_arch = "wasm32"))]
     {
         // Default for testing
-        DateValue { year: 2026, month: 1, day: 20 }
+        DateValue {
+            year: 2026,
+            month: 1,
+            day: 20,
+        }
     }
 }
 
 /// Month names for display
 const MONTH_NAMES: [&str; 12] = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 ];
 
 /// Day names for calendar header
@@ -277,9 +294,7 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
     });
 
     // Focused day in calendar for keyboard navigation
-    let focused_day = use_state(|| {
-        current_value.map(|d| d.day).unwrap_or(1)
-    });
+    let focused_day = use_state(|| current_value.map(|d| d.day).unwrap_or(1));
 
     // Update input text when value prop changes
     use_effect_with(props.value.clone(), {
@@ -318,18 +333,18 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
                 let new_value = date.format();
                 if new_value != value {
                     if let Some(callback) = &on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(
-                            DatePickerChangeDetail { value: new_value }
-                        ));
+                        callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                            value: new_value,
+                        }));
                     }
                 }
             } else if input_text.is_empty() {
                 // Clear the value
                 if !value.is_empty() {
                     if let Some(callback) = &on_change {
-                        callback.emit(CustomEvent::new_non_cancelable(
-                            DatePickerChangeDetail { value: String::new() }
-                        ));
+                        callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                            value: String::new(),
+                        }));
                     }
                 }
             } else {
@@ -382,9 +397,9 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
             let (year, month) = *displayed_month;
             if let Some(date) = DateValue::new(year, month, day) {
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        DatePickerChangeDetail { value: date.format() }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
+                        value: date.format(),
+                    }));
                 }
             }
             is_calendar_open.set(false);
@@ -490,7 +505,9 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
                     if let Some(date) = DateValue::new(year, month, current_day) {
                         if let Some(callback) = &on_change {
                             callback.emit(CustomEvent::new_non_cancelable(
-                                DatePickerChangeDetail { value: date.format() }
+                                DatePickerChangeDetail {
+                                    value: date.format(),
+                                },
                             ));
                         }
                     }
@@ -803,19 +820,19 @@ mod tests {
 
     #[test]
     fn test_get_days_in_month() {
-        assert_eq!(get_days_in_month(2026, 1), 31);  // January
-        assert_eq!(get_days_in_month(2026, 2), 28);  // February (non-leap)
-        assert_eq!(get_days_in_month(2024, 2), 29);  // February (leap)
-        assert_eq!(get_days_in_month(2026, 4), 30);  // April
+        assert_eq!(get_days_in_month(2026, 1), 31); // January
+        assert_eq!(get_days_in_month(2026, 2), 28); // February (non-leap)
+        assert_eq!(get_days_in_month(2024, 2), 29); // February (leap)
+        assert_eq!(get_days_in_month(2026, 4), 30); // April
         assert_eq!(get_days_in_month(2026, 12), 31); // December
     }
 
     #[test]
     fn test_is_leap_year() {
-        assert!(!is_leap_year(2026));  // Not a leap year
-        assert!(is_leap_year(2024));   // Divisible by 4
-        assert!(!is_leap_year(2100));  // Divisible by 100 but not 400
-        assert!(is_leap_year(2000));   // Divisible by 400
+        assert!(!is_leap_year(2026)); // Not a leap year
+        assert!(is_leap_year(2024)); // Divisible by 4
+        assert!(!is_leap_year(2100)); // Divisible by 100 but not 400
+        assert!(is_leap_year(2000)); // Divisible by 400
     }
 
     #[test]
@@ -829,11 +846,11 @@ mod tests {
     #[test]
     fn test_date_value_new_validates() {
         assert!(DateValue::new(2026, 1, 20).is_some());
-        assert!(DateValue::new(2026, 13, 1).is_none());  // Invalid month
-        assert!(DateValue::new(2026, 0, 1).is_none());   // Invalid month
-        assert!(DateValue::new(2026, 1, 32).is_none());  // Invalid day
-        assert!(DateValue::new(2026, 2, 29).is_none());  // Invalid day for non-leap year
-        assert!(DateValue::new(2024, 2, 29).is_some());  // Valid day for leap year
+        assert!(DateValue::new(2026, 13, 1).is_none()); // Invalid month
+        assert!(DateValue::new(2026, 0, 1).is_none()); // Invalid month
+        assert!(DateValue::new(2026, 1, 32).is_none()); // Invalid day
+        assert!(DateValue::new(2026, 2, 29).is_none()); // Invalid day for non-leap year
+        assert!(DateValue::new(2024, 2, 29).is_some()); // Valid day for leap year
     }
 
     #[test]

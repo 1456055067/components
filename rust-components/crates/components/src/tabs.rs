@@ -7,13 +7,12 @@
 //! views or content sections. Supports active tab state, disabled tabs,
 //! dismissible tabs, and various visual variants.
 
-use std::collections::HashSet;
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use std::collections::HashSet;
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// Tab item configuration
 #[derive(Clone, PartialEq, Debug)]
@@ -259,7 +258,8 @@ pub fn tabs(props: &TabsProps) -> Html {
         id.clone()
     } else {
         // Find first enabled tab
-        props.tabs
+        props
+            .tabs
             .iter()
             .find(|tab| !tab.disabled)
             .map(|tab| tab.id.clone())
@@ -279,9 +279,7 @@ pub fn tabs(props: &TabsProps) -> Html {
     }
 
     // Find the active tab
-    let active_tab = props.tabs
-        .iter()
-        .find(|tab| tab.id == active_tab_id);
+    let active_tab = props.tabs.iter().find(|tab| tab.id == active_tab_id);
 
     // Handle tab click
     let on_tab_click = {
@@ -308,9 +306,7 @@ pub fn tabs(props: &TabsProps) -> Html {
 
         Callback::from(move |tab_id: String| {
             if let Some(ref callback) = on_dismiss {
-                callback.emit(CustomEvent::new_non_cancelable(TabDismissDetail {
-                    tab_id,
-                }));
+                callback.emit(CustomEvent::new_non_cancelable(TabDismissDetail { tab_id }));
             }
         })
     };
@@ -329,7 +325,10 @@ pub fn tabs(props: &TabsProps) -> Html {
     // Build content wrapper classes
     let content_wrapper_classes = ClassBuilder::new()
         .add("awsui-tabs-content-wrapper")
-        .add_if(!props.disable_content_paddings, "awsui-tabs-content-paddings");
+        .add_if(
+            !props.disable_content_paddings,
+            "awsui-tabs-content-paddings",
+        );
 
     html! {
         <div
@@ -399,7 +398,9 @@ fn render_tab_header(
     let dismiss_button = if tab.dismissible {
         let tab_id = tab.id.clone();
         let dismiss_callback = on_tab_dismiss.clone();
-        let dismiss_label = tab.dismiss_label.clone()
+        let dismiss_label = tab
+            .dismiss_label
+            .clone()
             .unwrap_or_else(|| "Dismiss tab".to_string());
 
         let on_dismiss_click = Callback::from(move |e: MouseEvent| {
@@ -556,8 +557,8 @@ mod tests {
 
     #[test]
     fn test_tab_with_content() {
-        let tab = Tab::new("tab1", html! { "Label" })
-            .with_content(html! { <div>{"Test content"}</div> });
+        let tab =
+            Tab::new("tab1", html! { "Label" }).with_content(html! { <div>{"Test content"}</div> });
 
         assert!(tab.content.is_some());
     }

@@ -12,97 +12,107 @@ use wasm_bindgen::prelude::*;
 pub use cloudscape_design_tokens as tokens;
 
 // Component modules
-pub mod badge;
-pub mod spinner;
-pub mod box_component;
-pub mod button;
 pub mod alert;
-pub mod input;
-pub mod checkbox;
-pub mod radio_group;
-pub mod toggle;
-pub mod header;
-pub mod textarea;
-pub mod container;
-pub mod select;
-pub mod link;
-pub mod icon;
 pub mod app_layout;
-pub mod content_layout;
-pub mod form_field;
-pub mod multiselect;
 pub mod autosuggest;
+pub mod badge;
+pub mod box_component;
+pub mod breadcrumbs;
+pub mod button;
+pub mod checkbox;
+pub mod column_layout;
+pub mod container;
+pub mod content_layout;
 pub mod date_picker;
 pub mod date_range_picker;
-pub mod file_upload;
-pub mod tabs;
-pub mod breadcrumbs;
-pub mod pagination;
-pub mod side_navigation;
-pub mod top_navigation;
-pub mod status_indicator;
-pub mod key_value_pairs;
-pub mod column_layout;
 pub mod expandable_section;
+pub mod file_upload;
+pub mod form_field;
+pub mod header;
+pub mod icon;
+pub mod input;
+pub mod key_value_pairs;
+pub mod link;
+pub mod modal;
+pub mod multiselect;
+pub mod pagination;
+pub mod radio_group;
+pub mod select;
+pub mod side_navigation;
+pub mod spinner;
+pub mod status_indicator;
+pub mod tabs;
+pub mod textarea;
+pub mod toggle;
+pub mod top_navigation;
 
 // Internal utilities
 pub mod internal;
 
 // Re-export components for convenient access
-pub use badge::{Badge, BadgeColor, BadgeProps};
-pub use spinner::{Spinner, SpinnerProps, SpinnerSize, SpinnerVariant};
-pub use box_component::{Box, BoxProps, BoxVariant, SpacingSize};
-pub use button::{Button, ButtonProps, ButtonVariant, FormAction, IconAlign};
-pub use alert::{Alert, AlertProps, AlertType, AlertI18nStrings, DismissDetail};
-pub use input::{Input, InputProps, InputType, InputChangeDetail};
-pub use checkbox::{Checkbox, CheckboxProps, CheckboxChangeDetail};
-pub use radio_group::{RadioGroup, RadioGroupProps, RadioGroupItem, RadioGroupChangeDetail, RadioGroupDirection};
-pub use toggle::{Toggle, ToggleProps, ToggleChangeDetail};
-pub use header::{Header, HeaderProps, HeaderVariant};
-pub use textarea::{Textarea, TextareaProps, TextareaChangeDetail};
-pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPosition};
-pub use select::{Select, SelectProps, SelectOption, SelectChangeDetail};
-pub use icon::{Icon, IconProps, IconSize, IconVariant};
-pub use link::{Link, LinkProps, LinkVariant, LinkFontSize, LinkColor, FollowDetail, FollowEvent};
+pub use alert::{Alert, AlertI18nStrings, AlertProps, AlertType, DismissDetail};
 pub use app_layout::{
-    AppLayout, AppLayoutProps, ContentType, SplitPanelPosition, SplitPanelPreferences,
-    NavigationChangeDetail, ToolsChangeDetail, SplitPanelToggleDetail, SplitPanelResizeDetail,
+    AppLayout, AppLayoutProps, ContentType, NavigationChangeDetail, SplitPanelPosition,
+    SplitPanelPreferences, SplitPanelResizeDetail, SplitPanelToggleDetail, ToolsChangeDetail,
 };
+pub use autosuggest::{
+    Autosuggest, AutosuggestChangeDetail, AutosuggestOption, AutosuggestProps,
+    AutosuggestSelectDetail,
+};
+pub use badge::{Badge, BadgeColor, BadgeProps};
+pub use box_component::{Box, BoxProps, BoxVariant, SpacingSize};
+pub use breadcrumbs::{BreadcrumbFollowEvent, BreadcrumbItem, Breadcrumbs, BreadcrumbsProps};
+pub use button::{Button, ButtonProps, ButtonVariant, FormAction, IconAlign};
+pub use checkbox::{Checkbox, CheckboxChangeDetail, CheckboxProps};
+pub use column_layout::{BordersType, ColumnLayout, ColumnLayoutProps, ColumnVariant};
+pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPosition};
 pub use content_layout::{ContentLayout, ContentLayoutProps};
-pub use form_field::{FormField, FormFieldProps};
-pub use multiselect::{Multiselect, MultiselectProps, MultiselectOption, MultiselectChangeDetail, FilteringType};
-pub use autosuggest::{Autosuggest, AutosuggestProps, AutosuggestOption, AutosuggestChangeDetail, AutosuggestSelectDetail};
-pub use date_picker::{DatePicker, DatePickerProps, DatePickerChangeDetail};
+pub use date_picker::{DatePicker, DatePickerChangeDetail, DatePickerProps};
 pub use date_range_picker::{
-    DateRangePicker, DateRangePickerProps, DateRange, DateRangePickerChangeDetail,
+    DateRange, DateRangePicker, DateRangePickerChangeDetail, DateRangePickerProps,
     RangeSelectorMode, RelativeOption, TimeUnit,
 };
-pub use file_upload::{
-    FileUpload, FileUploadProps, FileUploadFile, FileUploadChangeDetail, FileUploadI18nStrings,
-};
-pub use tabs::{Tabs, TabsProps, Tab, TabsVariant, TabChangeDetail, TabDismissDetail};
-pub use breadcrumbs::{Breadcrumbs, BreadcrumbsProps, BreadcrumbItem, BreadcrumbFollowEvent};
-pub use pagination::{
-    Pagination, PaginationProps, PaginationChangeDetail, PaginationPageClickDetail,
-    PaginationI18nStrings,
-};
-pub use top_navigation::{
-    TopNavigation, TopNavigationProps, TopNavigationIdentity, TopNavigationUtility,
-    TopNavigationLogo, TopNavigationI18nStrings, UtilityType, UtilityButtonVariant,
-    UtilityClickDetail, UtilityFollowDetail, IdentityFollowDetail,
-};
-pub use side_navigation::{
-    SideNavigation, SideNavigationProps, SideNavigationItem, SideNavigationItemType,
-    SideNavigationHeader, FollowDetail as SideNavigationFollowDetail,
-    ChangeDetail as SideNavigationChangeDetail,
-};
-pub use status_indicator::{
-    StatusIndicator, StatusIndicatorProps, StatusIndicatorType, StatusIndicatorColor,
-};
-pub use key_value_pairs::{KeyValuePairs, KeyValuePairsProps, KeyValuePair};
-pub use column_layout::{ColumnLayout, ColumnLayoutProps, ColumnVariant, BordersType};
 pub use expandable_section::{
-    ExpandableSection, ExpandableSectionProps, ExpandableSectionVariant, ExpandableSectionChangeDetail,
+    ExpandableSection, ExpandableSectionChangeDetail, ExpandableSectionProps,
+    ExpandableSectionVariant,
+};
+pub use file_upload::{
+    FileUpload, FileUploadChangeDetail, FileUploadFile, FileUploadI18nStrings, FileUploadProps,
+};
+pub use form_field::{FormField, FormFieldProps};
+pub use header::{Header, HeaderProps, HeaderVariant};
+pub use icon::{Icon, IconProps, IconSize, IconVariant};
+pub use input::{Input, InputChangeDetail, InputProps, InputType};
+pub use key_value_pairs::{KeyValuePair, KeyValuePairs, KeyValuePairsProps};
+pub use link::{FollowDetail, FollowEvent, Link, LinkColor, LinkFontSize, LinkProps, LinkVariant};
+pub use modal::{DismissReason, Modal, ModalDismissDetail, ModalProps, ModalSize};
+pub use multiselect::{
+    FilteringType, Multiselect, MultiselectChangeDetail, MultiselectOption, MultiselectProps,
+};
+pub use pagination::{
+    Pagination, PaginationChangeDetail, PaginationI18nStrings, PaginationPageClickDetail,
+    PaginationProps,
+};
+pub use radio_group::{
+    RadioGroup, RadioGroupChangeDetail, RadioGroupDirection, RadioGroupItem, RadioGroupProps,
+};
+pub use select::{Select, SelectChangeDetail, SelectOption, SelectProps};
+pub use side_navigation::{
+    ChangeDetail as SideNavigationChangeDetail, FollowDetail as SideNavigationFollowDetail,
+    SideNavigation, SideNavigationHeader, SideNavigationItem, SideNavigationItemType,
+    SideNavigationProps,
+};
+pub use spinner::{Spinner, SpinnerProps, SpinnerSize, SpinnerVariant};
+pub use status_indicator::{
+    StatusIndicator, StatusIndicatorColor, StatusIndicatorProps, StatusIndicatorType,
+};
+pub use tabs::{Tab, TabChangeDetail, TabDismissDetail, Tabs, TabsProps, TabsVariant};
+pub use textarea::{Textarea, TextareaChangeDetail, TextareaProps};
+pub use toggle::{Toggle, ToggleChangeDetail, ToggleProps};
+pub use top_navigation::{
+    IdentityFollowDetail, TopNavigation, TopNavigationI18nStrings, TopNavigationIdentity,
+    TopNavigationLogo, TopNavigationProps, TopNavigationUtility, UtilityButtonVariant,
+    UtilityClickDetail, UtilityFollowDetail, UtilityType,
 };
 
 // Re-export commonly used internal types

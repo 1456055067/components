@@ -5,12 +5,9 @@
 //!
 //! A small visual indicator for labels and metadata.
 
-use yew::prelude::*;
-use crate::internal::{
-    BaseComponentProps, ComponentMetadata,
-    AnalyticsMetadata, ComponentStyles
-};
 use crate::internal::styles::BadgeStyle;
+use crate::internal::{AnalyticsMetadata, BaseComponentProps, ComponentMetadata, ComponentStyles};
+use yew::prelude::*;
 
 /// Badge color variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]

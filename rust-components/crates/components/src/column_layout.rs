@@ -7,8 +7,8 @@
 //! content into multiple columns with responsive behavior. It supports configurable
 //! column counts, variants, borders, and gutter spacing.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// Column layout visual variants
 ///
@@ -183,25 +183,39 @@ pub fn column_layout(props: &ColumnLayoutProps) -> Html {
     let is_text_grid = props.variant == ColumnVariant::TextGrid;
     let has_min_width = props.min_column_width.is_some();
     let should_disable_gutters = !is_text_grid && props.disable_gutters;
-    let should_have_horizontal_borders = !is_text_grid && !has_min_width &&
-        (props.borders == BordersType::Horizontal || props.borders == BordersType::All);
-    let should_have_vertical_borders = !is_text_grid && !has_min_width &&
-        (props.borders == BordersType::Vertical || props.borders == BordersType::All);
+    let should_have_horizontal_borders = !is_text_grid
+        && !has_min_width
+        && (props.borders == BordersType::Horizontal || props.borders == BordersType::All);
+    let should_have_vertical_borders = !is_text_grid
+        && !has_min_width
+        && (props.borders == BordersType::Vertical || props.borders == BordersType::All);
 
     // Build CSS classes for the root element
     let root_classes = ClassBuilder::new()
         .add("awsui-column-layout")
         .add(format!("awsui-column-layout-columns-{}", columns))
-        .add(format!("awsui-column-layout-variant-{}", props.variant.as_str()))
-        .add_if(should_have_horizontal_borders, "awsui-column-layout-borders-horizontal")
-        .add_if(should_have_vertical_borders, "awsui-column-layout-borders-vertical")
+        .add(format!(
+            "awsui-column-layout-variant-{}",
+            props.variant.as_str()
+        ))
+        .add_if(
+            should_have_horizontal_borders,
+            "awsui-column-layout-borders-horizontal",
+        )
+        .add_if(
+            should_have_vertical_borders,
+            "awsui-column-layout-borders-vertical",
+        )
         .add_if(should_disable_gutters, "awsui-column-layout-no-gutters");
 
     let root_class = props.base.merge_classes(&root_classes.build());
 
     // Build inline style for min-column-width if specified
     let style = props.min_column_width.map(|width| {
-        format!("--column-layout-min-width: {}px; --column-layout-max-columns: {}", width, columns)
+        format!(
+            "--column-layout-min-width: {}px; --column-layout-max-columns: {}",
+            width, columns
+        )
     });
 
     html! {
@@ -283,7 +297,10 @@ mod tests {
         let min_column_width = Some(200);
 
         let style = min_column_width.map(|width| {
-            format!("--column-layout-min-width: {}px; --column-layout-max-columns: {}", width, columns)
+            format!(
+                "--column-layout-min-width: {}px; --column-layout-max-columns: {}",
+                width, columns
+            )
         });
 
         assert_eq!(
@@ -298,8 +315,8 @@ mod tests {
         let is_text_grid = ColumnVariant::TextGrid == ColumnVariant::TextGrid;
         let borders = BordersType::All;
 
-        let should_have_borders = !is_text_grid &&
-            (borders == BordersType::Horizontal || borders == BordersType::All);
+        let should_have_borders =
+            !is_text_grid && (borders == BordersType::Horizontal || borders == BordersType::All);
 
         assert_eq!(should_have_borders, false);
     }
@@ -311,8 +328,9 @@ mod tests {
         let has_min_width = false;
         let borders = BordersType::All;
 
-        let should_have_horizontal_borders = !is_text_grid && !has_min_width &&
-            (borders == BordersType::Horizontal || borders == BordersType::All);
+        let should_have_horizontal_borders = !is_text_grid
+            && !has_min_width
+            && (borders == BordersType::Horizontal || borders == BordersType::All);
 
         assert_eq!(should_have_horizontal_borders, true);
     }

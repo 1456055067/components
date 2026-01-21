@@ -7,8 +7,8 @@
 //! content within AppLayout. It manages header, notifications, default actions,
 //! and main content areas with proper spacing and optional header overlap effects.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// Properties for the ContentLayout component
 #[derive(Properties, PartialEq, Clone)]
@@ -169,7 +169,10 @@ pub fn content_layout(props: &ContentLayoutProps) -> Html {
     // Build header wrapper classes
     let header_wrapper_classes = ClassBuilder::new()
         .add("awsui-content-layout-header-wrapper")
-        .add_if(!props.disable_overlap, "awsui-content-layout-header-wrapper-overlap")
+        .add_if(
+            !props.disable_overlap,
+            "awsui-content-layout-header-wrapper-overlap",
+        )
         .build();
 
     html! {
@@ -270,9 +273,7 @@ mod tests {
             data_attributes: None,
         };
 
-        let props = yew::props!(ContentLayoutProps {
-            base: base.clone(),
-        });
+        let props = yew::props!(ContentLayoutProps { base: base.clone() });
 
         assert_eq!(props.base.id, Some("test-id".to_string()));
         assert_eq!(props.base.class, Some("custom-class".to_string()));

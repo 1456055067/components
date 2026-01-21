@@ -6,11 +6,9 @@
 //! A binary switch control for toggling between on/off states.
 //! Commonly used for boolean settings and preferences.
 
+use crate::internal::{BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent};
+use web_sys::{FocusEvent, HtmlInputElement};
 use yew::prelude::*;
-use web_sys::{HtmlInputElement, FocusEvent};
-use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-};
 
 /// Event detail for toggle change events
 #[derive(Clone, PartialEq, Debug)]
@@ -147,7 +145,8 @@ pub fn toggle(props: &ToggleProps) -> Html {
         props.control_id.clone().unwrap_or_else(|| {
             // Simple unique ID generation using timestamp and random number
             use web_sys::js_sys;
-            format!("toggle-{}-{}",
+            format!(
+                "toggle-{}-{}",
                 js_sys::Date::now() as u64,
                 (js_sys::Math::random() * 1000000.0) as u32
             )
@@ -179,9 +178,9 @@ pub fn toggle(props: &ToggleProps) -> Html {
 
             // Fire change event
             if let Some(callback) = &on_change {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    ToggleChangeDetail { checked: !checked }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(ToggleChangeDetail {
+                    checked: !checked,
+                }));
             }
         })
     };
@@ -248,12 +247,10 @@ pub fn toggle(props: &ToggleProps) -> Html {
     };
 
     // Build CSS classes for the wrapper
-    let wrapper_classes = ClassBuilder::new()
-        .add("awsui-toggle-wrapper");
+    let wrapper_classes = ClassBuilder::new().add("awsui-toggle-wrapper");
 
     // Build CSS classes for the label wrapper
-    let label_wrapper_classes = ClassBuilder::new()
-        .add("awsui-toggle-label-wrapper");
+    let label_wrapper_classes = ClassBuilder::new().add("awsui-toggle-label-wrapper");
 
     // Build CSS classes for the control
     let control_classes = ClassBuilder::new()

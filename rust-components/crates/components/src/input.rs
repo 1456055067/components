@@ -5,12 +5,11 @@
 //!
 //! Provides a controlled text input with validation states, types, and accessibility.
 
-use yew::prelude::*;
-use web_sys::HtmlInputElement;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Input type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -170,9 +169,7 @@ pub fn input(props: &InputProps) -> Html {
                 let value = target.value();
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        InputChangeDetail { value }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(InputChangeDetail { value }));
                 }
             }
         })
@@ -209,9 +206,9 @@ pub fn input(props: &InputProps) -> Html {
             e.prevent_default();
 
             if let Some(callback) = &on_change {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    InputChangeDetail { value: String::new() }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(InputChangeDetail {
+                    value: String::new(),
+                }));
             }
 
             // Refocus the input after clearing
@@ -231,9 +228,7 @@ pub fn input(props: &InputProps) -> Html {
         .add_if(!props.invalid && props.warning, "awsui-input-warning");
 
     // Determine autocomplete attribute
-    let autocomplete_attr = props.autocomplete.map(|ac| {
-        if ac { "on" } else { "off" }
-    });
+    let autocomplete_attr = props.autocomplete.map(|ac| if ac { "on" } else { "off" });
 
     // Determine control ID (use provided or None to let browser auto-generate)
     let input_id = props.control_id.clone();
@@ -244,8 +239,14 @@ pub fn input(props: &InputProps) -> Html {
     // Build wrapper classes
     let wrapper_classes = ClassBuilder::new()
         .add("awsui-input-wrapper")
-        .add_if(props.input_type == InputType::Search, "awsui-input-has-icon-left")
-        .add_if(props.input_type == InputType::Search && !props.value.is_empty(), "awsui-input-has-clear-button");
+        .add_if(
+            props.input_type == InputType::Search,
+            "awsui-input-has-icon-left",
+        )
+        .add_if(
+            props.input_type == InputType::Search && !props.value.is_empty(),
+            "awsui-input-has-clear-button",
+        );
 
     html! {
         <div class={wrapper_classes.build()}>

@@ -5,11 +5,11 @@
 //!
 //! Alerts communicate important information to users with different severity levels.
 
-use yew::prelude::*;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AnalyticsMetadata, AriaAttributes,
+    AnalyticsMetadata, AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata,
+    CustomEvent,
 };
+use yew::prelude::*;
 
 /// Alert type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -148,9 +148,9 @@ pub fn alert(props: &AlertProps) -> Html {
             e.prevent_default();
 
             if let Some(callback) = &on_dismiss {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    DismissDetail { alert_type }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(DismissDetail {
+                    alert_type,
+                }));
             }
         })
     };
@@ -164,7 +164,10 @@ pub fn alert(props: &AlertProps) -> Html {
     let analytics_attr = serde_json::to_string(&analytics).ok();
 
     // ARIA role and label
-    let aria_label = props.aria.label.clone()
+    let aria_label = props
+        .aria
+        .label
+        .clone()
         .unwrap_or_else(|| props.alert_type.default_aria_label().to_string());
 
     html! {

@@ -5,12 +5,11 @@
 //!
 //! Status badges with color variants and optional icons to communicate status information.
 
-use yew::prelude::*;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder,
-    AnalyticsMetadata, AriaAttributes,
+    AnalyticsMetadata, AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata,
 };
 use crate::spinner::{Spinner, SpinnerSize};
+use yew::prelude::*;
 
 /// Status indicator type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -170,7 +169,10 @@ pub fn status_indicator(props: &StatusIndicatorProps) -> Html {
     // Build CSS classes
     let mut classes = ClassBuilder::new()
         .add("awsui-status-indicator")
-        .add(format!("awsui-status-indicator-type-{}", props.status_type.as_str()));
+        .add(format!(
+            "awsui-status-indicator-type-{}",
+            props.status_type.as_str()
+        ));
 
     // Add color override class if specified
     if let Some(color) = props.color_override {
@@ -241,13 +243,28 @@ mod tests {
 
     #[test]
     fn status_type_icons() {
-        assert_eq!(StatusIndicatorType::Success.default_icon(), "status-positive");
+        assert_eq!(
+            StatusIndicatorType::Success.default_icon(),
+            "status-positive"
+        );
         assert_eq!(StatusIndicatorType::Error.default_icon(), "status-negative");
-        assert_eq!(StatusIndicatorType::Warning.default_icon(), "status-warning");
+        assert_eq!(
+            StatusIndicatorType::Warning.default_icon(),
+            "status-warning"
+        );
         assert_eq!(StatusIndicatorType::Info.default_icon(), "status-info");
-        assert_eq!(StatusIndicatorType::Stopped.default_icon(), "status-stopped");
-        assert_eq!(StatusIndicatorType::Pending.default_icon(), "status-pending");
-        assert_eq!(StatusIndicatorType::InProgress.default_icon(), "status-in-progress");
+        assert_eq!(
+            StatusIndicatorType::Stopped.default_icon(),
+            "status-stopped"
+        );
+        assert_eq!(
+            StatusIndicatorType::Pending.default_icon(),
+            "status-pending"
+        );
+        assert_eq!(
+            StatusIndicatorType::InProgress.default_icon(),
+            "status-in-progress"
+        );
         assert_eq!(StatusIndicatorType::Loading.default_icon(), "spinner");
     }
 
@@ -294,7 +311,11 @@ mod tests {
         sorted.sort_unstable();
         sorted.dedup();
 
-        assert_eq!(strings.len(), sorted.len(), "All status types should have unique string representations");
+        assert_eq!(
+            strings.len(),
+            sorted.len(),
+            "All status types should have unique string representations"
+        );
     }
 
     #[test]
@@ -312,7 +333,11 @@ mod tests {
 
         for status_type in types {
             let icon = status_type.default_icon();
-            assert!(!icon.is_empty(), "{:?} should have a non-empty icon", status_type);
+            assert!(
+                !icon.is_empty(),
+                "{:?} should have a non-empty icon",
+                status_type
+            );
         }
     }
 }

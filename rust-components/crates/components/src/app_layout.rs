@@ -7,8 +7,8 @@
 //! navigation, content, tools, and other UI elements in a consistent layout.
 //! It follows the Cloudscape Design System patterns for complex applications.
 
+use crate::internal::{BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent};
 use yew::prelude::*;
-use crate::internal::{BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent};
 
 /// Content type determines the layout and spacing behavior
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -349,9 +349,9 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             if let Some(callback) = &on_navigation_change {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    NavigationChangeDetail { open: !current_state }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(NavigationChangeDetail {
+                    open: !current_state,
+                }));
             }
         })
     };
@@ -364,9 +364,9 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             if let Some(callback) = &on_tools_change {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    ToolsChangeDetail { open: !current_state }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(ToolsChangeDetail {
+                    open: !current_state,
+                }));
             }
         })
     };
@@ -379,9 +379,9 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             if let Some(callback) = &on_split_panel_toggle {
-                callback.emit(CustomEvent::new_non_cancelable(
-                    SplitPanelToggleDetail { open: !current_state }
-                ));
+                callback.emit(CustomEvent::new_non_cancelable(SplitPanelToggleDetail {
+                    open: !current_state,
+                }));
             }
         })
     };
@@ -389,7 +389,10 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
     // Build CSS classes for root element
     let root_classes = ClassBuilder::new()
         .add("awsui-app-layout")
-        .add(format!("awsui-app-layout-content-type-{}", props.content_type.as_str()))
+        .add(format!(
+            "awsui-app-layout-content-type-{}",
+            props.content_type.as_str()
+        ))
         .add_if(props.navigation_open, "awsui-app-layout-navigation-open")
         .add_if(props.tools_open, "awsui-app-layout-tools-open")
         .add_if(props.split_panel_open, "awsui-app-layout-split-panel-open")
@@ -418,15 +421,22 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
         .add_if(!props.tools_open, "awsui-app-layout-tools-closed");
 
     // Build CSS classes for main content
-    let main_classes = ClassBuilder::new()
-        .add("awsui-app-layout-main")
-        .add_if(!props.disable_content_paddings, "awsui-app-layout-main-padded");
+    let main_classes = ClassBuilder::new().add("awsui-app-layout-main").add_if(
+        !props.disable_content_paddings,
+        "awsui-app-layout-main-padded",
+    );
 
     // Build CSS classes for content area
     let content_classes = ClassBuilder::new()
         .add("awsui-app-layout-content")
-        .add(format!("awsui-app-layout-content-type-{}", props.content_type.as_str()))
-        .add_if(!props.disable_content_paddings, "awsui-app-layout-content-padded");
+        .add(format!(
+            "awsui-app-layout-content-type-{}",
+            props.content_type.as_str()
+        ))
+        .add_if(
+            !props.disable_content_paddings,
+            "awsui-app-layout-content-padded",
+        );
 
     // Helper function to build split panel classes
     let build_split_panel_classes = || {
@@ -437,7 +447,10 @@ pub fn app_layout(props: &AppLayoutProps) -> Html {
                 props.split_panel_preferences.position.as_str()
             ))
             .add_if(props.split_panel_open, "awsui-app-layout-split-panel-open")
-            .add_if(!props.split_panel_open, "awsui-app-layout-split-panel-closed")
+            .add_if(
+                !props.split_panel_open,
+                "awsui-app-layout-split-panel-closed",
+            )
             .build()
     };
 

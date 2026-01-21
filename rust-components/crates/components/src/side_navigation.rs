@@ -5,12 +5,11 @@
 //!
 //! Sidebar navigation with hierarchical items for organizing application navigation.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// Types of items that can appear in the side navigation
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -337,8 +336,7 @@ pub fn side_navigation(props: &SideNavigationProps) -> Html {
     });
 
     // Build root classes
-    let root_classes = ClassBuilder::new()
-        .add("awsui-side-navigation");
+    let root_classes = ClassBuilder::new().add("awsui-side-navigation");
 
     html! {
         <nav
@@ -420,7 +418,10 @@ fn render_header(
     active_href: &Option<String>,
     on_follow: &Option<Callback<CustomEvent<FollowDetail>>>,
 ) -> Html {
-    let is_active = active_href.as_ref().map(|href| href == &header.href).unwrap_or(false);
+    let is_active = active_href
+        .as_ref()
+        .map(|href| href == &header.href)
+        .unwrap_or(false);
 
     let header_classes = ClassBuilder::new()
         .add("awsui-side-navigation-header")
@@ -512,15 +513,25 @@ fn render_item(
                 <li key={item_key.clone()} class="awsui-side-navigation-item awsui-side-navigation-divider" role="separator" />
             }
         }
-        SideNavigationItemType::Link => {
-            render_link_item(item, &item_key, active_href, on_follow)
-        }
-        SideNavigationItemType::Section => {
-            render_section_item(item, &item_key, active_href, on_follow, on_change, expanded_items, depth)
-        }
-        SideNavigationItemType::ExpandableLinkGroup => {
-            render_expandable_group_item(item, &item_key, active_href, on_follow, on_change, expanded_items, depth)
-        }
+        SideNavigationItemType::Link => render_link_item(item, &item_key, active_href, on_follow),
+        SideNavigationItemType::Section => render_section_item(
+            item,
+            &item_key,
+            active_href,
+            on_follow,
+            on_change,
+            expanded_items,
+            depth,
+        ),
+        SideNavigationItemType::ExpandableLinkGroup => render_expandable_group_item(
+            item,
+            &item_key,
+            active_href,
+            on_follow,
+            on_change,
+            expanded_items,
+            depth,
+        ),
     }
 }
 
@@ -701,7 +712,10 @@ fn render_expandable_group_item(
     let group_classes = ClassBuilder::new()
         .add("awsui-side-navigation-item")
         .add("awsui-side-navigation-expandable-group")
-        .add_if(is_expanded, "awsui-side-navigation-expandable-group-expanded")
+        .add_if(
+            is_expanded,
+            "awsui-side-navigation-expandable-group-expanded",
+        )
         .add_if(is_active, "awsui-side-navigation-expandable-group-active");
 
     let toggle_onclick = {
@@ -810,8 +824,8 @@ mod tests {
 
     #[test]
     fn test_side_navigation_item_link_with_external() {
-        let item = SideNavigationItem::link("External Link", "https://example.com")
-            .with_external(true);
+        let item =
+            SideNavigationItem::link("External Link", "https://example.com").with_external(true);
         assert_eq!(item.item_type, SideNavigationItemType::Link);
         assert!(item.external);
     }
@@ -826,11 +840,10 @@ mod tests {
 
     #[test]
     fn test_side_navigation_item_section() {
-        let item = SideNavigationItem::section("Settings")
-            .with_items(vec![
-                SideNavigationItem::link("Profile", "/settings/profile"),
-                SideNavigationItem::link("Security", "/settings/security"),
-            ]);
+        let item = SideNavigationItem::section("Settings").with_items(vec![
+            SideNavigationItem::link("Profile", "/settings/profile"),
+            SideNavigationItem::link("Security", "/settings/security"),
+        ]);
 
         assert_eq!(item.item_type, SideNavigationItemType::Section);
         assert_eq!(item.text, "Settings");
@@ -841,9 +854,7 @@ mod tests {
     #[test]
     fn test_side_navigation_item_expandable_group() {
         let item = SideNavigationItem::expandable_link_group("Resources", "/resources")
-            .with_items(vec![
-                SideNavigationItem::link("Docs", "/resources/docs"),
-            ])
+            .with_items(vec![SideNavigationItem::link("Docs", "/resources/docs")])
             .with_default_expanded(false);
 
         assert_eq!(item.item_type, SideNavigationItemType::ExpandableLinkGroup);
@@ -864,10 +875,10 @@ mod tests {
     fn test_contains_active_href() {
         let items = vec![
             SideNavigationItem::link("Home", "/"),
-            SideNavigationItem::section("Settings")
-                .with_items(vec![
-                    SideNavigationItem::link("Profile", "/settings/profile"),
-                ]),
+            SideNavigationItem::section("Settings").with_items(vec![SideNavigationItem::link(
+                "Profile",
+                "/settings/profile",
+            )]),
         ];
 
         assert!(contains_active_href(&items, "/settings/profile"));
@@ -880,7 +891,10 @@ mod tests {
         assert_eq!(SideNavigationItemType::Link.as_str(), "link");
         assert_eq!(SideNavigationItemType::Divider.as_str(), "divider");
         assert_eq!(SideNavigationItemType::Section.as_str(), "section");
-        assert_eq!(SideNavigationItemType::ExpandableLinkGroup.as_str(), "expandable-link-group");
+        assert_eq!(
+            SideNavigationItemType::ExpandableLinkGroup.as_str(),
+            "expandable-link-group"
+        );
     }
 
     #[test]

@@ -7,11 +7,9 @@
 //! that users can click to expand or collapse the section. It supports both controlled
 //! and uncontrolled modes, multiple visual variants, and optional header actions.
 
-use yew::prelude::*;
+use crate::internal::{AriaAttributes, BaseComponentProps, ClassBuilder, CustomEvent};
 use web_sys::{KeyboardEvent, MouseEvent};
-use crate::internal::{
-    BaseComponentProps, ClassBuilder, CustomEvent, AriaAttributes,
-};
+use yew::prelude::*;
 
 /// Visual variants for the expandable section
 ///
@@ -222,7 +220,7 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
                 callback.emit(CustomEvent::new_non_cancelable(
                     ExpandableSectionChangeDetail {
                         expanded: new_expanded,
-                    }
+                    },
                 ));
             }
         })
@@ -254,14 +252,20 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
     // Build CSS classes
     let root_classes = ClassBuilder::new()
         .add("awsui-expandable-section")
-        .add(format!("awsui-expandable-section-variant-{}", props.variant.as_str()))
+        .add(format!(
+            "awsui-expandable-section-variant-{}",
+            props.variant.as_str()
+        ))
         .add_if(expanded, "awsui-expandable-section-expanded");
 
     let root_class = props.base.merge_classes(&root_classes.build());
 
     let header_classes = ClassBuilder::new()
         .add("awsui-expandable-section-header")
-        .add(format!("awsui-expandable-section-header-{}", props.variant.as_str()))
+        .add(format!(
+            "awsui-expandable-section-header-{}",
+            props.variant.as_str()
+        ))
         .build();
 
     let trigger_classes = ClassBuilder::new()
@@ -280,7 +284,10 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
 
     let content_classes = ClassBuilder::new()
         .add("awsui-expandable-section-content")
-        .add_if(!props.disable_content_paddings, "awsui-expandable-section-content-paddings")
+        .add_if(
+            !props.disable_content_paddings,
+            "awsui-expandable-section-content-paddings",
+        )
         .add_if(expanded, "awsui-expandable-section-content-expanded")
         .build();
 
@@ -377,7 +384,10 @@ mod tests {
 
     #[test]
     fn test_variant_default() {
-        assert_eq!(ExpandableSectionVariant::default(), ExpandableSectionVariant::Default);
+        assert_eq!(
+            ExpandableSectionVariant::default(),
+            ExpandableSectionVariant::Default
+        );
     }
 
     #[test]
@@ -409,8 +419,14 @@ mod tests {
 
     #[test]
     fn test_variant_equality() {
-        assert_eq!(ExpandableSectionVariant::Default, ExpandableSectionVariant::Default);
-        assert_ne!(ExpandableSectionVariant::Default, ExpandableSectionVariant::Container);
+        assert_eq!(
+            ExpandableSectionVariant::Default,
+            ExpandableSectionVariant::Default
+        );
+        assert_ne!(
+            ExpandableSectionVariant::Default,
+            ExpandableSectionVariant::Container
+        );
     }
 
     #[test]

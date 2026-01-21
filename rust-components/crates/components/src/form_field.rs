@@ -8,8 +8,8 @@
 //! and constraint text. It handles accessibility requirements including proper
 //! ARIA attributes and ID associations.
 
+use crate::internal::{BaseComponentProps, ClassBuilder, ComponentMetadata};
 use yew::prelude::*;
-use crate::internal::{BaseComponentProps, ComponentMetadata, ClassBuilder};
 
 /// Properties for the FormField component
 #[derive(Properties, PartialEq, Clone, Default)]
@@ -134,7 +134,8 @@ pub fn form_field(props: &FormFieldProps) -> Html {
         props.control_id.clone().unwrap_or_else(|| {
             // Simple unique ID generation using timestamp and random number
             use web_sys::js_sys;
-            format!("form-field-{}-{}",
+            format!(
+                "form-field-{}-{}",
                 js_sys::Date::now() as u64,
                 (js_sys::Math::random() * 1000000.0) as u32
             )
@@ -170,8 +171,7 @@ pub fn form_field(props: &FormFieldProps) -> Html {
         .add("awsui-form-field")
         .add_if(props.stretch, "awsui-form-field-stretch");
 
-    let control_wrapper_classes = ClassBuilder::new()
-        .add("awsui-form-field-control-wrapper");
+    let control_wrapper_classes = ClassBuilder::new().add("awsui-form-field-control-wrapper");
 
     html! {
         <div class={props.base.merge_classes(&root_classes.build())} id={props.base.id.clone()}>

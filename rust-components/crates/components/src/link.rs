@@ -7,12 +7,12 @@
 //! or to external resources. They support different visual variants and can display
 //! an external icon for links that open in new windows or tabs.
 
-use yew::prelude::*;
-use web_sys::{KeyboardEvent, MouseEvent};
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AnalyticsMetadata, ClickEvent, ClickDetail,
+    AnalyticsMetadata, BaseComponentProps, ClassBuilder, ClickDetail, ClickEvent,
+    ComponentMetadata, CustomEvent,
 };
+use web_sys::{KeyboardEvent, MouseEvent};
+use yew::prelude::*;
 
 /// Link variant styles
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -336,7 +336,9 @@ pub fn link(props: &LinkProps) -> Html {
     let analytics_attr = analytics.to_data_attribute();
 
     // Get external icon label
-    let external_icon_label = props.external_icon_aria_label.clone()
+    let external_icon_label = props
+        .external_icon_aria_label
+        .clone()
         .unwrap_or_else(|| "(opens in a new tab)".to_string());
 
     // Create the link content

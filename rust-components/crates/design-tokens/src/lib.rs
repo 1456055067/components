@@ -11,19 +11,19 @@
 
 use serde::{Deserialize, Serialize};
 
+pub mod borders;
 pub mod color;
+pub mod motion;
+pub mod shadows;
 pub mod spacing;
 pub mod typography;
-pub mod borders;
-pub mod shadows;
-pub mod motion;
 
+pub use borders::BorderTokens;
 pub use color::ColorTokens;
+pub use motion::MotionTokens;
+pub use shadows::ShadowTokens;
 pub use spacing::SpacingTokens;
 pub use typography::TypographyTokens;
-pub use borders::BorderTokens;
-pub use shadows::ShadowTokens;
-pub use motion::MotionTokens;
 
 /// Main design tokens structure containing all token categories
 #[derive(Debug, Clone, Serialize, Deserialize)]

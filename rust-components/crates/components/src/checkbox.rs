@@ -6,12 +6,11 @@
 //! A form control that allows users to make one or multiple selections from a list,
 //! supporting checked, unchecked, and indeterminate states.
 
-use yew::prelude::*;
-use web_sys::HtmlInputElement;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Event detail for checkbox change events
 #[derive(Debug, Clone, PartialEq)]
@@ -184,12 +183,15 @@ pub fn checkbox(props: &CheckboxProps) -> Html {
         let input_ref = input_ref.clone();
         let indeterminate = props.indeterminate;
 
-        use_effect_with((input_ref.clone(), indeterminate), move |(input_ref, indeterminate)| {
-            if let Some(input) = input_ref.cast::<HtmlInputElement>() {
-                input.set_indeterminate(*indeterminate);
-            }
-            || ()
-        });
+        use_effect_with(
+            (input_ref.clone(), indeterminate),
+            move |(input_ref, indeterminate)| {
+                if let Some(input) = input_ref.cast::<HtmlInputElement>() {
+                    input.set_indeterminate(*indeterminate);
+                }
+                || ()
+            },
+        );
     }
 
     // Handle checkbox change
@@ -339,7 +341,12 @@ pub fn checkbox(props: &CheckboxProps) -> Html {
 }
 
 /// Renders the checkbox icon based on its state
-fn render_checkbox_icon(checked: bool, indeterminate: bool, disabled: bool, read_only: bool) -> Html {
+fn render_checkbox_icon(
+    checked: bool,
+    indeterminate: bool,
+    disabled: bool,
+    read_only: bool,
+) -> Html {
     let icon_classes = ClassBuilder::new()
         .add("awsui-checkbox-icon")
         .add_if(checked, "awsui-checkbox-icon-checked")
@@ -431,11 +438,7 @@ mod tests {
         let indeterminate = true;
         let checked = false;
 
-        let next_checked = if indeterminate {
-            true
-        } else {
-            !checked
-        };
+        let next_checked = if indeterminate { true } else { !checked };
 
         assert_eq!(next_checked, true);
     }
@@ -446,11 +449,7 @@ mod tests {
         let indeterminate = false;
         let checked = true;
 
-        let next_checked = if indeterminate {
-            true
-        } else {
-            !checked
-        };
+        let next_checked = if indeterminate { true } else { !checked };
 
         assert_eq!(next_checked, false);
     }
@@ -461,11 +460,7 @@ mod tests {
         let indeterminate = false;
         let checked = false;
 
-        let next_checked = if indeterminate {
-            true
-        } else {
-            !checked
-        };
+        let next_checked = if indeterminate { true } else { !checked };
 
         assert_eq!(next_checked, true);
     }

@@ -6,12 +6,11 @@
 //! Provides an accessible radio button group with support for disabled items,
 //! descriptions, and form integration.
 
-use yew::prelude::*;
-use web_sys::HtmlInputElement;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
 
 /// Direction for radio button layout
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -170,7 +169,7 @@ pub fn radio_group(props: &RadioGroupProps) -> Html {
         .add("awsui-radio-group-root")
         .add_if(
             props.direction == RadioGroupDirection::Horizontal,
-            "awsui-radio-group-horizontal"
+            "awsui-radio-group-horizontal",
         );
 
     // Determine ARIA labelledby (form field context would set this in React)
@@ -382,7 +381,10 @@ mod tests {
 
     #[test]
     fn test_radio_group_direction_default() {
-        assert_eq!(RadioGroupDirection::default(), RadioGroupDirection::Vertical);
+        assert_eq!(
+            RadioGroupDirection::default(),
+            RadioGroupDirection::Vertical
+        );
     }
 
     #[test]
@@ -403,15 +405,13 @@ mod tests {
 
     #[test]
     fn test_radio_group_item_with_disabled() {
-        let item = RadioGroupItem::new("value1", html! { "Label" })
-            .with_disabled(true);
+        let item = RadioGroupItem::new("value1", html! { "Label" }).with_disabled(true);
         assert!(item.disabled);
     }
 
     #[test]
     fn test_radio_group_item_with_control_id() {
-        let item = RadioGroupItem::new("value1", html! { "Label" })
-            .with_control_id("custom-id");
+        let item = RadioGroupItem::new("value1", html! { "Label" }).with_control_id("custom-id");
         assert_eq!(item.control_id, Some("custom-id".to_string()));
     }
 

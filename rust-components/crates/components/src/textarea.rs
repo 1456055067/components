@@ -6,12 +6,11 @@
 //! Provides a controlled textarea input with validation states, auto-resize capabilities,
 //! and comprehensive accessibility support.
 
-use yew::prelude::*;
-use web_sys::HtmlTextAreaElement;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AriaAttributes,
+    AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::HtmlTextAreaElement;
+use yew::prelude::*;
 
 /// Event detail for change events
 #[derive(Clone, PartialEq, Debug)]
@@ -190,9 +189,9 @@ pub fn textarea(props: &TextareaProps) -> Html {
                 let value = target.value();
 
                 if let Some(callback) = &on_change {
-                    callback.emit(CustomEvent::new_non_cancelable(
-                        TextareaChangeDetail { value }
-                    ));
+                    callback.emit(CustomEvent::new_non_cancelable(TextareaChangeDetail {
+                        value,
+                    }));
                 }
             }
         })
@@ -229,9 +228,7 @@ pub fn textarea(props: &TextareaProps) -> Html {
         .add_if(!props.invalid && props.warning, "awsui-textarea-warning");
 
     // Determine autocomplete attribute
-    let autocomplete_attr = props.autocomplete.map(|ac| {
-        if ac { "on" } else { "off" }
-    });
+    let autocomplete_attr = props.autocomplete.map(|ac| if ac { "on" } else { "off" });
 
     // Determine control ID (use provided or None to let browser auto-generate)
     let textarea_id = props.control_id.clone();
@@ -243,8 +240,7 @@ pub fn textarea(props: &TextareaProps) -> Html {
     let rows = props.rows.unwrap_or(3).to_string();
 
     // Build wrapper classes
-    let wrapper_classes = ClassBuilder::new()
-        .add("awsui-textarea-wrapper");
+    let wrapper_classes = ClassBuilder::new().add("awsui-textarea-wrapper");
 
     html! {
         <span class={wrapper_classes.build()}>

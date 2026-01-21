@@ -6,12 +6,12 @@
 //! A top application bar with menu items, identity section, and utility items.
 //! This component provides the main navigation header for applications.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AnalyticsMetadata, AriaAttributes,
+    AnalyticsMetadata, AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata,
+    CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// Type of utility item in the top navigation
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -667,9 +667,10 @@ fn render_utilities(utilities: &[TopNavigationUtility]) -> Html {
         return html! {};
     }
 
-    let utility_items = utilities.iter().map(|utility| {
-        render_utility(utility)
-    }).collect::<Html>();
+    let utility_items = utilities
+        .iter()
+        .map(|utility| render_utility(utility))
+        .collect::<Html>();
 
     html! {
         <div class="awsui-top-navigation-utilities">
@@ -684,10 +685,19 @@ fn render_utilities(utilities: &[TopNavigationUtility]) -> Html {
 fn render_utility(utility: &TopNavigationUtility) -> Html {
     let utility_classes = ClassBuilder::new()
         .add("awsui-top-navigation-utility")
-        .add(format!("awsui-top-navigation-utility-type-{}", utility.utility_type.as_str()))
+        .add(format!(
+            "awsui-top-navigation-utility-type-{}",
+            utility.utility_type.as_str()
+        ))
         .add_if(utility.badge, "awsui-top-navigation-utility-badge")
-        .add_if(utility.disable_text_collapse, "awsui-top-navigation-utility-no-text-collapse")
-        .add_if(utility.disable_utility_collapse, "awsui-top-navigation-utility-no-collapse")
+        .add_if(
+            utility.disable_text_collapse,
+            "awsui-top-navigation-utility-no-text-collapse",
+        )
+        .add_if(
+            utility.disable_utility_collapse,
+            "awsui-top-navigation-utility-no-collapse",
+        )
         .build();
 
     match utility.utility_type {
@@ -743,9 +753,15 @@ fn render_button_utility(utility: &TopNavigationUtility, utility_classes: &str) 
     let variant = utility.variant.unwrap_or_default();
     let button_classes = ClassBuilder::new()
         .add("awsui-top-navigation-utility-button")
-        .add(format!("awsui-top-navigation-utility-button-variant-{}", variant.as_str()))
+        .add(format!(
+            "awsui-top-navigation-utility-button-variant-{}",
+            variant.as_str()
+        ))
         .add_if(is_disabled, "awsui-top-navigation-utility-button-disabled")
-        .add_if(utility.external, "awsui-top-navigation-utility-button-external")
+        .add_if(
+            utility.external,
+            "awsui-top-navigation-utility-button-external",
+        )
         .build();
 
     let content = html! {
@@ -895,7 +911,10 @@ mod tests {
     #[test]
     fn test_utility_button_variant_as_str() {
         assert_eq!(UtilityButtonVariant::Link.as_str(), "link");
-        assert_eq!(UtilityButtonVariant::PrimaryButton.as_str(), "primary-button");
+        assert_eq!(
+            UtilityButtonVariant::PrimaryButton.as_str(),
+            "primary-button"
+        );
     }
 
     #[test]
@@ -905,8 +924,7 @@ mod tests {
 
     #[test]
     fn test_logo_builder() {
-        let logo = TopNavigationLogo::new("logo.svg")
-            .with_alt("My Logo");
+        let logo = TopNavigationLogo::new("logo.svg").with_alt("My Logo");
 
         assert_eq!(logo.src, "logo.svg");
         assert_eq!(logo.alt, Some("My Logo".to_string()));
@@ -914,8 +932,7 @@ mod tests {
 
     #[test]
     fn test_identity_builder() {
-        let identity = TopNavigationIdentity::new("/")
-            .with_title("My App");
+        let identity = TopNavigationIdentity::new("/").with_title("My App");
 
         assert_eq!(identity.href, "/");
         assert_eq!(identity.title, Some("My App".to_string()));
@@ -1000,7 +1017,10 @@ mod tests {
             .with_overflow_menu_trigger_text("More options");
 
         assert_eq!(i18n.search_icon_aria_label, Some("Search".to_string()));
-        assert_eq!(i18n.overflow_menu_trigger_text, Some("More options".to_string()));
+        assert_eq!(
+            i18n.overflow_menu_trigger_text,
+            Some("More options".to_string())
+        );
     }
 
     #[test]

@@ -82,10 +82,7 @@ mod tests {
 
     #[test]
     fn test_classes_convenience() {
-        let result = classes()
-            .add("one")
-            .add("two")
-            .build();
+        let result = classes().add("one").add("two").build();
 
         assert_eq!(result, "one two");
     }

@@ -7,12 +7,11 @@
 //! navigation hierarchy. The last item represents the current page and is not clickable.
 //! When there are many items, the component can collapse them into an expandable dropdown.
 
-use yew::prelude::*;
-use web_sys::MouseEvent;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder, CustomEvent,
-    AnalyticsMetadata,
+    AnalyticsMetadata, BaseComponentProps, ClassBuilder, ComponentMetadata, CustomEvent,
 };
+use web_sys::MouseEvent;
+use yew::prelude::*;
 
 /// A single breadcrumb item in the navigation trail
 #[derive(Clone, PartialEq, Debug)]
@@ -181,14 +180,17 @@ pub fn breadcrumbs(props: &BreadcrumbsProps) -> Html {
     let _metadata = ComponentMetadata::new("Breadcrumbs");
 
     // Default ARIA labels
-    let aria_label = props.aria_label.clone()
+    let aria_label = props
+        .aria_label
+        .clone()
         .unwrap_or_else(|| "Breadcrumbs".to_string());
-    let _expand_aria_label = props.expand_aria_label.clone()
+    let _expand_aria_label = props
+        .expand_aria_label
+        .clone()
         .unwrap_or_else(|| "Show path".to_string());
 
     // Build component styles
-    let classes = ClassBuilder::new()
-        .add("awsui-breadcrumbs");
+    let classes = ClassBuilder::new().add("awsui-breadcrumbs");
 
     let class = props.base.merge_classes(&classes.build());
 
@@ -205,17 +207,22 @@ pub fn breadcrumbs(props: &BreadcrumbsProps) -> Html {
     let analytics_attr = analytics.to_data_attribute();
 
     // Render breadcrumb items
-    let items_html = props.items.iter().enumerate().map(|(index, item)| {
-        let is_last = index == props.items.len() - 1;
+    let items_html = props
+        .items
+        .iter()
+        .enumerate()
+        .map(|(index, item)| {
+            let is_last = index == props.items.len() - 1;
 
-        render_breadcrumb_item(
-            item,
-            index,
-            is_last,
-            props.on_click.clone(),
-            props.on_follow.clone(),
-        )
-    }).collect::<Html>();
+            render_breadcrumb_item(
+                item,
+                index,
+                is_last,
+                props.on_click.clone(),
+                props.on_follow.clone(),
+            )
+        })
+        .collect::<Html>();
 
     html! {
         <nav

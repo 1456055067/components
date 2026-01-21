@@ -7,8 +7,8 @@
 //! headers, footers, media elements, and different visual variants. It's designed
 //! to organize content sections within your application.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// Container visual variants
 ///
@@ -231,13 +231,18 @@ pub fn container(props: &ContainerProps) -> Html {
     // Build CSS classes for the root element
     let root_classes = ClassBuilder::new()
         .add("awsui-container")
-        .add(format!("awsui-container-variant-{}", props.variant.as_str()))
+        .add(format!(
+            "awsui-container-variant-{}",
+            props.variant.as_str()
+        ))
         .add_if(props.fit_height, "awsui-container-fit-height")
         .add_if(
             props.media.is_some(),
             format!(
                 "awsui-container-with-media-{}",
-                props.media.as_ref()
+                props
+                    .media
+                    .as_ref()
                     .map(|m| m.position.as_str())
                     .unwrap_or("top")
             ),
@@ -248,22 +253,37 @@ pub fn container(props: &ContainerProps) -> Html {
     // Build header classes
     let header_classes = ClassBuilder::new()
         .add("awsui-container-header")
-        .add_if(!props.disable_header_paddings, "awsui-container-header-with-paddings")
-        .add_if(props.children.is_empty(), "awsui-container-header-no-content")
+        .add_if(
+            !props.disable_header_paddings,
+            "awsui-container-header-with-paddings",
+        )
+        .add_if(
+            props.children.is_empty(),
+            "awsui-container-header-no-content",
+        )
         .build();
 
     // Build content classes
     let content_classes = ClassBuilder::new()
         .add("awsui-container-content")
-        .add_if(!props.disable_content_paddings, "awsui-container-content-with-paddings")
-        .add_if(props.header.is_some(), "awsui-container-content-with-header")
+        .add_if(
+            !props.disable_content_paddings,
+            "awsui-container-content-with-paddings",
+        )
+        .add_if(
+            props.header.is_some(),
+            "awsui-container-content-with-header",
+        )
         .add_if(props.fit_height, "awsui-container-content-fit-height")
         .build();
 
     // Build footer classes
     let footer_classes = ClassBuilder::new()
         .add("awsui-container-footer")
-        .add_if(!props.disable_footer_paddings, "awsui-container-footer-with-paddings")
+        .add_if(
+            !props.disable_footer_paddings,
+            "awsui-container-footer-with-paddings",
+        )
         .build();
 
     // Build media element with inline styles

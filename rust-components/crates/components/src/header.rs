@@ -6,11 +6,10 @@
 //! The Header component provides consistent heading styles across different hierarchy levels
 //! with support for descriptions, actions, counters, and info links.
 
-use yew::prelude::*;
 use crate::internal::{
-    BaseComponentProps, ComponentMetadata, ClassBuilder,
-    AnalyticsMetadata, AriaAttributes,
+    AnalyticsMetadata, AriaAttributes, BaseComponentProps, ClassBuilder, ComponentMetadata,
 };
+use yew::prelude::*;
 
 /// Header variant types corresponding to HTML heading levels
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -129,40 +128,54 @@ pub fn header(props: &HeaderProps) -> Html {
         .add_if(props.description.is_some(), "awsui-header-has-description");
 
     // Build CSS classes for main content area
-    let main_classes = ClassBuilder::new()
-        .add("awsui-header-main")
-        .add(format!("awsui-header-main-variant-{}", props.variant.as_str()));
+    let main_classes = ClassBuilder::new().add("awsui-header-main").add(format!(
+        "awsui-header-main-variant-{}",
+        props.variant.as_str()
+    ));
 
     // Build CSS classes for title area
-    let title_classes = ClassBuilder::new()
-        .add("awsui-header-title")
-        .add(format!("awsui-header-title-variant-{}", props.variant.as_str()));
+    let title_classes = ClassBuilder::new().add("awsui-header-title").add(format!(
+        "awsui-header-title-variant-{}",
+        props.variant.as_str()
+    ));
 
     // Build CSS classes for heading element
-    let heading_classes = ClassBuilder::new()
-        .add("awsui-header-heading")
-        .add(format!("awsui-header-heading-variant-{}", props.variant.as_str()));
+    let heading_classes = ClassBuilder::new().add("awsui-header-heading").add(format!(
+        "awsui-header-heading-variant-{}",
+        props.variant.as_str()
+    ));
 
     // Build CSS classes for heading text span
     let heading_text_classes = ClassBuilder::new()
         .add("awsui-header-heading-text")
-        .add(format!("awsui-header-heading-text-variant-{}", props.variant.as_str()));
+        .add(format!(
+            "awsui-header-heading-text-variant-{}",
+            props.variant.as_str()
+        ));
 
     // Build CSS classes for actions area
     let actions_classes = ClassBuilder::new()
         .add("awsui-header-actions")
-        .add(format!("awsui-header-actions-variant-{}", props.variant.as_str()))
+        .add(format!(
+            "awsui-header-actions-variant-{}",
+            props.variant.as_str()
+        ))
         .add("awsui-header-actions-centered");
 
     // Build CSS classes for description
     let description_classes = ClassBuilder::new()
         .add("awsui-header-description")
-        .add(format!("awsui-header-description-variant-{}", props.variant.as_str()));
+        .add(format!(
+            "awsui-header-description-variant-{}",
+            props.variant.as_str()
+        ));
 
     // Build analytics metadata
     let analytics = AnalyticsMetadata {
         action: Some("header".to_string()),
-        detail: Some(serde_json::Value::String(props.variant.as_str().to_string())),
+        detail: Some(serde_json::Value::String(
+            props.variant.as_str().to_string(),
+        )),
         component: None,
     };
     let analytics_attr = serde_json::to_string(&analytics).ok();

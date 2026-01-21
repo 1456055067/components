@@ -120,7 +120,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (32 Total)
+### Implemented (33 Total)
 
 #### Basic Components
 - ✅ **Badge** - Small visual indicator for labels and metadata
@@ -166,12 +166,16 @@ fn app() -> Html {
 - ✅ **KeyValuePairs** - Structured key-value pair display
 - ✅ **ExpandableSection** - Collapsible content sections
 
+#### Overlay Components
+
+- ✅ **Modal** - Dialog/modal component with size variants and dismiss handling
+
 ### Planned
 
 - ⏳ **Table** - Data table with sorting and filtering
-- ⏳ **Modal** - Dialog component
 - ⏳ **Flashbar** - Notification message container
 - ⏳ **Popover** - Popover/tooltip overlay
+- ⏳ **Drawer** - Side drawer panel
 - ⏳ More components coming...
 
 ## Design Tokens

@@ -5,8 +5,8 @@
 //!
 //! A layout utility component for controlling spacing, typography, and display properties.
 
-use yew::prelude::*;
 use crate::internal::{BaseComponentProps, ClassBuilder};
+use yew::prelude::*;
 
 /// Box HTML tag variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

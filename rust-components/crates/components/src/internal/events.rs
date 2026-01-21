@@ -85,10 +85,7 @@ impl ClickEvent {
 
     /// Checks if any modifier keys are pressed
     pub fn has_modifier_keys(&self) -> bool {
-        self.detail.ctrl_key
-            || self.detail.shift_key
-            || self.detail.alt_key
-            || self.detail.meta_key
+        self.detail.ctrl_key || self.detail.shift_key || self.detail.alt_key || self.detail.meta_key
     }
 }
 
