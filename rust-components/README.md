@@ -35,11 +35,13 @@ rust-components/
 ## Prerequisites
 
 1. **Rust**: Install from [rustup.rs](https://rustup.rs/)
+
    ```bash
    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
    ```
 
 2. **wasm-pack**: Install for building WASM
+
    ```bash
    cargo install wasm-pack
    ```
@@ -123,6 +125,7 @@ fn app() -> Html {
 ### Implemented (33 Total)
 
 #### Basic Components
+
 - ✅ **Badge** - Small visual indicator for labels and metadata
 - ✅ **Spinner** - Loading indicator with animation
 - ✅ **Box** - Layout utility for spacing and typography
@@ -132,6 +135,7 @@ fn app() -> Html {
 - ✅ **Icon** - SVG icon component with built-in and custom icon support
 
 #### Form Components
+
 - ✅ **Input** - Text input field with validation and multiple types
 - ✅ **Checkbox** - Checkbox input with indeterminate state support
 - ✅ **Toggle** - Toggle switch component (on/off control)
@@ -146,6 +150,7 @@ fn app() -> Html {
 - ✅ **FileUpload** - File upload with drag-and-drop
 
 #### Layout Components
+
 - ✅ **Container** - Content container with header, footer, and media slots
 - ✅ **Header** - Page and section headers (H1/H2/H3)
 - ✅ **AppLayout** - Main application shell with navigation, tools, and split panel
@@ -169,6 +174,14 @@ fn app() -> Html {
 #### Overlay Components
 
 - ✅ **Modal** - Dialog/modal component with size variants and dismiss handling
+
+#### Navigation Components
+
+- ✅ **Tabs** - Tabbed navigation with active state and dismissible tabs
+- ✅ **SideNavigation** - Sidebar navigation with hierarchical items
+- ✅ **Breadcrumbs** - Breadcrumb trail for navigation hierarchy
+- ✅ **Pagination** - Page navigation with next/previous and page numbers
+- ✅ **TopNavigation** - Top application bar with menu items and utilities
 
 ### Planned
 
