@@ -1,0 +1,29 @@
+# Cargo configuration for Cloudscape Rust components
+# Optimizations for WASM build size and performance
+
+[build]
+# Use incremental compilation for faster rebuilds in development
+incremental = true
+
+[target.wasm32-unknown-unknown]
+# Optimize for size in release builds
+rustflags = [
+  "-C", "link-arg=--no-entry",
+  "-C", "opt-level=z",
+  "-C", "lto=fat",
+  "-C", "codegen-units=1",
+]
+
+[profile.release]
+# Maximum size optimization
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+# Faster compilation in development
+opt-level = 0
+debug = true
+incremental = true

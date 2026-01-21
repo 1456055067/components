@@ -15,3 +15,9 @@ vendor/generated-*.txt
 .vscode
 # System
 .DS_Store
+
+# Rust components
+rust-components/target
+rust-components/dist
+rust-components/**/target
+shared-design-tokens/outputs
