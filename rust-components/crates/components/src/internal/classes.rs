@@ -12,6 +12,7 @@ pub struct ClassBuilder {
     classes: Vec<String>,
 }
 
+#[allow(clippy::should_implement_trait)]
 impl ClassBuilder {
     /// Creates a new class builder
     pub fn new() -> Self {

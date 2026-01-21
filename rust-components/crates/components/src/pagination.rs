@@ -31,6 +31,7 @@ pub struct PaginationPageClickDetail {
 
 /// I18n strings for pagination component
 #[derive(Clone, PartialEq)]
+#[allow(unpredictable_function_pointer_comparisons)]
 pub struct PaginationI18nStrings {
     /// Label for the pagination navigation
     pub pagination_label: Option<String>,

@@ -482,7 +482,6 @@ fn render_file_item(
 ) -> Html {
     let on_remove_click = {
         let on_remove = on_remove.clone();
-        let index = index;
 
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();

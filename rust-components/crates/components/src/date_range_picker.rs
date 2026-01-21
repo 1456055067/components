@@ -131,6 +131,7 @@ impl DateRange {
     }
 }
 
+type DateRangeValidator = Callback<(Option<String>, Option<String>), bool>;
 
 /// A relative date range option
 #[derive(Clone, PartialEq, Debug)]
@@ -234,7 +235,7 @@ pub struct DateRangePickerProps {
     ///
     /// Receives (start, end) and returns true if the range is valid
     #[prop_or_default]
-    pub is_valid_range: Option<Callback<(Option<String>, Option<String>), bool>>,
+    pub is_valid_range: Option<DateRangeValidator>,
 
     /// ARIA attributes
     #[prop_or_default]

@@ -666,7 +666,7 @@ fn render_calendar(
 
                 // Calendar grid
                 <div class="awsui-date-picker-grid" role="grid">
-                    {render_calendar_days(
+                    {render_calendar_days(CalendarDaysConfig {
                         year,
                         month,
                         days_in_month,
@@ -675,7 +675,7 @@ fn render_calendar(
                         today,
                         focused_day,
                         on_day_select,
-                    )}
+                    })}
                 </div>
 
                 // Footer with "Today" button
@@ -695,7 +695,7 @@ fn render_calendar(
 }
 
 /// Render the calendar days grid
-fn render_calendar_days(
+struct CalendarDaysConfig {
     year: i32,
     month: u32,
     days_in_month: u32,
@@ -704,7 +704,19 @@ fn render_calendar_days(
     today: DateValue,
     focused_day: u32,
     on_day_select: Callback<u32>,
-) -> Html {
+}
+
+fn render_calendar_days(config: CalendarDaysConfig) -> Html {
+    let CalendarDaysConfig {
+        year,
+        month,
+        days_in_month,
+        first_day,
+        selected_date,
+        today,
+        focused_day,
+        on_day_select,
+    } = config;
     let mut days = Vec::new();
 
     // Add empty cells for days before the first day of the month

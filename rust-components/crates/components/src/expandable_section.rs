@@ -204,7 +204,6 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
     let on_toggle = {
         let internal_expanded = internal_expanded.clone();
         let on_change = props.on_change.clone();
-        let is_controlled = is_controlled;
 
         Callback::from(move |new_expanded: bool| {
             // Update internal state if uncontrolled
@@ -226,7 +225,6 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
     // Click handler
     let onclick = {
         let on_toggle = on_toggle.clone();
-        let expanded = expanded;
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             on_toggle.emit(!expanded);
@@ -236,7 +234,6 @@ pub fn expandable_section(props: &ExpandableSectionProps) -> Html {
     // Keyboard handler
     let onkeydown = {
         let on_toggle = on_toggle.clone();
-        let expanded = expanded;
         Callback::from(move |e: KeyboardEvent| {
             let key = e.key();
             if key == "Enter" || key == " " {

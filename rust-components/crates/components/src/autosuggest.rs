@@ -360,9 +360,7 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
     let on_key_down = {
         let is_open = is_open.clone();
         let highlighted_index = highlighted_index.clone();
-        let total_items = total_items;
         let on_select = props.on_select.clone();
-        let show_entered_text = show_entered_text;
         let filtered_options = filtered_options.clone();
         let value = props.value.clone();
 
