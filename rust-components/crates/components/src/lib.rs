@@ -21,6 +21,12 @@ pub mod input;
 pub mod checkbox;
 pub mod radio_group;
 pub mod toggle;
+pub mod header;
+pub mod textarea;
+pub mod container;
+pub mod select;
+pub mod link;
+pub mod icon;
 
 // Internal utilities
 pub mod internal;
@@ -35,6 +41,12 @@ pub use input::{Input, InputProps, InputType, InputChangeDetail};
 pub use checkbox::{Checkbox, CheckboxProps, CheckboxChangeDetail};
 pub use radio_group::{RadioGroup, RadioGroupProps, RadioGroupItem, RadioGroupChangeDetail, RadioGroupDirection};
 pub use toggle::{Toggle, ToggleProps, ToggleChangeDetail};
+pub use header::{Header, HeaderProps, HeaderVariant};
+pub use textarea::{Textarea, TextareaProps, TextareaChangeDetail};
+pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPosition};
+pub use select::{Select, SelectProps, SelectOption, SelectChangeDetail};
+pub use icon::{Icon, IconProps, IconSize, IconVariant};
+pub use link::{Link, LinkProps, LinkVariant, LinkFontSize, LinkColor, FollowDetail, FollowEvent};
 
 // Re-export commonly used internal types
 pub use internal::CustomEvent;

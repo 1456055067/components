@@ -120,7 +120,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented
+### Implemented (15 Total)
 
 - ✅ **Badge** - Small visual indicator for labels and metadata
 - ✅ **Spinner** - Loading indicator with animation
@@ -131,14 +131,20 @@ fn app() -> Html {
 - ✅ **Checkbox** - Checkbox input with indeterminate state support
 - ✅ **Toggle** - Toggle switch component (on/off control)
 - ✅ **RadioGroup** - Radio button group with multiple options
+- ✅ **Select** - Dropdown selection with keyboard navigation
+- ✅ **Textarea** - Multi-line text input with auto-resize
+- ✅ **Link** - Hyperlink with external icon support
+- ✅ **Container** - Content container with header, footer, and media slots
+- ✅ **Header** - Page and section headers (H1/H2/H3)
+- ✅ **Icon** - SVG icon component with built-in and custom icon support
 
 ### Planned
 
-- ⏳ **Select** - Dropdown selection
 - ⏳ **FormField** - Form field wrapper with label and validation
-- ⏳ **TextArea** - Multi-line text input
 - ⏳ **Table** - Data table with sorting and filtering
 - ⏳ **Modal** - Dialog component
+- ⏳ **Tabs** - Tabbed navigation
+- ⏳ **Pagination** - Page navigation controls
 - ⏳ More components coming...
 
 ## Design Tokens
