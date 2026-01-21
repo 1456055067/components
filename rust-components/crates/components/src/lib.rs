@@ -160,7 +160,6 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 ///
 /// This should be called once when your application starts.
 /// It sets up any necessary global state or configuration.
-#[wasm_bindgen(start)]
 pub fn init() {
     // Initialization code can be added here as needed
     // For example: panic hooks, logging setup, etc.
