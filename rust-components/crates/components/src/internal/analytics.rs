@@ -12,18 +12,15 @@ use serde_json::json;
 /// Label identifier for analytics
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
+#[derive(Default)]
 pub enum LabelIdentifier {
     /// String label
     String(String),
     /// Root component identifier
+    #[default]
     Root,
 }
 
-impl Default for LabelIdentifier {
-    fn default() -> Self {
-        LabelIdentifier::Root
-    }
-}
 
 impl From<String> for LabelIdentifier {
     fn from(s: String) -> Self {

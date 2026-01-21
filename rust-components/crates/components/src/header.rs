@@ -13,20 +13,17 @@ use yew::prelude::*;
 
 /// Header variant types corresponding to HTML heading levels
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum HeaderVariant {
     /// Page-level header (h1 tag)
     H1,
     /// Container-level header (h2 tag) - default
+    #[default]
     H2,
     /// Section-level header (h3 tag)
     H3,
 }
 
-impl Default for HeaderVariant {
-    fn default() -> Self {
-        Self::H2
-    }
-}
 
 impl HeaderVariant {
     /// Returns the CSS class suffix for this variant

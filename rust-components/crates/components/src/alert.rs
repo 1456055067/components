@@ -13,8 +13,10 @@ use yew::prelude::*;
 
 /// Alert type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum AlertType {
     /// Informational message (default)
+    #[default]
     Info,
     /// Success confirmation message
     Success,
@@ -24,11 +26,6 @@ pub enum AlertType {
     Error,
 }
 
-impl Default for AlertType {
-    fn default() -> Self {
-        Self::Info
-    }
-}
 
 impl AlertType {
     /// Returns the CSS class name for this alert type

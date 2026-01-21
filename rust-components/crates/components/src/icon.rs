@@ -153,11 +153,11 @@ pub fn icon(props: &IconProps) -> Html {
     // Build component styles
     let mut styles = ComponentStyles::new();
     styles.add_class("awsui-icon");
-    styles.add_class(&format!("awsui-icon-size-{}", props.size.as_str()));
-    styles.add_class(&format!("awsui-icon-variant-{}", props.variant.as_str()));
+    styles.add_class(format!("awsui-icon-size-{}", props.size.as_str()));
+    styles.add_class(format!("awsui-icon-variant-{}", props.variant.as_str()));
 
     if !props.name.is_empty() {
-        styles.add_class(&format!("awsui-icon-name-{}", props.name));
+        styles.add_class(format!("awsui-icon-name-{}", props.name));
     }
 
     let class = props.base.merge_classes(&styles.class_attr());

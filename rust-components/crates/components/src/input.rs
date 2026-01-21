@@ -13,8 +13,10 @@ use yew::prelude::*;
 
 /// Input type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum InputType {
     /// Standard text input
+    #[default]
     Text,
     /// Password input (masked)
     Password,
@@ -28,11 +30,6 @@ pub enum InputType {
     Url,
 }
 
-impl Default for InputType {
-    fn default() -> Self {
-        Self::Text
-    }
-}
 
 impl InputType {
     /// Returns the HTML input type attribute value

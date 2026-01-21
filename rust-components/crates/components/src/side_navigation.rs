@@ -400,11 +400,10 @@ fn init_expanded_state(
 /// Checks if any item in the list has the given href
 fn contains_active_href(items: &[SideNavigationItem], href: &str) -> bool {
     items.iter().any(|item| {
-        if let Some(ref item_href) = item.href {
-            if item_href == href {
+        if let Some(ref item_href) = item.href
+            && item_href == href {
                 return true;
             }
-        }
         if !item.items.is_empty() {
             return contains_active_href(&item.items, href);
         }
@@ -563,8 +562,8 @@ fn render_link_item(
                 if !item.external {
                     e.prevent_default();
                 }
-                if let Some(ref callback) = on_follow {
-                    if let Some(ref href) = item.href {
+                if let Some(ref callback) = on_follow
+                    && let Some(ref href) = item.href {
                         callback.emit(CustomEvent::new(FollowDetail {
                             href: href.clone(),
                             external: item.external,
@@ -572,7 +571,6 @@ fn render_link_item(
                             item_type: SideNavigationItemType::Link,
                         }));
                     }
-                }
             }
         })
     };
@@ -751,8 +749,8 @@ fn render_expandable_group_item(
             // Only fire for plain left clicks
             if e.button() == 0 && !e.ctrl_key() && !e.shift_key() && !e.alt_key() && !e.meta_key() {
                 e.prevent_default();
-                if let Some(ref callback) = on_follow {
-                    if let Some(ref href) = item.href {
+                if let Some(ref callback) = on_follow
+                    && let Some(ref href) = item.href {
                         callback.emit(CustomEvent::new(FollowDetail {
                             href: href.clone(),
                             external: false,
@@ -760,7 +758,6 @@ fn render_expandable_group_item(
                             item_type: SideNavigationItemType::ExpandableLinkGroup,
                         }));
                     }
-                }
             }
         })
     };

@@ -84,7 +84,7 @@ pub fn badge(props: &BadgeProps) -> Html {
     // Build component styles
     let mut styles = ComponentStyles::new();
     styles.add_class("awsui-badge");
-    styles.add_class(&format!("awsui-badge-color-{}", props.color.as_str()));
+    styles.add_class(format!("awsui-badge-color-{}", props.color.as_str()));
 
     // Apply style overrides if provided
     if let Some(ref badge_style) = props.style {

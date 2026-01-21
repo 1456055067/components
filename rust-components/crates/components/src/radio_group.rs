@@ -14,18 +14,15 @@ use yew::prelude::*;
 
 /// Direction for radio button layout
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum RadioGroupDirection {
     /// Stack radio buttons vertically (default)
+    #[default]
     Vertical,
     /// Arrange radio buttons horizontally
     Horizontal,
 }
 
-impl Default for RadioGroupDirection {
-    fn default() -> Self {
-        Self::Vertical
-    }
-}
 
 /// A single radio button item in the group
 #[derive(Clone, PartialEq)]
@@ -209,15 +206,14 @@ pub fn radio_group(props: &RadioGroupProps) -> Html {
 
                     // Handle selection
                     let on_select = Callback::from(move |_e: Event| {
-                        if !read_only && !item_disabled {
-                            if let Some(callback) = &on_change {
+                        if !read_only && !item_disabled
+                            && let Some(callback) = &on_change {
                                 callback.emit(CustomEvent::new_non_cancelable(
                                     RadioGroupChangeDetail {
                                         value: item_value.clone(),
                                     }
                                 ));
                             }
-                        }
                     });
 
                     // Generate control ID

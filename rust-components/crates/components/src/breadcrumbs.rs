@@ -286,8 +286,8 @@ fn render_breadcrumb_item(
             }
 
             // Fire follow event for plain left clicks without modifiers
-            if is_plain_left_click(&e) {
-                if let Some(ref cb) = on_follow_cb {
+            if is_plain_left_click(&e)
+                && let Some(ref cb) = on_follow_cb {
                     let event = BreadcrumbFollowEvent::new(detail);
                     cb.emit(event.clone());
 
@@ -296,7 +296,6 @@ fn render_breadcrumb_item(
                         e.prevent_default();
                     }
                 }
-            }
         }))
     } else {
         None

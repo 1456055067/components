@@ -214,7 +214,7 @@ pub fn button(props: &ButtonProps) -> Html {
     // Build component styles
     let mut styles = ComponentStyles::new();
     styles.add_class("awsui-button");
-    styles.add_class(&format!("awsui-button-variant-{}", props.variant.as_str()));
+    styles.add_class(format!("awsui-button-variant-{}", props.variant.as_str()));
 
     if is_disabled {
         styles.add_class("awsui-button-disabled");
@@ -266,8 +266,7 @@ pub fn button(props: &ButtonProps) -> Html {
     let external_icon_label = props
         .i18n_strings
         .as_ref()
-        .and_then(|i18n| i18n.get("externalIconAriaLabel"))
-        .map(|s| s.clone())
+        .and_then(|i18n| i18n.get("externalIconAriaLabel")).cloned()
         .unwrap_or_else(|| "(opens in a new tab)".to_string());
 
     // Build button content

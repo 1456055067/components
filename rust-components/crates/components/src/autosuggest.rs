@@ -15,18 +15,15 @@ use yew::prelude::*;
 
 /// Filtering type for autosuggest options
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum FilteringType {
     /// No filtering, show all options
     None,
     /// Automatically filter options based on input value
+    #[default]
     Auto,
 }
 
-impl Default for FilteringType {
-    fn default() -> Self {
-        Self::Auto
-    }
-}
 
 /// A single option in the autosuggest dropdown
 #[derive(Clone, PartialEq, Debug)]
@@ -413,9 +410,9 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                         } else {
                             // Selected an option
                             let option_idx = if show_entered_text { idx - 1 } else { idx };
-                            if let Some(option) = filtered_options.get(option_idx) {
-                                if !option.disabled {
-                                    if let Some(callback) = &on_select {
+                            if let Some(option) = filtered_options.get(option_idx)
+                                && !option.disabled
+                                    && let Some(callback) = &on_select {
                                         callback.emit(CustomEvent::new_non_cancelable(
                                             AutosuggestSelectDetail {
                                                 value: option.value.clone(),
@@ -423,8 +420,6 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                                             },
                                         ));
                                     }
-                                }
-                            }
                         }
 
                         is_open.set(false);
@@ -520,7 +515,7 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                     <ul class="awsui-autosuggest-options-list">
                         // "Use entered text" option
                         if show_entered_text {
-                            {(|| {
+                            {{
                                 let is_highlighted = *highlighted_index == 0;
                                 let value = props.value.clone();
                                 let on_select = on_option_select.clone();
@@ -548,7 +543,7 @@ pub fn autosuggest(props: &AutosuggestProps) -> Html {
                                         </span>
                                     </li>
                                 }
-                            })()}
+                            }}
                         }
 
                         // Regular options

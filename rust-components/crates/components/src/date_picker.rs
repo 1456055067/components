@@ -110,7 +110,7 @@ struct DateValue {
 impl DateValue {
     /// Create a new date value
     fn new(year: i32, month: u32, day: u32) -> Option<Self> {
-        if month < 1 || month > 12 {
+        if !(1..=12).contains(&month) {
             return None;
         }
         let days_in_month = get_days_in_month(year, month);
@@ -280,7 +280,7 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
     let _metadata = ComponentMetadata::new("DatePicker");
     let input_ref = use_node_ref();
     let is_calendar_open = use_state(|| false);
-    let input_text = use_state(|| String::new());
+    let input_text = use_state(String::new);
 
     // Parse current value to determine displayed month
     let current_value = parse_date(&props.value);
@@ -329,24 +329,22 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
 
         Callback::from(move |_e: FocusEvent| {
             // Try to parse the input text
-            if let Some(date) = parse_date_display(&*input_text) {
+            if let Some(date) = parse_date_display(&input_text) {
                 let new_value = date.format();
-                if new_value != value {
-                    if let Some(callback) = &on_change {
+                if new_value != value
+                    && let Some(callback) = &on_change {
                         callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
                             value: new_value,
                         }));
                     }
-                }
             } else if input_text.is_empty() {
                 // Clear the value
-                if !value.is_empty() {
-                    if let Some(callback) = &on_change {
+                if !value.is_empty()
+                    && let Some(callback) = &on_change {
                         callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
                             value: String::new(),
                         }));
                     }
-                }
             } else {
                 // Invalid input - revert to current value
                 if let Some(date) = parse_date(&value) {
@@ -395,13 +393,12 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
 
         Callback::from(move |day: u32| {
             let (year, month) = *displayed_month;
-            if let Some(date) = DateValue::new(year, month, day) {
-                if let Some(callback) = &on_change {
+            if let Some(date) = DateValue::new(year, month, day)
+                && let Some(callback) = &on_change {
                     callback.emit(CustomEvent::new_non_cancelable(DatePickerChangeDetail {
                         value: date.format(),
                     }));
                 }
-            }
             is_calendar_open.set(false);
         })
     };
@@ -413,12 +410,12 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         Callback::from(move |e: web_sys::MouseEvent| {
             e.prevent_default();
             let (year, month) = *displayed_month;
-            let new_month = if month == 1 {
+            if month == 1 {
                 displayed_month.set((year - 1, 12));
             } else {
                 displayed_month.set((year, month - 1));
             };
-            new_month
+            
         })
     };
 
@@ -429,12 +426,12 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
         Callback::from(move |e: web_sys::MouseEvent| {
             e.prevent_default();
             let (year, month) = *displayed_month;
-            let new_month = if month == 12 {
+            if month == 12 {
                 displayed_month.set((year + 1, 1));
             } else {
                 displayed_month.set((year, month + 1));
             };
-            new_month
+            
         })
     };
 
@@ -502,15 +499,14 @@ pub fn date_picker(props: &DatePickerProps) -> Html {
                 }
                 "Enter" | " " => {
                     e.prevent_default();
-                    if let Some(date) = DateValue::new(year, month, current_day) {
-                        if let Some(callback) = &on_change {
+                    if let Some(date) = DateValue::new(year, month, current_day)
+                        && let Some(callback) = &on_change {
                             callback.emit(CustomEvent::new_non_cancelable(
                                 DatePickerChangeDetail {
                                     value: date.format(),
                                 },
                             ));
                         }
-                    }
                     is_calendar_open.set(false);
                 }
                 "Escape" => {

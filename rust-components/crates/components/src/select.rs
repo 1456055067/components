@@ -241,13 +241,12 @@ pub fn select(props: &SelectProps) -> Html {
         Callback::from(move |option: SelectOption| {
             is_open.set(false);
 
-            if !option.disabled {
-                if let Some(callback) = &on_change {
+            if !option.disabled
+                && let Some(callback) = &on_change {
                     callback.emit(CustomEvent::new_non_cancelable(SelectChangeDetail {
                         selected_option: option,
                     }));
                 }
-            }
         })
     };
 
@@ -333,8 +332,8 @@ pub fn select(props: &SelectProps) -> Html {
                     e.prevent_default();
                     if *is_open {
                         // Select highlighted option
-                        if let Some(option) = options.get(*highlighted_index) {
-                            if !option.disabled {
+                        if let Some(option) = options.get(*highlighted_index)
+                            && !option.disabled {
                                 if let Some(callback) = &on_change {
                                     callback.emit(CustomEvent::new_non_cancelable(
                                         SelectChangeDetail {
@@ -344,7 +343,6 @@ pub fn select(props: &SelectProps) -> Html {
                                 }
                                 is_open.set(false);
                             }
-                        }
                     } else {
                         is_open.set(true);
                     }
@@ -389,14 +387,13 @@ pub fn select(props: &SelectProps) -> Html {
     use_effect_with((props.selected_option.clone(), props.options.clone()), {
         let highlighted_index = highlighted_index.clone();
         move |(selected, options)| {
-            if let Some(selected_opt) = selected {
-                if let Some(index) = options
+            if let Some(selected_opt) = selected
+                && let Some(index) = options
                     .iter()
                     .position(|opt| opt.value == selected_opt.value)
                 {
                     highlighted_index.set(index);
                 }
-            }
             || ()
         }
     });

@@ -14,18 +14,15 @@ use yew::prelude::*;
 ///
 /// Determines the spacing and layout behavior of the column grid.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum ColumnVariant {
     /// Default layout for general content
+    #[default]
     Default,
     /// Text-focused layout with equal width columns optimized for readability
     TextGrid,
 }
 
-impl Default for ColumnVariant {
-    fn default() -> Self {
-        Self::Default
-    }
-}
 
 impl ColumnVariant {
     /// Returns the CSS class name suffix for this variant
@@ -41,8 +38,10 @@ impl ColumnVariant {
 ///
 /// Controls dividers between rows and columns.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum BordersType {
     /// No borders
+    #[default]
     None,
     /// Vertical borders between columns
     Vertical,
@@ -52,11 +51,6 @@ pub enum BordersType {
     All,
 }
 
-impl Default for BordersType {
-    fn default() -> Self {
-        Self::None
-    }
-}
 
 impl BordersType {
     /// Returns the CSS class name suffix for this border type

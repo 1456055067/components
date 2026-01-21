@@ -16,10 +16,12 @@ use yew::prelude::*;
 
 /// Link variant styles
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum LinkVariant {
     /// Primary variant - bold styling for sufficient contrast (default in some contexts)
     Primary,
     /// Secondary variant - minimal styling, underline on hover (default)
+    #[default]
     Secondary,
     /// Info variant - used for info links that open help panels
     Info,
@@ -27,11 +29,6 @@ pub enum LinkVariant {
     ValueLarge,
 }
 
-impl Default for LinkVariant {
-    fn default() -> Self {
-        Self::Secondary
-    }
-}
 
 impl LinkVariant {
     pub fn as_str(&self) -> &'static str {
@@ -46,8 +43,10 @@ impl LinkVariant {
 
 /// Font size options for links
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum LinkFontSize {
     BodyS,
+    #[default]
     BodyM,
     HeadingXs,
     HeadingS,
@@ -58,11 +57,6 @@ pub enum LinkFontSize {
     Inherit,
 }
 
-impl Default for LinkFontSize {
-    fn default() -> Self {
-        Self::BodyM
-    }
-}
 
 impl LinkFontSize {
     pub fn as_str(&self) -> &'static str {
@@ -82,18 +76,15 @@ impl LinkFontSize {
 
 /// Color options for links
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum LinkColor {
     /// Normal color (default)
+    #[default]
     Normal,
     /// Inverted color (for use in Flashbars and dark backgrounds)
     Inverted,
 }
 
-impl Default for LinkColor {
-    fn default() -> Self {
-        Self::Normal
-    }
-}
 
 impl LinkColor {
     pub fn as_str(&self) -> &'static str {
@@ -467,8 +458,8 @@ fn create_click_handler(
         }
 
         // Fire follow event for plain left clicks (or all clicks if button)
-        if is_button || is_plain_left_click(&e) {
-            if let Some(ref cb) = on_follow {
+        if (is_button || is_plain_left_click(&e))
+            && let Some(ref cb) = on_follow {
                 let follow_detail = FollowDetail {
                     href: href.clone(),
                     external,
@@ -482,7 +473,6 @@ fn create_click_handler(
                     e.prevent_default();
                 }
             }
-        }
     })
 }
 

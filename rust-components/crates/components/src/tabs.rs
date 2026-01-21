@@ -251,7 +251,7 @@ pub fn tabs(props: &TabsProps) -> Html {
     let _metadata = ComponentMetadata::new("Tabs");
 
     // Track which tabs have been viewed for lazy loading
-    let viewed_tabs = use_state(|| HashSet::new());
+    let viewed_tabs = use_state(HashSet::new);
 
     // Determine the active tab ID
     let active_tab_id = if let Some(ref id) = props.active_tab_id {
@@ -287,16 +287,14 @@ pub fn tabs(props: &TabsProps) -> Html {
         let tabs = props.tabs.clone();
 
         Callback::from(move |tab_id: String| {
-            if let Some(tab) = tabs.iter().find(|t| t.id == tab_id) {
-                if !tab.disabled {
-                    if let Some(ref callback) = on_change {
+            if let Some(tab) = tabs.iter().find(|t| t.id == tab_id)
+                && !tab.disabled
+                    && let Some(ref callback) = on_change {
                         callback.emit(CustomEvent::new_non_cancelable(TabChangeDetail {
                             active_tab_id: tab_id,
                             active_tab_href: tab.href.clone(),
                         }));
                     }
-                }
-            }
         })
     };
 
@@ -314,7 +312,7 @@ pub fn tabs(props: &TabsProps) -> Html {
     // Build container classes
     let container_classes = ClassBuilder::new()
         .add("awsui-tabs")
-        .add(&format!("awsui-tabs-variant-{}", props.variant.as_str()))
+        .add(format!("awsui-tabs-variant-{}", props.variant.as_str()))
         .add_if(props.fit_to_container, "awsui-tabs-fit-container");
 
     // Build tab list classes

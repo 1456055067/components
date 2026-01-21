@@ -12,8 +12,10 @@ use yew::prelude::*;
 
 /// Content type determines the layout and spacing behavior
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum ContentType {
     /// Default content type with standard padding
+    #[default]
     Default,
     /// Dashboard layout with grid-friendly spacing
     Dashboard,
@@ -27,11 +29,6 @@ pub enum ContentType {
     Cards,
 }
 
-impl Default for ContentType {
-    fn default() -> Self {
-        Self::Default
-    }
-}
 
 impl ContentType {
     /// Returns the CSS class suffix for this content type
@@ -49,18 +46,15 @@ impl ContentType {
 
 /// Split panel position configuration
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum SplitPanelPosition {
     /// Split panel positioned at the bottom of the content area
+    #[default]
     Bottom,
     /// Split panel positioned on the side of the content area
     Side,
 }
 
-impl Default for SplitPanelPosition {
-    fn default() -> Self {
-        Self::Bottom
-    }
-}
 
 impl SplitPanelPosition {
     /// Returns the CSS class suffix for this position
@@ -74,6 +68,7 @@ impl SplitPanelPosition {
 
 /// Split panel preferences configuration
 #[derive(Clone, PartialEq)]
+#[derive(Default)]
 pub struct SplitPanelPreferences {
     /// Position of the split panel (bottom or side)
     pub position: SplitPanelPosition,
@@ -82,14 +77,6 @@ pub struct SplitPanelPreferences {
     pub size: Option<u32>,
 }
 
-impl Default for SplitPanelPreferences {
-    fn default() -> Self {
-        Self {
-            position: SplitPanelPosition::default(),
-            size: None,
-        }
-    }
-}
 
 impl SplitPanelPreferences {
     /// Creates new split panel preferences with default values

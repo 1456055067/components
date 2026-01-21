@@ -81,8 +81,10 @@ impl MultiselectOption {
 
 /// Filtering behavior for the multiselect
 #[derive(Clone, PartialEq, Debug)]
+#[derive(Default)]
 pub enum FilteringType {
     /// No filtering
+    #[default]
     None,
     /// Automatic client-side filtering
     Auto,
@@ -90,11 +92,6 @@ pub enum FilteringType {
     Manual,
 }
 
-impl Default for FilteringType {
-    fn default() -> Self {
-        FilteringType::None
-    }
-}
 
 /// Event detail for multiselect change events
 #[derive(Clone, PartialEq)]
@@ -253,7 +250,7 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
     let multiselect_ref = use_node_ref();
     let is_open = use_state(|| false);
     let highlighted_index = use_state(|| 0usize);
-    let filter_text = use_state(|| String::new());
+    let filter_text = use_state(String::new);
 
     let keep_open = props.keep_open.unwrap_or(true);
     let token_limit = props.token_limit.unwrap_or(3);
@@ -275,7 +272,7 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                             || opt
                                 .description
                                 .as_ref()
-                                .map_or(false, |d| d.to_lowercase().contains(&filter_lower))
+                                .is_some_and(|d| d.to_lowercase().contains(&filter_lower))
                     })
                     .cloned()
                     .collect::<Vec<_>>()
@@ -454,8 +451,8 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                     e.prevent_default();
                     if *is_open && !filtered_options.is_empty() {
                         // Toggle highlighted option
-                        if let Some(option) = filtered_options.get(*highlighted_index) {
-                            if !option.disabled {
+                        if let Some(option) = filtered_options.get(*highlighted_index)
+                            && !option.disabled {
                                 let mut new_selection = selected_options.clone();
 
                                 if let Some(pos) = new_selection
@@ -479,7 +476,6 @@ pub fn multiselect(props: &MultiselectProps) -> Html {
                                     is_open.set(false);
                                 }
                             }
-                        }
                     } else {
                         is_open.set(true);
                     }

@@ -10,7 +10,9 @@ use yew::prelude::*;
 
 /// Box HTML tag variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum BoxVariant {
+    #[default]
     Div,
     Span,
     H1,
@@ -27,11 +29,6 @@ pub enum BoxVariant {
     AwsuiValueLarge,
 }
 
-impl Default for BoxVariant {
-    fn default() -> Self {
-        BoxVariant::Div
-    }
-}
 
 impl BoxVariant {
     fn as_str(&self) -> &'static str {

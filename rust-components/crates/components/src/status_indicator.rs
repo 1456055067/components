@@ -13,6 +13,7 @@ use yew::prelude::*;
 
 /// Status indicator type variants
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum StatusIndicatorType {
     /// Success status
     Success,
@@ -21,6 +22,7 @@ pub enum StatusIndicatorType {
     /// Warning status
     Warning,
     /// Informational status (default)
+    #[default]
     Info,
     /// Stopped status
     Stopped,
@@ -32,11 +34,6 @@ pub enum StatusIndicatorType {
     Loading,
 }
 
-impl Default for StatusIndicatorType {
-    fn default() -> Self {
-        Self::Info
-    }
-}
 
 impl StatusIndicatorType {
     /// Returns the CSS class name for this status type

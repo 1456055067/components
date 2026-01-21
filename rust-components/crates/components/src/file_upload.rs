@@ -69,11 +69,10 @@ impl FileUploadFile {
             }
 
             // Check file extension (e.g., ".pdf", ".jpg")
-            if pattern.starts_with('.') {
-                if self.name.to_lowercase().ends_with(&pattern.to_lowercase()) {
+            if pattern.starts_with('.')
+                && self.name.to_lowercase().ends_with(&pattern.to_lowercase()) {
                     return true;
                 }
-            }
 
             // Check exact MIME type
             // Note: This is simplified - full implementation would need file MIME type detection

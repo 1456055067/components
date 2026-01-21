@@ -37,18 +37,15 @@ impl TimeUnit {
 
 /// Range selector mode
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum RangeSelectorMode {
     /// Absolute mode: Two inputs (start, end) with shared calendar
+    #[default]
     Absolute,
     /// Relative mode: Dropdown with presets (Last 7 days, Last 30 days, etc.)
     Relative,
 }
 
-impl Default for RangeSelectorMode {
-    fn default() -> Self {
-        Self::Absolute
-    }
-}
 
 impl RangeSelectorMode {
     /// Returns the string representation of the mode
@@ -62,6 +59,7 @@ impl RangeSelectorMode {
 
 /// A date range with start and end dates
 #[derive(Clone, PartialEq, Debug)]
+#[derive(Default)]
 pub struct DateRange {
     /// Start date in YYYY-MM-DD format
     pub start: Option<String>,
@@ -133,14 +131,6 @@ impl DateRange {
     }
 }
 
-impl Default for DateRange {
-    fn default() -> Self {
-        Self {
-            start: None,
-            end: None,
-        }
-    }
-}
 
 /// A relative date range option
 #[derive(Clone, PartialEq, Debug)]
