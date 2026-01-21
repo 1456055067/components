@@ -12,6 +12,9 @@ use crate::internal::{
 use web_sys::{HtmlInputElement, KeyboardEvent};
 use yew::prelude::*;
 
+#[cfg(target_arch = "wasm32")]
+use js_sys;
+
 /// Event detail for date picker change events
 #[derive(Clone, PartialEq, Debug)]
 pub struct DatePickerChangeDetail {
@@ -209,7 +212,7 @@ fn get_today() -> DateValue {
     {
         let date = js_sys::Date::new_0();
         let year = date.get_full_year() as i32;
-        let month = (date.get_month() + 1.0) as u32;
+        let month = (date.get_month() as u32) + 1;
         let day = date.get_date() as u32;
         DateValue::new(year, month, day).unwrap_or(DateValue {
             year: 2026,

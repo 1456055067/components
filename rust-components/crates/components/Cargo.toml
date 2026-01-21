@@ -17,6 +17,7 @@ serde_json = { workspace = true }
 cloudscape-design-tokens = { path = "../design-tokens" }
 gloo-timers = "0.3.0"
 wasm-bindgen-futures = "0.4"
+js-sys = "0.3.85"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
