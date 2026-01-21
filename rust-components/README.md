@@ -128,14 +128,17 @@ fn app() -> Html {
 - ✅ **Button** - Interactive button with multiple variants
 - ✅ **Alert** - Contextual feedback messages with different severity levels
 - ✅ **Input** - Text input field with validation and multiple types
+- ✅ **Checkbox** - Checkbox input with indeterminate state support
+- ✅ **Toggle** - Toggle switch component (on/off control)
+- ✅ **RadioGroup** - Radio button group with multiple options
 
 ### Planned
 
-- ⏳ **Checkbox** - Checkbox input
-- ⏳ **Toggle** - Toggle switch
 - ⏳ **Select** - Dropdown selection
 - ⏳ **FormField** - Form field wrapper with label and validation
+- ⏳ **TextArea** - Multi-line text input
 - ⏳ **Table** - Data table with sorting and filtering
+- ⏳ **Modal** - Dialog component
 - ⏳ More components coming...
 
 ## Design Tokens
