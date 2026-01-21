@@ -175,14 +175,6 @@ fn app() -> Html {
 
 - ✅ **Modal** - Dialog/modal component with size variants and dismiss handling
 
-#### Navigation Components
-
-- ✅ **Tabs** - Tabbed navigation with active state and dismissible tabs
-- ✅ **SideNavigation** - Sidebar navigation with hierarchical items
-- ✅ **Breadcrumbs** - Breadcrumb trail for navigation hierarchy
-- ✅ **Pagination** - Page navigation with next/previous and page numbers
-- ✅ **TopNavigation** - Top application bar with menu items and utilities
-
 ### Planned
 
 - ⏳ **Table** - Data table with sorting and filtering
