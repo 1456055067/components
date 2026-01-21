@@ -57,58 +57,11 @@ impl Route {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let current_route = use_state(|| Route::Home);
-
-    let on_navigate = {
-        let current_route = current_route.clone();
-        Callback::from(move |route: Route| {
-            current_route.set(route);
-        })
-    };
-
-    let navigation_open = use_state(|| true);
-    let tools_open = use_state(|| false);
-
-    let on_navigation_change = {
-        let navigation_open = navigation_open.clone();
-        Callback::from(move |event: CustomEvent<NavigationChangeDetail>| {
-            navigation_open.set(event.detail.open);
-        })
-    };
-
-    let on_tools_change = {
-        let tools_open = tools_open.clone();
-        Callback::from(move |event: CustomEvent<ToolsChangeDetail>| {
-            tools_open.set(event.detail.open);
-        })
-    };
-
-    let content = match (*current_route).clone() {
-        Route::Home => html! { <Home /> },
-        Route::Basic => html! { <BasicComponents /> },
-        Route::Forms => html! { <FormComponents /> },
-        Route::Layout => html! { <LayoutComponents /> },
-        Route::Navigation => html! { <NavigationComponents /> },
-        Route::DataDisplay => html! { <DataDisplayComponents /> },
-        Route::Overlay => html! { <OverlayComponents /> },
-        Route::Notification => html! { <NotificationComponents /> },
-    };
-
+    // Simple test to verify rendering works
     html! {
-        <AppLayout
-            navigation_open={*navigation_open}
-            navigation_width={250}
-            on_navigation_change={Some(on_navigation_change)}
-            tools_open={*tools_open}
-            on_tools_change={Some(on_tools_change)}
-            content_type={ContentType::Default}
-        >
-            <div slot="navigation">
-                <Sidebar current_route={(*current_route).clone()} {on_navigate} />
-            </div>
-            <div slot="content">
-                { content }
-            </div>
-        </AppLayout>
+        <div style="padding: 20px; font-family: sans-serif;">
+            <h1>{"Cloudscape Components Demo"}</h1>
+            <p>{"If you can see this, the WASM app is working!"}</p>
+        </div>
     }
 }
