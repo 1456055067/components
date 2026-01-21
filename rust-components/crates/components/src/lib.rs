@@ -35,6 +35,11 @@ pub mod autosuggest;
 pub mod date_picker;
 pub mod date_range_picker;
 pub mod file_upload;
+pub mod tabs;
+pub mod breadcrumbs;
+pub mod pagination;
+pub mod side_navigation;
+pub mod top_navigation;
 
 // Internal utilities
 pub mod internal;
@@ -70,6 +75,22 @@ pub use date_range_picker::{
 };
 pub use file_upload::{
     FileUpload, FileUploadProps, FileUploadFile, FileUploadChangeDetail, FileUploadI18nStrings,
+};
+pub use tabs::{Tabs, TabsProps, Tab, TabsVariant, TabChangeDetail, TabDismissDetail};
+pub use breadcrumbs::{Breadcrumbs, BreadcrumbsProps, BreadcrumbItem, BreadcrumbFollowEvent};
+pub use pagination::{
+    Pagination, PaginationProps, PaginationChangeDetail, PaginationPageClickDetail,
+    PaginationI18nStrings,
+};
+pub use top_navigation::{
+    TopNavigation, TopNavigationProps, TopNavigationIdentity, TopNavigationUtility,
+    TopNavigationLogo, TopNavigationI18nStrings, UtilityType, UtilityButtonVariant,
+    UtilityClickDetail, UtilityFollowDetail, IdentityFollowDetail,
+};
+pub use side_navigation::{
+    SideNavigation, SideNavigationProps, SideNavigationItem, SideNavigationItemType,
+    SideNavigationHeader, FollowDetail as SideNavigationFollowDetail,
+    ChangeDetail as SideNavigationChangeDetail,
 };
 
 // Re-export commonly used internal types
