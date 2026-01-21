@@ -5,26 +5,40 @@
  * CommonJS wrapper for Rust styles tasks
  */
 
-const noopTask = (done) => {
-  console.warn('⚠️  Rust styles task skipped');
-  done();
+const loadRustStylesModule = async () => {
+  try {
+    return await import('./rust-styles.js');
+  } catch (error) {
+    return null;
+  }
+};
+
+const runOrSkip = async (taskName, done) => {
+  const rustStylesModule = await loadRustStylesModule();
+  if (!rustStylesModule || typeof rustStylesModule[taskName] !== 'function') {
+    console.warn('⚠️  Rust styles task skipped');
+    if (typeof done === 'function') {
+      done();
+    }
+    return;
+  }
+
+  try {
+    await rustStylesModule[taskName]();
+    if (typeof done === 'function') {
+      done();
+    }
+  } catch (error) {
+    if (typeof done === 'function') {
+      done(error);
+    } else {
+      throw error;
+    }
+  }
 };
 
 module.exports = {
-  buildRustStyles: noopTask,
-  watchRustStyles: () => Promise.resolve(),
-  cleanRustStyles: noopTask,
+  buildRustStyles: (done) => runOrSkip('buildRustStyles', done),
+  watchRustStyles: (done) => runOrSkip('watchRustStyles', done),
+  cleanRustStyles: (done) => runOrSkip('cleanRustStyles', done),
 };
-
-// Dynamically load ESM module
-(async () => {
-  try {
-    const rustStylesModule = await import('./rust-styles.js');
-
-    module.exports.buildRustStyles = rustStylesModule.buildRustStyles;
-    module.exports.watchRustStyles = rustStylesModule.watchRustStyles;
-    module.exports.cleanRustStyles = rustStylesModule.cleanRustStyles;
-  } catch (error) {
-    // Silent fail - styles are optional
-  }
-})();

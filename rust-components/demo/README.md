@@ -269,7 +269,7 @@ If styles aren't loading:
 
 2. Ensure the CSS path in `index.html` is correct:
    ```html
-   <link data-trunk rel="css" href="../dist/cloudscape-components.css" />
+   <link data-trunk rel="css" href="../dist/styles/cloudscape-components.css" />
    ```
 
 ### Port Already in Use
