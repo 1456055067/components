@@ -27,6 +27,8 @@ pub mod container;
 pub mod select;
 pub mod link;
 pub mod icon;
+pub mod app_layout;
+pub mod content_layout;
 
 // Internal utilities
 pub mod internal;
@@ -47,6 +49,11 @@ pub use container::{Container, ContainerProps, ContainerVariant, Media, MediaPos
 pub use select::{Select, SelectProps, SelectOption, SelectChangeDetail};
 pub use icon::{Icon, IconProps, IconSize, IconVariant};
 pub use link::{Link, LinkProps, LinkVariant, LinkFontSize, LinkColor, FollowDetail, FollowEvent};
+pub use app_layout::{
+    AppLayout, AppLayoutProps, ContentType, SplitPanelPosition, SplitPanelPreferences,
+    NavigationChangeDetail, ToolsChangeDetail, SplitPanelToggleDetail, SplitPanelResizeDetail,
+};
+pub use content_layout::{ContentLayout, ContentLayoutProps};
 
 // Re-export commonly used internal types
 pub use internal::CustomEvent;

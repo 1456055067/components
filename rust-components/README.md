@@ -120,7 +120,7 @@ fn app() -> Html {
 
 ## Components
 
-### Implemented (15 Total)
+### Implemented (17 Total)
 
 - ✅ **Badge** - Small visual indicator for labels and metadata
 - ✅ **Spinner** - Loading indicator with animation
@@ -137,6 +137,8 @@ fn app() -> Html {
 - ✅ **Container** - Content container with header, footer, and media slots
 - ✅ **Header** - Page and section headers (H1/H2/H3)
 - ✅ **Icon** - SVG icon component with built-in and custom icon support
+- ✅ **AppLayout** - Main application shell with navigation, tools, and split panel
+- ✅ **ContentLayout** - Content wrapper with header and notifications
 
 ### Planned
 
